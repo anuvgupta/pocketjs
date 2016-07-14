@@ -7,9 +7,8 @@ class Pocket {
     protected $p; //server port
     protected $c; //client array
     protected $mc; //max clients
-    protected $on; //event listeners
-    protected $am; //data to send to all clients
-    protected $cm; //data to send to individual clients
+    protected $ev; //reserved event listeners
+    protected $on; //custom event listeners
     protected $v; //verbose run
     //constructor method called when new Pocket constructed
     public function __construct($d, $p, $mc, $v = null) {
@@ -17,14 +16,10 @@ class Pocket {
         $this->p = $p ?: 30000;
         $this->c = array();
         $this->mc = $mc ?: 25;
+        $this->ev = array('open' => function ($id) { }, 'run' => function () { }, 'close' => function ($id) { });
         $this->on = array();
-        $this->am = array();
-        $this->cm = array();
         $this->v = true;
         $this->n = 'LOCAL';
-        $this->bind('__open', function ($id) { });
-        $this->bind('__run', function () { });
-        $this->bind('__close', function ($id) { });
         if (is_string($v)) $this->n = strtoupper($v);
         else $this->v = ($v !== null) ? $v : true;
         if ($this->v) echo PHP_EOL . "\e[1m{$this->n} POCKET SERVER" . PHP_EOL;
@@ -80,11 +75,11 @@ class Pocket {
                         //generate and send back server socket handshake headers to client socket
                         $accept = base64_encode(pack('H*', sha1($headers['Sec-WebSocket-Key'] . '258EAFA5-E914-47DA-95CA-C5AB0DC85B11')));
                         $upgrade  = "HTTP/1.1 101 Web Socket Protocol Handshake\r\n" .
-                        "Upgrade: websocket\r\n" .
-                        "Connection: Upgrade\r\n" .
-                        "WebSocket-Origin: " . $this->d . "\r\n" .
-                        "WebSocket-Location: ws://" . $this->d . ":" . $this->p . "/server.php\r\n".
-                        "Sec-WebSocket-Accept:$accept\r\n\r\n";
+                          "Upgrade: websocket\r\n" .
+                          "Connection: Upgrade\r\n" .
+                          "WebSocket-Origin: " . $this->d . "\r\n" .
+                          "WebSocket-Location: ws://" . $this->d . ":" . $this->p . "/server.php\r\n".
+                          "Sec-WebSocket-Accept:$accept\r\n\r\n";
                         if (socket_write($this->c[$i], $upgrade, strlen($upgrade)) === false)
                             die ('socket_write: fail - [' . socket_last_error() . '] ' . socket_strerror(socket_last_error()) . PHP_EOL);
                         echo 'headers sent' . PHP_EOL;
@@ -94,7 +89,7 @@ class Pocket {
                             //send client's data to client
                             $this->data = $this->mask(json_encode(array('id' => $i, 'address' => $addr, 'port' => $this->pt)));
                             socket_write($this->c[$i], $this->data, strlen($this->data));
-                            $this->call('__open', false, $i);
+                            $this->onOpen($i);
                         }
                         break;
                     }
@@ -102,25 +97,7 @@ class Pocket {
             }
 
             //calculate client data
-            $this->call('__run');
-
-            //send clients data
-            for ($j = 0; $j < count($am); $j++) {
-                $msg = $am[$j];
-                for ($i = 0; $i < $this->mc; $i++) {
-                    if ((@$this->c[$i] != null) && isset($this->c[$i])) socket_write($this->c[$i], $msg, strlen($msg));
-                }
-                unset($am[$j]);
-            }
-            for ($j = 0; $j < count($am); $j++) {
-                $a = $this->cm[$j];
-                if ((@$this->c[$a['id']] != null) && isset($this->c[$a['id']])) socket_write($this->c[$a['id']], $a['msg'], strlen($a['msg']));
-                else {
-                    $e = array_shift(debug_backtrace());
-                    echo "[ERROR] client {$a['id']} does not exist ({$e['file']}:{$e['line']})";
-                }
-                unset($this->cm[$j]);
-            }
+            $this->onRun();
 
             //check if client sockets have sent data
             for ($i = 0; $i < $this->mc; $i++) { //loop through client sockets
@@ -129,28 +106,29 @@ class Pocket {
                     while (@socket_recv($this->c[$i], $masked_data, 1024, 0) >= 1) { //if client sends new data (0 bytes = disconnected, 1 byte = connected, >1 bytes = new data sent to server)
                         //$data = json_decode(escapeshellcmd($this->unmask($masked_data)), true);
                         $data = json_decode($this->unmask($masked_data), true);
-                        if (!isset($data['call'])) {
+                        if (isset($data['command'])) {
+                            if ($data['command'] == 'close') {
+                                $id = $data['id'];
+                                $this->onClose($id);
+                                echo PHP_EOL . "client[$id] {$data['ad']} : {$data['p']} disconnected" . PHP_EOL . PHP_EOL;
+                                $this->close($id);
+                            }
+                            //elseif ($data['command'] == 'alive') ;
+                        } elseif (!isset($data['call'])) {
+                            $this->onClose($i);
+                            echo "[SERVER] client[$i] kicked for: sending illegal data:" . PHP_EOL;
                             $this->close($i);
-                            echo "[SERVER] client[$i] kicked for: sending illegal data" . PHP_EOL;
-                        } elseif (in_array($data['call'], $this->on)) {
-                            print_r($this->on);
-                            if (isset($data['args'])) $this->call($data['call'], true, $data['args']);
+                        } elseif (isset($this->on[$data['call']])) {
+                            if (isset($data['args'])) $this->callArr($data['call'], $data['args']);
                             else $this->call($data['call']);
                         }
-                        // else {
-                        //     $args = '';
-                        //     if (isset($this->data['args'])) {
-                        //         for ($j = 0; $j < count($this->data['args']); $j++) $args .= ', ' . escapeshellcmd($this->data['args'][$j]);
-                        //     }
-                        //     echo "[SERVER] message from client[$i]: " . escapeshellcmd($this->data['call']) . $args . PHP_EOL;
-                        // }
                         break 2;
                     }
                     //check if client has disconnected
                     $input = @socket_read($this->c[$i], 1024, PHP_NORMAL_READ); //read data from client socket
                     if ($input == null) { //if data is blank, client has disconnected from socket
-                        $this->call('__close', false, $i);
-                        echo PHP_EOL . "client[$i] " . $this->c[$i]->ad . ' : ' . $this->c[$i]->p . ' disconnected' . PHP_EOL . PHP_EOL;
+                        $this->onClose($i);
+                        echo PHP_EOL . "client[$i] disconnected" . PHP_EOL . PHP_EOL;
                         $this->close($i);
                     }
                 }
@@ -162,9 +140,9 @@ class Pocket {
         if (($id !== null) && ($id >= 0)) { //close client socket
             if (isset($this->c[$id])) {
                 socket_close($this->c[$id]); //close client socket connection
-                unset($this->c[$i]); //remove client from list of client sockets
+                unset($this->c[$id]); //remove client from list of client sockets
             }
-        } elseif (($id !== null) && ($id >= $this->mc)) { //close all clients id is too large
+        } elseif (($id !== null) && ($id >= $this->mc)) { //close all clients if id is too large
             for ($i = 0; $i < $this->mc; $i++) { //loop through client array
                 if (isset($this->c[$i])) {
                     socket_close($this->c[$i]); //close existing client sockets
@@ -174,53 +152,47 @@ class Pocket {
         }
         if (($id < 0) || ($id === null)) socket_close($this->s); //close master socket if id is negative or null
     }
-    //function send called to send messages to individual or all clients
-    public function send($msg, $id = null) {
-        if ($id === null) array_push($this->am, $this->mask($msg));
-        else {
-            if (!isset($this->c[$id])) {
-                $e = array_shift(debug_backtrace());
-                echo "[ERROR] client $id does not exist ({$e['file']}:{$e['line']})" . PHP_EOL;
-                return false;
-            }
-            array_push($this->cm, array('id' => $id, 'msg' => $this->mask($msg)));
+    //function send called to send messages to all clients
+    public function send($call, $id) {
+        if (!isset($this->c[$id])) {
+            $e = array_shift(debug_backtrace());
+            echo "[ERROR] client $id does not exist ({$e['file']}:{$e['line']})" . PHP_EOL;
+            return false;
+        }
+        $data = array('call' => $call);
+        if (func_num_args() > 2) $data['args'] = array_slice(func_get_args(), 2);
+        $msg = $this->mask(json_encode($data));
+        socket_write($this->c[$id], $msg, strlen($msg));
+        return true;
+    }
+    public function sendAll($call) {
+        $data = array('call' => $call);
+        if (func_num_args() > 1) $data['args'] = array_slice(func_get_args(), 1);
+        $msg = $this->mask(json_encode($data));
+        for ($i = 0; $i < $this->mc; $i++) {
+            if ((@$this->c[$i] != null) && isset($this->c[$i])) socket_write($this->c[$i], $msg, strlen($msg));
         }
         return true;
     }
     //function on called to create socket events with callbacks
     public function bind($n, $f) { //event name and callback
-        // if (($n == '__close') || ($n == '__open')) {
-        //     $e = array_shift(debug_backtrace());
-        //     echo "[ERROR] event '$n' is reserved by PocketJS and cannot be overriden ({$e['file']}:{$e['line']})" . PHP_EOL;
-        //     return false;
-        // }
         $this->on[$n] = $f; //assign event name to callback in assoc array
         return true;
     }
     //function call called to run events created with on()
-    public function call($n, $a = null) { //event name, array args (true = load args from array, false = load args from hidden params)
+    public function call($n) { //event name, array args (true = load args from array, false = load args from hidden params)
+      //error handling
         if (func_num_args() < 1) {
             $e = array_shift(debug_backtrace());
             echo "[ERROR] function 'call()' requires an event name ({$e['file']}:{$e['line']})" . PHP_EOL;
             return false;
-        }
-        if (!isset($this->on[$n])) { //if given event is not defined, cannot be run
+        } elseif (!isset($this->on[$n])) { //if given event is not defined, cannot be run
             $e = array_shift(debug_backtrace());
             echo "[ERROR] event '$n' does not exist ({$e['file']}:{$e['line']})" . PHP_EOL;
             return false; //error out of function
         }
         //get number of arguments for event callback
-
-        if (func_num_args() == 1) $y = 0;
-        elseif ($a) {
-            if (is_array(func_get_args()[2])) $y = count(func_get_args()[2]); //if array passed in, arg num is length of array
-            else {
-                $e = array_shift(debug_backtrace());
-                echo "[ERROR] param #3 of call() expected to be array -- set param #2 to false to pass in individual arguments ({$e['file']}:{$e['line']})" . PHP_EOL;
-                return false;
-            }
-        }
-        else $y = func_num_args() - 2; //if array not passed in, get number of params passed in to call
+        $y = func_num_args() - 1; //get number of params passed in to call()
         $x = (new ReflectionFunction($this->on[$n]))->getNumberOfRequiredParameters(); //get number of parameters callback requires
         if ($x != $y) { //if parameter amounts don't match, event cannot be run
             $e = array_shift(debug_backtrace());
@@ -228,9 +200,40 @@ class Pocket {
             return false; //error out of function
         }
         if ($y == 0) $this->on[$n](); //if event has no arguments, run event by simply calling callback
-        elseif (@$a) call_user_func_array($this->on[$n], func_get_args()[2]);
-        else call_user_func_array($this->on[$n], array_slice(func_get_args(), 2));
+        else call_user_func_array($this->on[$n], array_slice(func_get_args(), 1));
         return true; //if function has not errored out and program has not died, succeed
+    }
+    public function callArr($n, $a) {
+      if (is_array($a)) $y = count($a); //if array passed in, arg num is length of array
+      else {
+          $e = array_shift(debug_backtrace());
+          echo "[ERROR] param #2 of callArr() expected to be array -- use call() to pass in individual arguments ({$e['file']}:{$e['line']})" . PHP_EOL;
+          return false;
+      }
+      if (!isset($this->on[$n])) { //if given event is not defined, cannot be run
+          $e = array_shift(debug_backtrace());
+          echo "[ERROR] event '$n' does not exist ({$e['file']}:{$e['line']})" . PHP_EOL;
+          return false; //error out of function
+      }
+      call_user_func_array($this->on[$n], $a);
+    }
+    //function onOpen called to assign callback to or run event for user connection
+    public function onOpen($arg = null) {
+      if (!isset($arg)) $this->ev['open']();
+      else if (is_callable($arg)) $this->ev['open'] = $arg;
+      else call_user_func_array($this->ev['open'], func_get_args());
+    }
+    //function onRun called to assign callback to or run event for server loop
+    public function onRun($arg = null) {
+      if (!isset($arg)) $this->ev['run']();
+      else if (is_callable($arg)) $this->ev['run'] = $arg;
+      else call_user_func_array($this->ev['run'], func_get_args());
+    }
+    //function onRun called to assign callback to or run event for server loop
+    public function onClose ($arg = null) {
+      if (!isset($arg)) $this->ev['close']();
+      else if (is_callable($arg)) $this->ev['close'] = $arg;
+      else call_user_func_array($this->ev['close'], func_get_args());
     }
     //function unmask called to unmask masked data received from client
     private function unmask($text) { //parameter text (masked string data) to be unmasked
