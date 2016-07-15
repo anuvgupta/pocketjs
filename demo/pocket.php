@@ -108,28 +108,30 @@ class Pocket {
                         $data = json_decode($this->unmask($masked_data), true);
                         if (isset($data['command'])) {
                             if ($data['command'] == 'close') {
-                                $id = $data['id'];
-                                $this->onClose($id);
-                                echo PHP_EOL . "client[$id] {$data['ad']} : {$data['p']} disconnected" . PHP_EOL . PHP_EOL;
-                                $this->close($id);
+                                $this->close($data['id']);
+                                echo PHP_EOL . "client[{$data['id']}] {$data['ad']} : {$data['p']} disconnected" . PHP_EOL;
                             }
                             //elseif ($data['command'] == 'alive') ;
                         } elseif (!isset($data['call'])) {
-                            $this->onClose($i);
-                            echo "[SERVER] client[$i] kicked for: sending illegal data:" . PHP_EOL;
                             $this->close($i);
+                            echo "[SERVER] client[$i] kicked for: sending illegal data: no event specified" . PHP_EOL;
                         } elseif (isset($this->on[$data['call']])) {
-                            if (isset($data['args'])) $this->callArr($data['call'], $data['args']);
-                            else $this->call($data['call']);
+                            if (isset($data['args'])) {
+                                array_push($data['args'], $i);
+                                $this->callArr($data['call'], $data['args']);
+                            }
+                            else $this->call($data['call'], $i);
+                        } else {
+                            $this->close($i);
+                            echo "[SERVER] client[$i] kicked for: sending illegal data: event '{$data['call']}' does not exist" . PHP_EOL;
                         }
                         break 2;
                     }
                     //check if client has disconnected
                     $input = @socket_read($this->c[$i], 1024, PHP_NORMAL_READ); //read data from client socket
                     if ($input == null) { //if data is blank, client has disconnected from socket
-                        $this->onClose($i);
-                        echo PHP_EOL . "client[$i] disconnected" . PHP_EOL . PHP_EOL;
                         $this->close($i);
+                        echo PHP_EOL . "client[$i] disconnected" . PHP_EOL;
                     }
                 }
             }
@@ -139,6 +141,7 @@ class Pocket {
     public function close($id = null) { //optional parameter id decides which sockets to close
         if (($id !== null) && ($id >= 0)) { //close client socket
             if (isset($this->c[$id])) {
+                $this->onClose($id);
                 socket_close($this->c[$id]); //close client socket connection
                 unset($this->c[$id]); //remove client from list of client sockets
             }
@@ -181,7 +184,7 @@ class Pocket {
     }
     //function call called to run events created with on()
     public function call($n) { //event name, array args (true = load args from array, false = load args from hidden params)
-      //error handling
+        //error handling
         if (func_num_args() < 1) {
             $e = array_shift(debug_backtrace());
             echo "[ERROR] function 'call()' requires an event name ({$e['file']}:{$e['line']})" . PHP_EOL;
@@ -194,7 +197,7 @@ class Pocket {
         //get number of arguments for event callback
         $y = func_num_args() - 1; //get number of params passed in to call()
         $x = (new ReflectionFunction($this->on[$n]))->getNumberOfRequiredParameters(); //get number of parameters callback requires
-        if ($x != $y) { //if parameter amounts don't match, event cannot be run
+        if (($x != $y) && ($x + 1 != $y)) { //if parameter amounts don't match, event cannot be run
             $e = array_shift(debug_backtrace());
             echo "[ERROR] event '$n' must be given $x arguments, $y given ({$e['file']}:{$e['line']})" . PHP_EOL;
             return false; //error out of function
@@ -204,36 +207,64 @@ class Pocket {
         return true; //if function has not errored out and program has not died, succeed
     }
     public function callArr($n, $a) {
-      if (is_array($a)) $y = count($a); //if array passed in, arg num is length of array
-      else {
-          $e = array_shift(debug_backtrace());
-          echo "[ERROR] param #2 of callArr() expected to be array -- use call() to pass in individual arguments ({$e['file']}:{$e['line']})" . PHP_EOL;
-          return false;
-      }
-      if (!isset($this->on[$n])) { //if given event is not defined, cannot be run
-          $e = array_shift(debug_backtrace());
-          echo "[ERROR] event '$n' does not exist ({$e['file']}:{$e['line']})" . PHP_EOL;
-          return false; //error out of function
-      }
-      call_user_func_array($this->on[$n], $a);
+        if (is_array($a)) $y = count($a); //if array passed in, arg num is length of array
+        else {
+            $e = array_shift(debug_backtrace());
+            echo "[ERROR] param #2 of callArr() expected to be array -- use call() to pass in individual arguments ({$e['file']}:{$e['line']})" . PHP_EOL;
+            return false;
+        }
+        if (!isset($this->on[$n])) { //if given event is not defined, cannot be run
+            $e = array_shift(debug_backtrace());
+            echo "[ERROR] event '$n' does not exist ({$e['file']}:{$e['line']})" . PHP_EOL;
+            return false; //error out of function
+        }
+        $y = count($a); //get number of params passed in to call()
+        $x = (new ReflectionFunction($this->on[$n]))->getNumberOfRequiredParameters(); //get number of parameters callback requires
+        if ($x != $y) { //if parameter amounts don't match, event cannot be run
+            $e = array_shift(debug_backtrace());
+            echo "[ERROR] event '$n' must be given $x arguments, $y given ({$e['file']}:{$e['line']})" . PHP_EOL;
+            return false; //error out of function
+        }
+        call_user_func_array($this->on[$n], $a);
+        return true;
     }
     //function onOpen called to assign callback to or run event for user connection
     public function onOpen($arg = null) {
-      if (!isset($arg)) $this->ev['open']();
-      else if (is_callable($arg)) $this->ev['open'] = $arg;
-      else call_user_func_array($this->ev['open'], func_get_args());
+        if (!isset($arg)) {
+            $e = array_shift(debug_backtrace());
+            echo "[ERROR] event 'onOpen' must be given client id or callback function ({$e['file']}:{$e['line']})" . PHP_EOL;
+            return false; //error out of function
+        }
+        else if (is_callable($arg)) {
+            if ((new ReflectionFunction($arg))->getNumberOfRequiredParameters() > 1) {
+                $e = array_shift(debug_backtrace());
+                echo "[ERROR] callback for event 'onOpen' must have only 1 argument: client id ({$e['file']}:{$e['line']})" . PHP_EOL;
+                return false;
+            } else $this->ev['open'] = $arg;
+        }
+        else call_user_func_array($this->ev['open'], func_get_args());
     }
     //function onRun called to assign callback to or run event for server loop
     public function onRun($arg = null) {
-      if (!isset($arg)) $this->ev['run']();
-      else if (is_callable($arg)) $this->ev['run'] = $arg;
-      else call_user_func_array($this->ev['run'], func_get_args());
+        if (!isset($arg)) $this->ev['run']();
+        else if (is_callable($arg)) $this->ev['run'] = $arg;
+        else call_user_func_array($this->ev['run'], func_get_args());
     }
     //function onRun called to assign callback to or run event for server loop
     public function onClose ($arg = null) {
-      if (!isset($arg)) $this->ev['close']();
-      else if (is_callable($arg)) $this->ev['close'] = $arg;
-      else call_user_func_array($this->ev['close'], func_get_args());
+        if (!isset($arg)) {
+            $e = array_shift(debug_backtrace());
+            echo "[ERROR] event 'onClose' must be given client id or callback function ({$e['file']}:{$e['line']})" . PHP_EOL;
+            return false; //error out of function
+        }
+        else if (is_callable($arg)) {
+            if ((new ReflectionFunction($arg))->getNumberOfRequiredParameters() > 1) {
+                $e = array_shift(debug_backtrace());
+                echo "[ERROR] callback for event 'onClose' must have only 1 argument: client id ({$e['file']}:{$e['line']})" . PHP_EOL;
+                return false;
+            } else $this->ev['close'] = $arg;
+        }
+        else call_user_func_array($this->ev['close'], func_get_args());
     }
     //function unmask called to unmask masked data received from client
     private function unmask($text) { //parameter text (masked string data) to be unmasked
