@@ -28,7 +28,7 @@
 	color: #1A1A1A;
 }
 ::-webkit-scrollbar {
-    display: none;
+    //display: none;
 }
 
 * {
@@ -38,11 +38,16 @@
 
 html, body {
     margin: 0;
-    width: 100%;
+    width: 102%;
     height: 100%;
 	background: #161616 url('') no-repeat;
 	background-size: cover;
 	background-attachment: fixed;
+	overflow-x: hidden;
+}
+.main {
+	width: 98%;
+	height: 100%;
 }
 
 .block {
