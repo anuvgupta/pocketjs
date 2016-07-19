@@ -1,0 +1,123 @@
+@font-face {
+	font-family: CenturyGothic;
+	src: url("./centurygothic.ttf");
+}
+@font-face {
+	font-family: JosefinSans;
+	src: url("./JosefinSans-Regular.ttf");
+	font-weight: normal;
+}
+@font-face {
+	font-family: JosefinSansBold;
+	src: url("./JosefinSans-Bold.ttf");
+	font-weight: bold;
+}
+
+@keyframes logopulse {
+	0% { transform: scale(1.025); }
+	50% { transform: scale(1.06); }
+	100% { transform: scale(1.025); }
+}
+
+::selection {
+	background-color: rgba(156, 156, 156, 0.99);
+	color: #1A1A1A;
+}
+::-moz-selection {
+	background-color: rgba(156, 156, 156, 0.99);
+	color: #1A1A1A;
+}
+::-webkit-scrollbar {
+    display: none;
+}
+
+* {
+	font: 20px CenturyGothic;
+	color: #ECECED;
+}
+
+html, body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+	background: #161616 url('') no-repeat;
+	background-size: cover;
+	background-attachment: fixed;
+}
+
+.block {
+    width: 100%;
+    height: 100%;
+    display: table;
+    text-align: center;
+}
+.block .content {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+#intro { }
+#intro .content .logo {
+	background: url('../img/logo2.png') no-repeat;
+	background-size: cover;
+	height: 400px;
+	width: 400px;
+	transform: scale(1.025);
+	animation: logopulse 3.5s ease-in-out infinite;
+	margin: 0 auto;
+}
+#intro .content .title {
+    font-size: 150px;
+    color: #EBEBEB;
+	//line-height: 85px;
+}
+#intro .content .text {
+    font-size: 24px;
+    color: #ECECED;
+}
+#intro .content .nav {
+	//height: 60px;
+}
+#intro .content .nav .text {
+    font: 25px JosefinSansBold;
+    color: #E2E2E2;
+	display: block;
+}
+#intro .content .nav .image {
+	background: url('../img/down.png') no-repeat;
+	background-size: cover;
+	height: 35px;
+	width: 60px;
+	margin: 10px auto;
+	opacity: 0.65;
+	transition: opacity 0.3s ease-in-out;
+}
+#intro .content .nav .image:hover {
+	opacity: 0.97;
+}
+
+#hook .content {
+	padding-top: 5%;
+	height: 95%;
+	position: relative;
+}
+#hook .content .panel {
+	top: 0;
+	bottom: 0;
+	position: absolute;
+}
+#hook .content .left {
+	left: 0;
+	right: 68%;
+	width: 32%;
+}
+#hook .content .middle {
+	left: 32%;
+	right: 32%;
+	width: 36%;
+}
+#hook .content .right {
+	left: 68%;
+	right: 0;
+	width: 32%;
+}
