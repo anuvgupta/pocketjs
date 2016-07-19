@@ -38,16 +38,22 @@
 
 html, body {
     margin: 0;
-    width: 102%;
+    width: 100%;
     height: 100%;
 	background: #161616 url('') no-repeat;
 	background-size: cover;
 	background-attachment: fixed;
-	overflow-x: hidden;
 }
-.main {
-	width: 98%;
+#wrap {
+	width: 100%;
 	height: 100%;
+	overflow: hidden;
+}
+#main {
+	width: 100%;
+	height: 100%;
+	padding-right: 15px;
+	overflow-y: scroll;
 }
 
 .block {
