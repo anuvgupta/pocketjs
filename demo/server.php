@@ -4,17 +4,19 @@ include ('./pocket.php');
 $log = array();
 $users = array();
 
-$pocket = new Pocket('localhost', 30000, 20, 'RUBBR.IO');
+$pocket = new Pocket('localhost', 30000, 20);
 $pocket->onOpen(function ($id) {
-    echo "[CHAT] user[$id] connected" . PHP_EOL;
+    global $pocket;
+    $pocket->log("user[$id] connected");
 });
 $pocket->onClose(function ($id) {
-    echo "[CHAT] user[$id] disconnected" . PHP_EOL;
+    global $pocket;
+    $pocket->log("user[$id] disconnected");
 });
 $pocket->bind('username', function ($username, $id) {
     global $pocket, $users;
     $users[$id] = "$username";
-    echo "[CHAT] user[$id] is '$username'" . PHP_EOL;
+    $pocket->log("user[$id] is '$username'");
     $pocket->send('username', $id, true, $username);
 });
 $pocket->bind('ready', function ($id) {
@@ -25,7 +27,7 @@ $pocket->bind('message', function ($message, $id) {
     global $pocket, $log, $users;
     $username = $users[$id];
     array_push($log, array('user' => "$username", 'id' => $id, 'message' => "$message"));
-    echo "[CHAT] user[$id] $username: $message" . PHP_EOL;
+    $pocket->log("user[$id] $username: $message");
     $pocket->sendAll('message', "$username", "$message", $id);
 });
 

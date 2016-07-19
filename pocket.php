@@ -19,7 +19,7 @@ class Pocket {
         $this->ev = array('open' => function ($id) { }, 'run' => function () { }, 'close' => function ($id) { });
         $this->on = array();
         $this->v = true;
-        $this->n = 'LOCAL';
+        $this->n = 'LOG';
         if (is_string($v)) $this->n = strtoupper($v);
         else $this->v = ($v !== null) ? $v : true;
         if ($this->v) echo PHP_EOL . "\e[1m{$this->n} POCKET SERVER" . PHP_EOL;
@@ -265,6 +265,16 @@ class Pocket {
             } else $this->ev['close'] = $arg;
         }
         else call_user_func_array($this->ev['close'], func_get_args());
+    }
+    //function log called to sanitize and log data
+    public function log($text) {
+        //sanitize $text here!
+        $name = $this->n ?: 'LOG';
+        if (is_string($text)) echo "[$name] $text" . PHP_EOL;
+        else {
+            echo "[$name] non-string data: " . PHP_EOL;
+            print_r($text);
+        }
     }
     //function unmask called to unmask masked data received from client
     private function unmask($text) { //parameter text (masked string data) to be unmasked
