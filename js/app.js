@@ -8,6 +8,10 @@ function load() {
             scrollTop: $('#hook').offset().top + $('#main').scrollTop() + 'px'
         }, 700);
     });
+    $('#main').scroll(function () {
+        if ($('#intro .content .nav').offset().top < window.innerHeight/3.2) $('#intro .content .nav').css('opacity', '0');
+        else $('#intro .content .nav').css('opacity', '1');
+    });
     _('main').style.opacity = 1;
 }
 
