@@ -33,7 +33,7 @@
 
 * {
 	font: 20px CenturyGothic;
-	color: #ECECED;
+	color: #E5E5E5;
 }
 
 html, body {
@@ -54,6 +54,10 @@ html, body {
 	height: 100%;
 	padding-right: 15px;
 	overflow-y: scroll;
+	opacity: 0;
+	transition: opacity 0.35s ease-in-out;
+	-moz-transition: opacity 0.35s ease-in-out;
+	-webkit-transition: opacity 0.35s ease-in-out;
 }
 
 .block {
@@ -67,7 +71,9 @@ html, body {
     vertical-align: middle;
 }
 
-#intro { }
+#intro .content {
+	position: relative;
+}
 #intro .content .logo {
 	background: url('../img/logo2.png') no-repeat;
 	background-size: cover;
@@ -79,19 +85,26 @@ html, body {
 }
 #intro .content .title {
     font-size: 150px;
-    color: #EBEBEB;
+    color: #E5E5E5;
 	//line-height: 85px;
 }
 #intro .content .text {
     font-size: 24px;
-    color: #ECECED;
+    color: #E6E6E6;
+}
+#intro .content .spacer {
+	height: 13%;
 }
 #intro .content .nav {
-	//height: 60px;
+	height: 70px;
+	position: absolute;
+	bottom: 12px;
+	left: 0;
+	right: 0;
 }
 #intro .content .nav .text {
     font: 25px JosefinSansBold;
-    color: #E2E2E2;
+    color: #DFDFDF;
 	display: block;
 }
 #intro .content .nav .image {
