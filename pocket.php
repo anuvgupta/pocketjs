@@ -22,7 +22,8 @@ class Pocket {
         $this->n = 'LOG';
         if (is_string($v)) $this->n = strtoupper($v);
         else $this->v = ($v !== null) ? $v : true;
-        if ($this->v) echo PHP_EOL . "\e[1m{$this->n} POCKET SERVER" . PHP_EOL;
+        if ($this->v && ($this->n != 'LOG')) echo PHP_EOL . "\e[1m{$this->n} POCKET SERVER" . PHP_EOL;
+        elseif ($this->v) echo PHP_EOL . "\e[1mPOCKET SERVER" . PHP_EOL;
         if (!($this->s = socket_create(AF_INET, SOCK_STREAM, 0))) //create blank websocket
             die ('[ERROR] socket_create(' . AF_INET . ', ' . SOCK_STREAM . ', 0): fail - [' . socket_last_error() . '] ' . socket_strerror(socket_last_error()) . PHP_EOL);
         if ($this->v) echo '[SERVER] pocket created' . PHP_EOL;
