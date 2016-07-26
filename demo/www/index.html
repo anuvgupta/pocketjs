@@ -21,7 +21,7 @@
                 });
                 Pocket.bind('username', function(success, username) {
                     if (success) {
-                        element('output').style.height = (0.7 * window.innerHeight) + 'px';
+                        element('output').style.height = (0.66 * window.innerHeight) + 'px';
                         element('output').style.backgroundColor = '#222222';
                         element('output').style.borderStyle = 'solid';
                         element('output').style.borderBottomWidth = '45px';
@@ -37,19 +37,19 @@
                     element('output').innerHTML += "<span id = 'message'><strong>" + user + '</strong>: ' + message + '</span><br/>';
                     element('output').scrollTop += 50;
                 });
-                Pocket.connect('localhost', 30000, 'demo/server.php');
+                Pocket.connect('mangofam.tk', 30000, 'server.php');
             });
         </script>
         <title>pocketjs chat</title>
     </head>
     <body>
-        <center id = 'content'>
+        <div id = 'content'>
             <span id ='title'>PocketJS Chat</span>
             <div id = 'output'></div>
             <div id = 'inputwrap'>
                 <input id = 'input' type = 'text' placeholder = 'nickname'/>
                 <button id = 'submit'>join</button>
             </div>
-        </center>
+        </div>
     </body>
 </html>

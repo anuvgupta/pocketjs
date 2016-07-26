@@ -29,6 +29,8 @@ body {
     display: table-cell;
     vertical-align: middle;
     padding-top: 30px;
+    margin: auto;
+    text-align: center;
 }
 
 #title {
@@ -40,6 +42,7 @@ body {
     height: 40px; //70%;
     width: 500px;
     background-color: #111111; //222222;
+    margin: 0 auto;
     margin-top: 12px;
     border: 20px hidden #222222; //solid
     font-size: 20px;
@@ -47,8 +50,8 @@ body {
     overflow-y: auto;
     text-align: left;
     border-radius: 10px 10px 0 0;
-    transition: background-color 0.3s, height 0.5s;
-    -webkit-transition: background-color 0.3s, height 0.5s;
+    transition: height 0.5s;
+    -webkit-transition: height 0.5s;
 }
 
 #message {
@@ -66,7 +69,7 @@ body {
     height: 70px;
     position: relative;
     padding: 0;
-    margin: 0;
+    margin: 0 auto;
     top: -40px; //0;
     transition: top 0.5s;
     -webkit-transition: top 0.5s;
@@ -91,21 +94,28 @@ body {
     -webkit-transition: border-radius 0.3s;
 }
 
-#submit {
-    right: 0;
-    width: 20%;
+#inputwrap button {
+    width: 50%;
     height: 100%;
-    border-radius: 0 10px 10px 0; //0 0 10px 0;
+    display: none;
     position: absolute;
     padding: 0;
     color: #DDDDDD;
     background-color: #222222;
     border: 1px solid #222222;
-    border-width: 0 0 0 2px;
     outline: none;
+}
+#inputwrap button:hover {
+    background-color: #2D2D2D;
+}
+
+#inputwrap #submit {
+    right: 0;
+    display: inline-block;
+    width: 20%;
+    height: 100%;
+    border-radius: 0 10px 10px 0; //0 0 10px 0;
+    border-width: 0 0 0 2px;
     transition: border-radius 0.3s;
     -webkit-transition: border-radius 0.3s;
-}
-#submit:hover {
-    background-color: #2D2D2D;
 }

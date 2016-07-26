@@ -1,10 +1,10 @@
 <?php
-include ('./pocket.php');
+include('pocket.php');
 
 $log = array();
 $users = array();
 
-$pocket = new Pocket('localhost', 30000, 20);
+$pocket = new Pocket('mangofam.tk', 30000, 20);
 $pocket->onOpen(function ($id) {
     global $pocket;
     $pocket->log("user[$id] connected");

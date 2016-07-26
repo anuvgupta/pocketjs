@@ -1,4 +1,19 @@
 <?php
+
+if (@$argv[2] == 'web') { //if library is included from web
+    $cli = 2; //set cli to 2 to prevent bash commands
+    $eol = '<br/>'; //set eol to line break for html
+}
+if (!isset($cli)) $cli = php_sapi_name() == 'cli'; //if script does not have permission to be run from elsewhere, get cli status
+if (!$cli) header('Location: .'); //if script is not run from cli or is not allowed, redirect
+if (!isset($eol)) $eol = PHP_EOL; //if the eol string isn't defaulted, default to platform default
+
+ini_set('output_buffering', 'off'); //turn off output buffering
+ini_set('zlib.output_compression', false); //turn off output compression
+while (@ob_end_flush()); //flush output buffer, again turn off output buffering
+ini_set('implicit_flush', true); //allow implicit flushing
+ob_implicit_flush(true); //implicitly flush buffers
+
 class Pocket {
     //instance fields
     protected $n; //name of server
@@ -12,6 +27,7 @@ class Pocket {
     protected $v; //verbose run
     //constructor method called when new Pocket constructed
     public function __construct($d, $p, $mc, $v = null) {
+        global $eol, $cli;
         $this->d = $d ?: 'localhost';
         $this->p = $p ?: 30000;
         $this->c = array();
@@ -22,11 +38,12 @@ class Pocket {
         $this->n = 'LOG';
         if (is_string($v)) $this->n = strtoupper($v);
         else $this->v = ($v !== null) ? $v : true;
-        if ($this->v && ($this->n != 'LOG')) echo PHP_EOL . "\e[1m{$this->n} POCKET SERVER" . PHP_EOL;
-        elseif ($this->v) echo PHP_EOL . "\e[1mPOCKET SERVER" . PHP_EOL;
+        $bash = $cli == 1 ? '\e[1m' : '';
+        if ($this->v && ($this->n != 'LOG')) echo $eol . "$bash{$this->n} POCKET SERVER" . $eol;
+        elseif ($this->v) echo $eol . $bash. 'POCKET SERVER' . $eol;
         if (!($this->s = socket_create(AF_INET, SOCK_STREAM, 0))) //create blank websocket
-            die ('[ERROR] socket_create(' . AF_INET . ', ' . SOCK_STREAM . ', 0): fail - [' . socket_last_error() . '] ' . socket_strerror(socket_last_error()) . PHP_EOL);
-        if ($this->v) echo '[SERVER] pocket created' . PHP_EOL;
+            die ('[ERROR] socket_create(' . AF_INET . ', ' . SOCK_STREAM . ', 0): fail - [' . socket_last_error() . '] ' . socket_strerror(socket_last_error()) . $eol);
+        if ($this->v) echo '[SERVER] pocket created' . $eol;
     }
     //destructor method called before destroying Pocket object
     public function __destruct() {
@@ -34,14 +51,16 @@ class Pocket {
     }
     //function open called to start socket server
     public function open() {
+        global $eol, $cli;
         if (!(socket_bind($this->s, $this->d, $this->p))) //bind socket to domain and port
-            die ("[ERROR] socket_bind(\$this->s, $this->d, $this->p): fail - [" . socket_last_error() . '] ' . socket_strerror(socket_last_error()) . PHP_EOL);
+            die ("[ERROR] socket_bind(\$this->s, $this->d, $this->p): fail - [" . socket_last_error() . '] ' . socket_strerror(socket_last_error()) . $eol);
         if (!(socket_listen($this->s, $this->mc))) //commence listening for clients
-            die ("[ERROR] socket_listen(\$this->s, $this->mc): fail - [" . socket_last_error() . '] ' . socket_strerror(socket_last_error()) . PHP_EOL);
+            die ("[ERROR] socket_listen(\$this->s, $this->mc): fail - [" . socket_last_error() . '] ' . socket_strerror(socket_last_error()) . $eol);
         if ($this->v) {
-            echo "[SERVER] pocket listening on $this->d:$this->p" . PHP_EOL;
+            echo "[SERVER] pocket listening on $this->d:$this->p" . $eol;
             echo '[SERVER] waiting for connections';
-            echo "..\e[5m.\e[25m" . PHP_EOL . PHP_EOL;
+            $bash = $cli == 1 ? '..\e[5m.\e[25m' : '...';
+            echo "$bash$eol$eol";
         }
         while (true) { //start server
             $read = array(); //array of sockets to be read
@@ -52,17 +71,17 @@ class Pocket {
             }
             //select sockets in read array to be watched for status changes
             if (@socket_select($read , $write , $except , null) === false) //pass in read, null write and except, null timeout (to block (watch for status change) infinitely)
-                die ('[ERROR] socket_select($read , $write , $except , null): fail - [' . socket_last_error() . '] ' . socket_strerror(socket_last_error()) . PHP_EOL);
+                die ('[ERROR] socket_select($read , $write , $except , null): fail - [' . socket_last_error() . '] ' . socket_strerror(socket_last_error()) . $eol);
             //FUNCTIONALITY OF socket_select() IN QUESTION: does it remove all socket elements in $read, and later add them back when status change occurs?
 
             //check if new client is connecting
             if (in_array($this->s, $read)) { //if master socket is in read array, master socket's status has changed, thus a client is connecting
                 for ($i = 0; $i < $this->mc; $i++) { //loop through array of clients
                     if (@$this->c[$i] == null) { //if there is space available for a new connection
-                        echo PHP_EOL;
+                        echo $eol;
                         $this->c[$i] = socket_accept($this->s);//accept the new socket connection from master socket, construct client and add to client array
                         //display connecting client's details
-                        if (socket_getpeername($this->c[$i], $addr, $this->pt)) echo "[SERVER] client[$i] $addr : $this->pt connecting" . PHP_EOL;
+                        if (socket_getpeername($this->c[$i], $addr, $this->pt)) echo "[SERVER] client[$i] $addr : $this->pt connecting" . $eol;
                         //accept client socket handshake headers
                         $header = socket_read($this->c[$i], 1024); //read data from new client socket: contains handshake headers
                         echo '[SERVER] headers recieved';
@@ -82,11 +101,11 @@ class Pocket {
                           "WebSocket-Location: ws://" . $this->d . ":" . $this->p . "/server.php\r\n".
                           "Sec-WebSocket-Accept:$accept\r\n\r\n";
                         if (socket_write($this->c[$i], $upgrade, strlen($upgrade)) === false)
-                            die ('socket_write: fail - [' . socket_last_error() . '] ' . socket_strerror(socket_last_error()) . PHP_EOL);
-                        echo 'headers sent' . PHP_EOL;
+                            die ('socket_write: fail - [' . socket_last_error() . '] ' . socket_strerror(socket_last_error()) . $eol);
+                        echo 'headers sent' . $eol;
                         //display connection details if connection successful
                         if (socket_getpeername($this->c[$i], $addr, $this->pt)) {
-                            echo '[SERVER] handshake complete - client connected' . PHP_EOL . PHP_EOL;
+                            echo '[SERVER] handshake complete - client connected' . $eol . $eol;
                             //send client's data to client
                             $this->data = $this->mask(json_encode(array('id' => $i, 'address' => $addr, 'port' => $this->pt)));
                             socket_write($this->c[$i], $this->data, strlen($this->data));
@@ -110,12 +129,12 @@ class Pocket {
                         if (isset($data['command'])) {
                             if ($data['command'] == 'close') {
                                 $this->close($data['id']);
-                                echo PHP_EOL . "client[{$data['id']}] {$data['ad']} : {$data['p']} disconnected" . PHP_EOL;
+                                echo $eol . "client[{$data['id']}] {$data['ad']} : {$data['p']} disconnected" . $eol;
                             }
                             //elseif ($data['command'] == 'alive') ;
                         } elseif (!isset($data['call'])) {
                             $this->close($i);
-                            echo "[SERVER] client[$i] kicked for: sending illegal data: no event specified" . PHP_EOL;
+                            echo "[SERVER] client[$i] kicked for: sending illegal data: no event specified" . $eol;
                         } elseif (isset($this->on[$data['call']])) {
                             if (isset($data['args'])) {
                                 array_push($data['args'], $i);
@@ -124,7 +143,7 @@ class Pocket {
                             else $this->call($data['call'], $i);
                         } else {
                             $this->close($i);
-                            echo "[SERVER] client[$i] kicked for: sending illegal data: event '{$data['call']}' does not exist" . PHP_EOL;
+                            echo "[SERVER] client[$i] kicked for: sending illegal data: event '{$data['call']}' does not exist" . $eol;
                         }
                         break 2;
                     }
@@ -132,7 +151,7 @@ class Pocket {
                     $input = @socket_read($this->c[$i], 1024, PHP_NORMAL_READ); //read data from client socket
                     if ($input == null) { //if data is blank, client has disconnected from socket
                         $this->close($i);
-                        echo PHP_EOL . "client[$i] disconnected" . PHP_EOL;
+                        echo $eol . "client[$i] disconnected" . $eol;
                     }
                 }
             }
@@ -158,9 +177,10 @@ class Pocket {
     }
     //function send called to send messages to all clients
     public function send($call, $id) {
+        global $eol, $cli;
         if (!isset($this->c[$id])) {
             $e = array_shift(debug_backtrace());
-            echo "[ERROR] client $id does not exist ({$e['file']}:{$e['line']})" . PHP_EOL;
+            echo "[ERROR] client $id does not exist ({$e['file']}:{$e['line']})" . $eol;
             return false;
         }
         $data = array('call' => $call);
@@ -170,6 +190,7 @@ class Pocket {
         return true;
     }
     public function sendAll($call) {
+        global $eol, $cli;
         $data = array('call' => $call);
         if (func_num_args() > 1) $data['args'] = array_slice(func_get_args(), 1);
         $msg = $this->mask(json_encode($data));
@@ -180,19 +201,21 @@ class Pocket {
     }
     //function on called to create socket events with callbacks
     public function bind($n, $f) { //event name and callback
+        global $eol, $cli;
         $this->on[$n] = $f; //assign event name to callback in assoc array
         return true;
     }
     //function call called to run events created with on()
     public function call($n) { //event name, array args (true = load args from array, false = load args from hidden params)
+        global $eol, $cli;
         //error handling
         if (func_num_args() < 1) {
             $e = array_shift(debug_backtrace());
-            echo "[ERROR] function 'call()' requires an event name ({$e['file']}:{$e['line']})" . PHP_EOL;
+            echo "[ERROR] function 'call()' requires an event name ({$e['file']}:{$e['line']})" . $eol;
             return false;
         } elseif (!isset($this->on[$n])) { //if given event is not defined, cannot be run
             $e = array_shift(debug_backtrace());
-            echo "[ERROR] event '$n' does not exist ({$e['file']}:{$e['line']})" . PHP_EOL;
+            echo "[ERROR] event '$n' does not exist ({$e['file']}:{$e['line']})" . $eol;
             return false; //error out of function
         }
         //get number of arguments for event callback
@@ -200,7 +223,7 @@ class Pocket {
         $x = (new ReflectionFunction($this->on[$n]))->getNumberOfRequiredParameters(); //get number of parameters callback requires
         if (($x != $y) && ($x + 1 != $y)) { //if parameter amounts don't match, event cannot be run
             $e = array_shift(debug_backtrace());
-            echo "[ERROR] event '$n' must be given $x arguments, $y given ({$e['file']}:{$e['line']})" . PHP_EOL;
+            echo "[ERROR] event '$n' must be given $x arguments, $y given ({$e['file']}:{$e['line']})" . $eol;
             return false; //error out of function
         }
         if ($y == 0) $this->on[$n](); //if event has no arguments, run event by simply calling callback
@@ -208,22 +231,23 @@ class Pocket {
         return true; //if function has not errored out and program has not died, succeed
     }
     public function callArr($n, $a) {
+        global $eol, $cli;
         if (is_array($a)) $y = count($a); //if array passed in, arg num is length of array
         else {
             $e = array_shift(debug_backtrace());
-            echo "[ERROR] param #2 of callArr() expected to be array -- use call() to pass in individual arguments ({$e['file']}:{$e['line']})" . PHP_EOL;
+            echo "[ERROR] param #2 of callArr() expected to be array -- use call() to pass in individual arguments ({$e['file']}:{$e['line']})" . $eol;
             return false;
         }
         if (!isset($this->on[$n])) { //if given event is not defined, cannot be run
             $e = array_shift(debug_backtrace());
-            echo "[ERROR] event '$n' does not exist ({$e['file']}:{$e['line']})" . PHP_EOL;
+            echo "[ERROR] event '$n' does not exist ({$e['file']}:{$e['line']})" . $eol;
             return false; //error out of function
         }
         $y = count($a); //get number of params passed in to call()
         $x = (new ReflectionFunction($this->on[$n]))->getNumberOfRequiredParameters(); //get number of parameters callback requires
         if ($x != $y) { //if parameter amounts don't match, event cannot be run
             $e = array_shift(debug_backtrace());
-            echo "[ERROR] event '$n' must be given $x arguments, $y given ({$e['file']}:{$e['line']})" . PHP_EOL;
+            echo "[ERROR] event '$n' must be given $x arguments, $y given ({$e['file']}:{$e['line']})" . $eol;
             return false; //error out of function
         }
         call_user_func_array($this->on[$n], $a);
@@ -231,15 +255,16 @@ class Pocket {
     }
     //function onOpen called to assign callback to or run event for user connection
     public function onOpen($arg = null) {
+        global $eol, $cli;
         if (!isset($arg)) {
             $e = array_shift(debug_backtrace());
-            echo "[ERROR] event 'onOpen' must be given client id or callback function ({$e['file']}:{$e['line']})" . PHP_EOL;
+            echo "[ERROR] event 'onOpen' must be given client id or callback function ({$e['file']}:{$e['line']})" . $eol;
             return false; //error out of function
         }
         else if (is_callable($arg)) {
             if ((new ReflectionFunction($arg))->getNumberOfRequiredParameters() > 1) {
                 $e = array_shift(debug_backtrace());
-                echo "[ERROR] callback for event 'onOpen' must have only 1 argument: client id ({$e['file']}:{$e['line']})" . PHP_EOL;
+                echo "[ERROR] callback for event 'onOpen' must have only 1 argument: client id ({$e['file']}:{$e['line']})" . $eol;
                 return false;
             } else $this->ev['open'] = $arg;
         }
@@ -247,21 +272,23 @@ class Pocket {
     }
     //function onRun called to assign callback to or run event for server loop
     public function onRun($arg = null) {
+        global $eol, $cli;
         if (!isset($arg)) $this->ev['run']();
         else if (is_callable($arg)) $this->ev['run'] = $arg;
         else call_user_func_array($this->ev['run'], func_get_args());
     }
     //function onRun called to assign callback to or run event for server loop
     public function onClose ($arg = null) {
+        global $eol, $cli;
         if (!isset($arg)) {
             $e = array_shift(debug_backtrace());
-            echo "[ERROR] event 'onClose' must be given client id or callback function ({$e['file']}:{$e['line']})" . PHP_EOL;
+            echo "[ERROR] event 'onClose' must be given client id or callback function ({$e['file']}:{$e['line']})" . $eol;
             return false; //error out of function
         }
         else if (is_callable($arg)) {
             if ((new ReflectionFunction($arg))->getNumberOfRequiredParameters() > 1) {
                 $e = array_shift(debug_backtrace());
-                echo "[ERROR] callback for event 'onClose' must have only 1 argument: client id ({$e['file']}:{$e['line']})" . PHP_EOL;
+                echo "[ERROR] callback for event 'onClose' must have only 1 argument: client id ({$e['file']}:{$e['line']})" . $eol;
                 return false;
             } else $this->ev['close'] = $arg;
         }
@@ -269,11 +296,12 @@ class Pocket {
     }
     //function log called to sanitize and log data
     public function log($text) {
+        global $eol, $cli;
         //sanitize $text here!
         $name = $this->n ?: 'LOG';
-        if (is_string($text)) echo "[$name] $text" . PHP_EOL;
+        if (is_string($text)) echo "[$name] $text" . $eol;
         else {
-            echo "[$name] non-string data: " . PHP_EOL;
+            echo "[$name] non-string data: " . $eol;
             print_r($text);
         }
     }
@@ -302,6 +330,51 @@ class Pocket {
         elseif ($length > 125 && $length < 65536) $header = pack('CCn', $b1, 126, $length);
         elseif ($length >= 65536) $header = pack('CCNN', $b1, 127, $length);
         return $header.$text;
+    }
+    //static function start called to execute a pocket server script
+    public static function start($path) {
+        ignore_user_abort(true);
+        // $d = array(
+        //     0 => array('pipe', 'r'),
+        //     1 => array('pipe', 'w'),
+        //     2 => array('pipe', 'w')
+        // );
+        // $process = proc_open("php $path -- web", $d, $pipes);
+        // return array($process, $pipes);
+    }
+    //static function read called to read output from a pocket server started from start()
+    public static function read($process) {
+        echo str_pad('<span style = \'display: none;\'>', 4096, ' ');
+        echo '</span>';
+        @ob_flush();
+        flush();
+        // fclose($process[1][0]);
+        // $pid = proc_get_status($process[0])['pid'];
+        // file_put_contents('../server.txt', $pid);
+        // while (file_exists('../server.txt') && (intval(file_get_contents('../server.txt')) == $pid)) {
+        //     sleep(1);
+        //     echo fread($process[1][1], 2096);
+        //     @ob_flush();
+        //     flush();
+        // }
+        // proc_close($process[0]);
+        for ($i = 0; $i < 10; $i++) {
+            echo $i . '<br/>';
+            @ob_flush();
+            flush();
+            sleep(1);
+        }
+        // @ob_flush();
+        // flush();
+        ob_end_flush();
+    }
+    //static function stop called to stop a pocket server started from start()
+    public static function stop($pid) {
+        global $eol, $cli;
+        $pid = intval($pid);
+        posix_kill($pid, 15);
+        if (!posix_getpgid($pid)) return 'process killed' . $eol;
+        else return 'process not killed' . $eol;
     }
 }
 ?>
