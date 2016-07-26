@@ -4,15 +4,16 @@ if (@$argv[2] == 'web') { //if library is included from web
     $cli = 2; //set cli to 2 to prevent bash commands
     $eol = '<br/>'; //set eol to line break for html
 }
+// } elseif (@$argv[2] == 'nobash') $cli = 2; //if library is included with no bash
 if (!isset($cli)) $cli = php_sapi_name() == 'cli'; //if script does not have permission to be run from elsewhere, get cli status
 if (!$cli) header('Location: .'); //if script is not run from cli or is not allowed, redirect
 if (!isset($eol)) $eol = PHP_EOL; //if the eol string isn't defaulted, default to platform default
 
-ini_set('output_buffering', 'off'); //turn off output buffering
-ini_set('zlib.output_compression', false); //turn off output compression
-while (@ob_end_flush()); //flush output buffer, again turn off output buffering
-ini_set('implicit_flush', true); //allow implicit flushing
-ob_implicit_flush(true); //implicitly flush buffers
+// @ini_set('output_buffering', 'off'); //turn off output buffering
+// @ini_set('zlib.output_compression', false); //turn off output compression
+// while (@ob_end_flush()); //flush output buffer, again turn off output buffering
+// @ini_set('implicit_flush', true); //allow implicit flushing
+// @ob_implicit_flush(true); //implicitly flush buffers
 
 class Pocket {
     //instance fields
@@ -220,7 +221,8 @@ class Pocket {
         }
         //get number of arguments for event callback
         $y = func_num_args() - 1; //get number of params passed in to call()
-        $x = (new ReflectionFunction($this->on[$n]))->getNumberOfRequiredParameters(); //get number of parameters callback requires
+        $z = new ReflectionFunction($this->on[$n]); //get callback closure as reflection function
+        $x = $z->getNumberOfRequiredParameters(); //get number of parameters callback requires
         if (($x != $y) && ($x + 1 != $y)) { //if parameter amounts don't match, event cannot be run
             $e = array_shift(debug_backtrace());
             echo "[ERROR] event '$n' must be given $x arguments, $y given ({$e['file']}:{$e['line']})" . $eol;
@@ -244,7 +246,8 @@ class Pocket {
             return false; //error out of function
         }
         $y = count($a); //get number of params passed in to call()
-        $x = (new ReflectionFunction($this->on[$n]))->getNumberOfRequiredParameters(); //get number of parameters callback requires
+        $z = new ReflectionFunction($this->on[$n]); //get callback closure as reflection function
+        $x = $z->getNumberOfRequiredParameters(); //get number of parameters callback requires
         if ($x != $y) { //if parameter amounts don't match, event cannot be run
             $e = array_shift(debug_backtrace());
             echo "[ERROR] event '$n' must be given $x arguments, $y given ({$e['file']}:{$e['line']})" . $eol;
@@ -262,7 +265,8 @@ class Pocket {
             return false; //error out of function
         }
         else if (is_callable($arg)) {
-            if ((new ReflectionFunction($arg))->getNumberOfRequiredParameters() > 1) {
+            $x = new ReflectionFunction($arg);
+            if ($x->getNumberOfRequiredParameters() > 1) {
                 $e = array_shift(debug_backtrace());
                 echo "[ERROR] callback for event 'onOpen' must have only 1 argument: client id ({$e['file']}:{$e['line']})" . $eol;
                 return false;
@@ -286,7 +290,8 @@ class Pocket {
             return false; //error out of function
         }
         else if (is_callable($arg)) {
-            if ((new ReflectionFunction($arg))->getNumberOfRequiredParameters() > 1) {
+            $x = new ReflectionFunction($arg);
+            if ($x->getNumberOfRequiredParameters() > 1) {
                 $e = array_shift(debug_backtrace());
                 echo "[ERROR] callback for event 'onClose' must have only 1 argument: client id ({$e['file']}:{$e['line']})" . $eol;
                 return false;
