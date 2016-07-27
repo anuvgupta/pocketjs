@@ -3,8 +3,7 @@
 if (@$argv[2] == 'web') { //if library is included from web
     $cli = 2; //set cli to 2 to prevent bash commands
     $eol = '<br/>'; //set eol to line break for html
-}
-// } elseif (@$argv[2] == 'nobash') $cli = 2; //if library is included with no bash
+} elseif (@$argv[2] == 'nobash') $cli = 2; //if library is included with no bash
 if (!isset($cli)) $cli = php_sapi_name() == 'cli'; //if script does not have permission to be run from elsewhere, get cli status
 if (!$cli) header('Location: .'); //if script is not run from cli or is not allowed, redirect
 if (!isset($eol)) $eol = PHP_EOL; //if the eol string isn't defaulted, default to platform default
@@ -33,7 +32,11 @@ class Pocket {
         $this->p = $p ?: 30000;
         $this->c = array();
         $this->mc = $mc ?: 25;
-        $this->ev = array('open' => function ($id) { }, 'run' => function () { }, 'close' => function ($id) { });
+        $this->ev = array(
+            'open' => function ($id) { },
+            'run' => function () { },
+            'close' => function ($id) { }
+        );
         $this->on = array();
         $this->v = true;
         $this->n = 'LOG';
@@ -80,9 +83,10 @@ class Pocket {
                 for ($i = 0; $i < $this->mc; $i++) { //loop through array of clients
                     if (@$this->c[$i] == null) { //if there is space available for a new connection
                         echo $eol;
+                        echo 'CLIENT CONNECTING: ' . $eol;
                         $this->c[$i] = socket_accept($this->s);//accept the new socket connection from master socket, construct client and add to client array
                         //display connecting client's details
-                        if (socket_getpeername($this->c[$i], $addr, $this->pt)) echo "[SERVER] client[$i] $addr : $this->pt connecting" . $eol;
+                        if (socket_getpeername($this->c[$i], $addr, $port)) echo "[SERVER] client[$i] $addr : $port connecting" . $eol;
                         //accept client socket handshake headers
                         $header = socket_read($this->c[$i], 1024); //read data from new client socket: contains handshake headers
                         echo '[SERVER] headers recieved';
@@ -96,19 +100,19 @@ class Pocket {
                         //generate and send back server socket handshake headers to client socket
                         $accept = base64_encode(pack('H*', sha1($headers['Sec-WebSocket-Key'] . '258EAFA5-E914-47DA-95CA-C5AB0DC85B11')));
                         $upgrade  = "HTTP/1.1 101 Web Socket Protocol Handshake\r\n" .
-                          "Upgrade: websocket\r\n" .
-                          "Connection: Upgrade\r\n" .
-                          "WebSocket-Origin: " . $this->d . "\r\n" .
-                          "WebSocket-Location: ws://" . $this->d . ":" . $this->p . "/server.php\r\n".
-                          "Sec-WebSocket-Accept:$accept\r\n\r\n";
+                            "Upgrade: websocket\r\n" .
+                            "Connection: Upgrade\r\n" .
+                            "WebSocket-Origin: $this->d \r\n" .
+                            "WebSocket-Location: ws://$this->d:$this->p/server.php\r\n".
+                            "Sec-WebSocket-Accept:$accept\r\n\r\n";
                         if (socket_write($this->c[$i], $upgrade, strlen($upgrade)) === false)
                             die ('socket_write: fail - [' . socket_last_error() . '] ' . socket_strerror(socket_last_error()) . $eol);
                         echo 'headers sent' . $eol;
                         //display connection details if connection successful
-                        if (socket_getpeername($this->c[$i], $addr, $this->pt)) {
+                        if (socket_getpeername($this->c[$i], $addr, $port)) {
                             echo '[SERVER] handshake complete - client connected' . $eol . $eol;
                             //send client's data to client
-                            $this->data = $this->mask(json_encode(array('id' => $i, 'address' => $addr, 'port' => $this->pt)));
+                            $this->data = $this->mask(json_encode(array('id' => $i, 'address' => $addr, 'port' => $port)));
                             socket_write($this->c[$i], $this->data, strlen($this->data));
                             $this->onOpen($i);
                         }

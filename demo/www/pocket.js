@@ -26,14 +26,24 @@ var Pocket = (function () {
     };
     var data = {
         connect: function (domain, port, server) {
-            ws = new WebSocket('ws://' + domain + ':' + port + '/' + server);
+            var target = 'ws://' + domain + ':' + port + '/' + server;
+            target = 'ws://' + domain + ':' + port.toString() + '/';
+            if ('WebSocket' in window) ws = new WebSocket(target);
+            else if ('MozWebSocket' in window) ws = new MozWebSocket(target);
+            else {
+                alert('WebSocket is not supported by this browser.');
+                return;
+            }
             ws.onopen = function (e) {
                 console.log('[POCKET] connecting');
+                ws.send(JSON.stringify({ command: 'alive', id: id }));
+                return false;
             }
             ws.onclose = function (e) {
                 ol = false;
                 ws.send(JSON.stringify({ command: 'close', id: id, ad: address, p: port}));
                 console.log('[POCKET] disconnected');
+                return false;
             };
             ws.onmessage = function (e) {
                 var data = JSON.parse(e.data);
@@ -48,6 +58,7 @@ var Pocket = (function () {
                     console.log('[POCKET] connected');
                 }
                 // ws.send(JSON.stringify({ command: 'alive', id: id }));
+                return false;
             };
             ws.onerror = function (e) {
                 if (e.data == null) console.log('[POCKET] unknown error');
