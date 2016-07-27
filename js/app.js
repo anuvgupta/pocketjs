@@ -85,8 +85,7 @@ var body = Block('wrap')
 ;
 
 function load() {
-    document.body.innerHTML = '';
-    document.body.appendChild(body.node());
+    body.fill(document.body);
     size();
     $('#intro .content .nav .image').click(function () {
         $('#main').animate({
