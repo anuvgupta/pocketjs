@@ -25,6 +25,13 @@ Block = function () {
         node: function () {
             return element;
         },
+        fill: function (target) {
+            if (typeof target === 'string' || target instanceof String) target = document.querySelector(target);
+            if (typeof target === 'object' && target instanceof Node && target instanceof Element) {
+                target.innerHTML = '';
+                target.appendChild(element);
+            }
+        },
         $: function () {
             if (jQuery != null && jQuery != undefined && typeof jQuery != 'undefined' && window.jQuery) return jQuery(element);
         }
