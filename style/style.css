@@ -60,25 +60,10 @@ html, body {
 	-webkit-transition: opacity 0.35s ease-in-out;
 }
 
-.block {
-	width: 100%;
-	height: 100%;
-	display: table;
-	text-align: center;
-}
-.block .content {
-	display: table-cell;
-	vertical-align: middle;
-}
-
 #intro .content {
 	position: relative;
 }
 #intro .content .logo {
-	background: url('../img/logo2.png') no-repeat;
-	background-size: cover;
-	height: 400px;
-	width: 400px;
 	transform: scale(1.025);
 	animation: logopulse 3.5s ease-in-out infinite;
 	margin: 0 auto;
@@ -109,10 +94,6 @@ html, body {
 	display: block;
 }
 #intro .content .nav .image {
-	background: url('../img/down.png') no-repeat;
-	background-size: cover;
-	height: 35px;
-	width: 60px;
 	margin: 10px auto;
 	opacity: 0.65;
 	transition: opacity 0.3s ease-in-out;

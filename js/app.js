@@ -1,7 +1,92 @@
-
 var _ = function (id) { return document.getElementById(id); };
+var body = Block('wrap')
+    .id('wrap')
+    .add(Block('main')
+        .id('main')
+        .add(Block()
+            .id('intro')
+            .add('break')
+            .add(Block('image', {
+                    src: './img/logo2.png',
+                    height: '400px',
+                    width: '400px'
+                })
+                .class('logo')
+            )
+            .add(Block('text', 'pocketjs')
+                .class('title')
+            )
+            .add('break')
+            .add(Block('text')
+                .add(Block('text', 'realtime websocket applications')
+                    .class('text')
+                )
+                .add(Block('text', ' ')
+                    .class('space')
+                )
+                .add(Block('text', 'with PHP and JavaScript')
+                    .class('text')
+                )
+            )
+            .add('spacer')
+            .add(Block('nav')
+                .add(Block('text', 'check it out')
+                    .class('text')
+                )
+                .add(Block('image', {
+                        src: './img/down.png',
+                        height: '35px',
+                        width: '60px'
+                    })
+                    .class('image')
+                )
+            )
+        )
+        .add(Block()
+            .id('hook')
+            .add(Block('left panel')
+                .add(Block()
+                    .add(Block()
+                        .class('inner')
+                        .add('text', 'server code')
+                    )
+                )
+            )
+            .add(Block('middle panel')
+                .add(Block()
+                    .add(Block()
+                        .class('inner')
+                        .add('text', 'chat demo')
+                    )
+                )
+            )
+            .add(Block('right panel')
+                .add(Block()
+                    .add(Block()
+                        .class('inner')
+                        .add('text', 'client code')
+                    )
+                )
+            )
+            .add(Block('bottom')
+                .add(Block()
+                    .add(Block()
+                        .add(Block('text', 'pocketjs simplifies server and client side operations with an intuitive yet robust api')
+                            .class('text')
+                        )
+                        // .add(Block('text', 'view documentation')
+                        //     .class('link')
+                        // )
+                    )
+                )
+            )
+        )
+    )
+;
 
 function load() {
+    document.body.innerHTML = '';
+    document.body.appendChild(body.node());
     size();
     $('#intro .content .nav .image').click(function () {
         $('#main').animate({
