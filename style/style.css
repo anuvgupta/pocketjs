@@ -114,18 +114,18 @@ html, body {
 }
 #hook .content .left {
 	left: 0;
-	right: 66%;
-	width: 34%;
-}
-#hook .content .middle {
-	left: 34%;
-	right: 34%;
+	right: 68%;
 	width: 32%;
 }
+#hook .content .middle {
+	left: 32%;
+	right: 32%;
+	width: 36%;
+}
 #hook .content .right {
-	left: 66%;
+	left: 68%;
 	right: 0;
-	width: 34%;
+	width: 32%;
 }
 #hook .content .panel .inner {
 	background-color: #222;
