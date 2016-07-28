@@ -89,7 +89,7 @@ html, body {
 	transition: opacity 0.3s ease-in-out;
 }
 #intro .content .nav .text {
-	font: 25px JosefinSansBold;
+	font: 25px JosefinSans;
 	color: #DFDFDF;
 	display: block;
 }
