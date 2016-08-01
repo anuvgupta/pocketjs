@@ -1,3 +1,3 @@
 # pocketjs
-WebSocket library for PHP 5.4.x and Javascript  
-*Visit [pocketjs.tk](http://pocketjs.tk)*
+WebSocket library for PHP 5.4.x/7 and Javascript  
+*Visit [anuvgupta.tk/pocketjs](http://anuvgupta.tk/pocketjs)*
