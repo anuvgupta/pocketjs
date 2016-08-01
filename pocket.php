@@ -3,16 +3,15 @@
 if (@$argv[2] == 'web') { //if library is included from web
     $cli = 2; //set cli to 2 to prevent bash commands
     $eol = '<br/>'; //set eol to line break for html
+    @ini_set('output_buffering', 'off'); //turn off output buffering
+    @ini_set('zlib.output_compression', false); //turn off output compression
+    while (@ob_end_flush()); //flush output buffer, again turn off output buffering
+    @ini_set('implicit_flush', true); //allow implicit flushing
+    @ob_implicit_flush(true); //implicitly flush buffers
 } elseif (@$argv[2] == 'nobash') $cli = 2; //if library is included with no bash
 if (!isset($cli)) $cli = php_sapi_name() == 'cli'; //if script does not have permission to be run from elsewhere, get cli status
 if (!$cli) header('Location: .'); //if script is not run from cli or is not allowed, redirect
 if (!isset($eol)) $eol = PHP_EOL; //if the eol string isn't defaulted, default to platform default
-
-// @ini_set('output_buffering', 'off'); //turn off output buffering
-// @ini_set('zlib.output_compression', false); //turn off output compression
-// while (@ob_end_flush()); //flush output buffer, again turn off output buffering
-// @ini_set('implicit_flush', true); //allow implicit flushing
-// @ob_implicit_flush(true); //implicitly flush buffers
 
 class Pocket {
     //instance fields
