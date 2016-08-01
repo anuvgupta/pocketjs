@@ -1,0 +1,119 @@
+    *
+app
+    css
+        width 100%
+        height 100%
+        overflow hidden
+        opacity 0
+        transition opacity 0.35s ease-in-out
+        -moz-transition opacity 0.35s ease-in-out
+        -webkit-transition opacity 0.35s ease-in-out
+    main
+        css
+            width 100%
+            height 100%
+            padding-right 15px
+            overflow-y scroll
+        intro
+            logo
+                css
+                    transform scale(1.025)
+                    animation logopulse 3.5s ease-in-out infinite
+                    margin 0 auto
+                    cursor crosshair
+                src ./img/logo2.png
+                height 400px
+                width 400px
+            title
+                css
+                    font-size 150px
+                    color #E5E5E5
+                    //line-height 85px
+                val pocketjs
+            text
+                css
+                    font-size 24px
+                    color #E6E6E6
+                textL
+                    val realtime websocket applications
+                    css
+                        font-size inherit
+                space
+                    val &nbsp;
+                    css
+                        font-size inherit
+                textR
+                    val with PHP and JavaScript
+                    css
+                        font-size inherit
+            spacer
+                css
+                    height 13%
+            nav
+                css
+                    height 70px
+                    position absolute
+                    bottom 12px
+                    left 0
+                    right 0
+                    cursor pointer
+                    transition opacity 0.3s ease-in-out
+                    -webkit-backface-visibility hidden
+                    animation none
+                text
+                    css
+                        font 25px JosefinSans
+                        color #DFDFDF
+                        display block
+                    val check it out
+                down
+                    src ./img/down.png
+                    height 35px
+                    width 60px
+                    css
+                        margin 10px auto
+                        opacity 0.65
+                        transition opacity 0.3s ease-in-out
+        hook
+            css
+                position absolute
+                top 100%
+                width 100%
+                height 100%
+            left
+                css
+                    left 0
+                    right 68%
+                    width 32%
+                text
+                    val server code
+            middle
+                css
+                    left 32%
+                    right 32%
+                    width 36%
+                text
+                    val chat demo
+            right
+                css
+                    left 68%
+                    right 0
+                    width 32%
+                text
+                    val client code
+            bottom
+                css
+                    position absolute
+                    height 9%
+                    bottom 1%
+                    left 0
+                    right 0
+                    width 100%
+                block
+                    block
+                        text
+                            val pocketjs simplifies server and client side realtime operations with an intuitive yet robust api
+                            css
+                                font 30px JosefinSans
+                                font-size 27px
+                                padding-bottom 5px
