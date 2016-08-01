@@ -31,9 +31,9 @@ Block('text', function () { //function to create text block
 // define image block
 Block('image', function () { //function to create image block
     var block = Block('div'); //start off with div block
-    //until data is loaded, image is blank, so do nothing
+    block.css('opacity', '0'); //until data is loaded, image is blank, so hide
     return block; //return the newly modified block
-}, function (block, data) { //function to load data into image block
+}, function (block, data, css) { //function to load data into image block
     //prevent blocks from being added to this block
     block.add = function () {
         return block; //return block to allow chaining
@@ -44,7 +44,17 @@ Block('image', function () { //function to create image block
     var width = data('width'); //get data 'width'
     if (src != null) { //if src is not null
         //load background image
-        element.style.backgroundImage = "url('" + src + "')";
+        var img = new Image();
+        img.onload = function () {
+            var c = document.createElement('canvas');
+            c.width = this.naturalWidth;
+            c.height = this.naturalHeight;
+            c.getContext('2d').drawImage(this, 0, 0);
+            element.style.backgroundImage = "url('" + c.toDataURL('image/png') + "')";
+            if (css['opacity'] != null && css['opacity'] != undefined) element.style.opacity = css['opacity'];
+            else element.style.opacity = 1;
+        };
+        img.src = src;
         element.style.backgroundRepeat = 'no-repeat';
         element.style.backgroundSize = 'contain';
     }
