@@ -74,7 +74,7 @@ Block('panel', function () {
             height: '93%',
             width: '85%',
             margin: '0 auto'
-        }).class('innerpotato')
+        })
         .cssContent({
             paddingTop: '3%',
             height: '97%',
