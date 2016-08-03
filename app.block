@@ -58,6 +58,8 @@ app
                     right 0
                     cursor pointer
                     transition opacity 0.3s ease-in-out
+                    -moz-transition opacity 0.3s ease-in-out
+                    -webkit-transition opacity 0.3s ease-in-out
                     -webkit-backface-visibility hidden
                     animation none
                 text
@@ -74,6 +76,8 @@ app
                         margin 10px auto
                         opacity 0.65
                         transition opacity 0.3s ease-in-out
+                        -moz-transition opacity 0.3s ease-in-out
+                        -webkit-transition opacity 0.3s ease-in-out
         hook
             css
                 position absolute
