@@ -51,7 +51,7 @@ Block('image', function () { //function to create image block
             c.height = this.naturalHeight;
             c.getContext('2d').drawImage(this, 0, 0);
             element.style.backgroundImage = "url('" + c.toDataURL('image/png') + "')";
-            if (css['opacity'] != null && css['opacity'] != undefined) element.style.opacity = css['opacity'];
+            if (css('opacity') != null) element.style.opacity = css('opacity');
             else element.style.opacity = 1;
         };
         img.src = src;
