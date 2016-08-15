@@ -1,10 +1,10 @@
 @font-face {
 	font-family: CenturyGothic;
-	src: url("./fonts/centurygothic.ttf");
+	src: url("font/centurygothic.ttf");
 }
 @font-face {
 	font-family: JosefinSans;
-	src: url("./fonts/JosefinSans-Regular.ttf");
+	src: url("font/JosefinSans-Regular.ttf");
 	font-weight: normal;
 }
 

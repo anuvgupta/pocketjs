@@ -2,8 +2,8 @@
 
 // define break block
 Block('break', function () { //function to create break block
-    var block = Block('span'); //start off with a span block
-    block.add(Block('br')); //add a line break to the span
+    var block = Block('span') //start off with a span block
+        .add(Block('br')); //add a line break to the span
     return block; //return the newly modified block
 }, function (block, data) { //function to load data into break block
     var value = data('val'); //get block data 'val' (amount of breaks)
@@ -25,7 +25,8 @@ Block('text', function () { //function to create text block
 }, function (block, data) { //function to load data into text block
     var value = data('val'); //get data 'val' (text of span)
     // if val is not null, add text to text block
-    if (value != null) block.node().appendChild(document.createTextNode(value.replace(/&nbsp;/g, ' ')));
+    if (value != null)
+        block.node().appendChild(document.createTextNode(value.replace(/&nbsp;/g, ' ')));
 });
 
 // define image block
@@ -75,11 +76,14 @@ Block('panel', function () {
             width: '85%',
             margin: '0 auto'
         })
-        .cssContent({
-            paddingTop: '3%',
-            height: '97%',
-            position: 'relative'
-        });
+        .__child('content')
+            .css({
+                paddingTop: '3%',
+                height: '97%',
+                position: 'relative'
+            })
+            .__parent()
+    ;
     var block = Block('div')
         .css({
             top: '0',
@@ -87,13 +91,15 @@ Block('panel', function () {
         	position: 'absolute'
         })
         .add(Block()
-            .cssContent({
-                paddingTop: '3%',
-                height: '97%',
-                position: 'relative'
-            })
+            .__child('content')
+                .css({
+                    paddingTop: '3%',
+                    height: '97%',
+                    position: 'relative'
+                })
+                .__parent()
             .add(inner)
-        );
-    block.setAdd(inner);
+        )
+        .setAdd(inner);
     return block;
 }, function (block, data) { });
