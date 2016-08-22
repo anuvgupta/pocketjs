@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <title>pocketjs chat demo</title>
         <link rel = 'stylesheet' type = 'text/css' href = 'style.css'/>
         <link rel = 'icon' type = 'image/png' href = 'pocketjs.png'/>
         <script type = 'text/javascript' src = 'pocket.js'></script>
@@ -11,8 +12,9 @@
                 var send = function () {
                     var val = element('input').value;
                     element('input').value = '';
-                    if ((val !== null) && (val != '') && val != ' ') {
-                        if ((name == null) || (name == '') || (name == ' ')) Pocket.send('username', val);
+                    if ((val !== null) && (val != '') && val.trim() != '') {
+                        if ((name == null) || (name == '') || (name.trim() == ''))
+                            Pocket.send('username', val);
                         else Pocket.send('message', val);
                     }
                 };
@@ -23,6 +25,9 @@
                 Pocket.bind('username', function(success, username) {
                     if (success) {
                         element('output').style.height = (0.66 * window.innerHeight) + 'px';
+                        setTimeout(function () {
+                            element('output').style.overflowY = 'auto';
+                        }, 500);
                         element('output').style.backgroundColor = '#222222';
                         element('output').style.borderStyle = 'solid';
                         element('output').style.borderBottomWidth = '45px';
@@ -38,10 +43,9 @@
                     element('output').innerHTML += "<span id = 'message'><strong>" + user + '</strong>: ' + message + '</span><br/>';
                     element('output').scrollTop += 50;
                 });
-                Pocket.connect('pocketjs.tk', 8000, 'chat.php');
+                Pocket.connect('demo.pocketjs.tk', 8000, 'chat.php');
             });
         </script>
-        <title>pocketjs chat</title>
     </head>
     <body>
         <div id = 'content'>

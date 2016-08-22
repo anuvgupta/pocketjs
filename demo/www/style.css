@@ -47,7 +47,7 @@ body {
     border: 20px hidden #222222; //solid
     font-size: 20px;
     color: #EEEEEE;
-    overflow-y: auto;
+    overflow-y: hidden;
     text-align: left;
     border-radius: 10px 10px 0 0;
     transition: height 0.5s;
