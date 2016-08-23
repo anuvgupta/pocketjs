@@ -1,6 +1,6 @@
 # pocketjs - pages
 Project website for [pocketjs](https://github.com/anuvgupta/pocketjs)  
-*Check it out at [anuv.tk/pocketjs](http://anuv.tk/pocketjs)*  
+*Check it out at [anuv.me/pocketjs](http://anuv.me/pocketjs)*  
 &nbsp;    
 Libraries Used  
 &nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;[jQuery](https://jquery.com/) - v1.12.4  
