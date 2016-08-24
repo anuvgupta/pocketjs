@@ -104,6 +104,7 @@ body {
     background-color: #222222;
     border: 1px solid #222222;
     outline: none;
+    cursor: pointer;
 }
 #inputwrap button:hover {
     background-color: #2D2D2D;
