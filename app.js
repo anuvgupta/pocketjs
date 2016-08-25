@@ -41,13 +41,17 @@ body = Block('div', 'app')
         )
         .add(Block('div', 'hook')
             .add(Block('panel', 'left')
-                .add('text', 1)
+                .add(Block('div', 1)
+                    .class('code_container')
+                )
             )
             .add(Block('panel', 'middle')
                 .add('text', 1)
             )
             .add(Block('panel', 'right')
-                .add('text', 1)
+                .add(Block('div', 1)
+                    .class('code_container')
+                )
             )
             .add(Block('div', 'bottom')
                 .add(Block('block', 1)
@@ -71,6 +75,20 @@ function load() {
             b.css('opacity', '1');
         }, 10);
     }, 'app', true);
+    $.ajax({
+        url: 'code/php.txt',
+        dataType: 'text',
+        success: function (data) {
+            body.child('main/hook/left/div').node().innerHTML = data;
+        }
+    });
+    $.ajax({
+        url: 'code/js.txt',
+        dataType: 'text',
+        success: function (data) {
+            body.child('main/hook/right/div').node().innerHTML = data;
+        }
+    });
     $(document).scroll(function () {
         var nav = body.child('main/intro/nav');
         if (nav.$().offset().top - $(window).scrollTop() < window.innerHeight/3.2)

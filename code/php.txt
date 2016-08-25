@@ -1,0 +1,30 @@
+<pre class = 'code'><span class = 'tag'>&lt;?php</span>
+
+<span class = 'var'>$users</span> <span class = 'operator'>=</span> [];
+<span class = 'var'>$pocket</span> <span class = 'operator'>=</span> <span class = 'keyword'>new</span> <span class = 'class'>Pocket</span>(
+  <span class = 'string'>'pocketjs.ml'</span>, <span class = 'primitive'>8000</span>, <span class = 'primitive'>20</span>
+);
+
+<span class = 'var'>$pocket</span><span class = 'operator'>-></span><span class = 'method'>bind</span>(<span class = 'string'>'username'</span>,
+  <span class = 'keyword'>function</span> (<span class = 'var'>$username</span>, <span class = 'var'>$id</span>) {
+    <span class = 'var'>$users</span>[<span class = 'var'>$id</span>] <span class = 'operator'>=</span> <span class = 'embed_var'>$username</span>;
+    <span class = 'var'>$pocket</span><span class = 'operator'>-></span><span class = 'method'>send</span>(
+      <span class = 'string'>'username'</span>,
+      <span class = 'var'>$id</span>, <span class = 'primitive'>true</span>,
+      <span class = 'var'>$username</span>
+    );
+});
+<span class = 'var'>$pocket</span><span class = 'operator'>-></span><span class = 'method'>bind</span>(<span class = 'string'>'message'</span>,
+  <span class = 'keyword'>function</span> (<span class = 'var'>$message</span>, <span class = 'var'>$id</span>) {
+    <span class = 'var'>$pocket</span><span class = 'operator'>-></span><span class = 'method'>sendAll</span>(
+      <span class = 'string'>'message'</span>,
+      <span class = 'var'>$users</span>[<span class = 'var'>$id</span>],
+      <span class = 'embed_var'>$message</span>,
+      <span class = 'var'>$id</span>
+    );
+});
+
+<span class = 'var'>$pocket</span><span class = 'operator'>-></span><span class = 'method'>open</span>();
+
+<span class = 'tag'>?></span>
+</pre>

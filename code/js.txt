@@ -1,0 +1,30 @@
+<pre class = 'code'>&lt;<span class = 'var'>script</span>&gt;
+
+<span class = 'keyword'>var</span> name = <span class = 'primitive'>null</span>;
+<span class = 'var'>Pocket</span>.<span class = 'method'>bind</span>(<span class = 'string'>'username'</span>,
+  <span class = 'keyword'>function</span> (yes, username) {
+    <span class = 'keyword'>if</span> (yes) name <span class = 'operator'>=</span> username;
+});
+<span class = 'var'>Pocket</span>.<span class = 'method'>bind</span>(<span class = 'string'>'message'</span>,
+  <span class = 'keyword'>function</span> (user, message) {
+    <span class = 'method'>node</span>(<span class = 'string'>'output'</span>).<span class = 'var'>innerHTML</span>
+      <span class = 'operator'>+=</span> user <span class = 'operator'>+</span> <span class = 'string'>': '</span> <span class = 'operator'>+</span> message;
+});
+<span class = 'method'>node</span>(<span class = 'string'>'input'</span>)
+  .<span class = 'method'>addEventListener</span>(<span class = 'string'>'keyup'</span>,
+    <span class = 'keyword'>function</span> (e) {
+      <span class = 'keyword'>if</span> (<span class = 'var'>e</span>.<span class = 'var'>keyCode</span> <span class = 'operator'>==</span> <span class = 'primitive'>13</span>)
+        <span class = 'var'>Pocket</span>.<span class = 'method'>send</span>(
+          name ? <span class = 'string'>'username'</span>:
+            <span class = 'string'>'message'</span>,
+          <span class = 'method'>node</span>(<span class = 'string'>'input'</span>).<span class = 'var'>value</span>
+        );
+});
+
+<span class = 'var'>Pocket</span>.<span class = 'method'>connect</span>(
+  <span class = 'string'>'pocketjs.ml'</span>,
+  <span class = 'primitive'>8000</span>, <span class = 'string'>'chat.php'</span>
+);
+
+&lt;/<span class = 'var'>script</span>&gt;
+</pre>

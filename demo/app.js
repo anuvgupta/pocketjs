@@ -14,7 +14,7 @@ window.addEventListener('load', function () {
     element('input').addEventListener('keyup', function (e) {
         if ((e.keyCode ? e.keyCode : e.which) == '13') send();
     });
-    Pocket.bind('username', function(success, username) {
+    Pocket.bind('username', function (success, username) {
         if (success) {
             element('output').style.height = (0.66 * window.innerHeight) + 'px';
             setTimeout(function () {

@@ -28,7 +28,7 @@
 	color: #1A1A1A;
 }
 ::-webkit-scrollbar {
-	display: none;
+	/*display: none;*/
 }
 
 * {
@@ -43,4 +43,56 @@ html, body {
 	background: #161616 url('') no-repeat;
 	background-size: cover;
 	background-attachment: fixed;
+}
+
+
+.code_container {
+	background-color: #1b1d1f;
+	position: absolute;
+	top: 15px;
+	bottom: 15px;
+	left: 15px;
+	right: 15px;
+	text-align: left;
+	overflow: scroll;
+	border-radius: 20px;
+	margin: 0 auto;
+	padding: 10px;
+}
+.code {
+    background-color: #1b1d1f;
+    color: #ddd;
+	font: 16px 'Courier New', Courier;
+	margin: 0;
+}
+.code span {
+    font: inherit;
+}
+.tag {
+    color: #a1664f;
+}
+.var {
+    color: #cc6666;
+}
+.embed_var {
+    color: #cc6666;
+}
+.operator {
+    color: #ccc;
+}
+.keyword {
+    color: #b195ba;
+}
+.method {
+    //color: #616fc9;
+    color: #8690c4;
+}
+.string {
+    color: #b3af46;
+}
+.class {
+    color: #f0c575;
+}
+.primitive {
+    color: #de9357;
 }
