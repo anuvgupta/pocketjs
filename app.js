@@ -191,6 +191,7 @@ $(document).ready(function () {
                 .css('top', (window.innerHeight * 2.05 + 400 + 100) + 'px')
                 .sibling('links')
                     .css('height', '100px')
+                    .css('top', (window.innerHeight * 2.05 + 400) + 'px')
             ;
             var children = body.child('main/links').children();
             for (var i in children)
@@ -233,8 +234,7 @@ $(document).ready(function () {
                     .css('top', (window.innerHeight * 2.05 + 400 + 280) + 'px')
                     .sibling('links')
                         .css('height', '280px')
-                        .__child('content')
-                            .css('height', '100%')
+                        .css('top', (window.innerHeight * 2.05 + 400) + 'px')
                 ;
                 var children = body.child('main/links').children();
                 for (var i in children)
