@@ -8,6 +8,43 @@ app
         transition opacity 0.35s ease-in-out
         -moz-transition opacity 0.35s ease-in-out
         -webkit-transition opacity 0.35s ease-in-out
+    menu
+        github
+            link
+                target _blank
+                href https://github.com/anuvgupta/pocketjs
+                image
+                    src img/github.png
+                    height 45px
+                    width 45px
+                    css
+                        margin 14px auto 5px auto
+                text
+                    val View Source
+                    css
+                        font-size 14px
+                        text-transform uppercase
+                        opacity 0
+                        transition opacity 0.15s ease
+                        -moz-transition opacity 0.15s ease
+                        -webkit-transition opacity 0.15s ease
+                css
+                    cursor pointer
+                    text-decoration none
+            css
+                width 65px
+                opacity 0.6
+                transition opacity 0.25s ease
+                -moz-transition opacity 0.25s ease
+                -webkit-transition opacity 0.25s ease
+        css
+            position fixed
+            top 0
+            left 0
+            right 0
+            width 100%
+            z-index 5
+            display none
     main
         css
             width 100%
@@ -85,19 +122,29 @@ app
                 width 100%
                 height 100%
             left
+                title chat.php
                 css
                     left 0
                     right 68%
                     width 32%
                     overflow hidden
             middle
+                title demo.pocketjs.ml
                 css
                     left 32%
                     right 32%
                     width 36%
-                text
-                    val chat demo
+                chat
+                    css
+                        position absolute
+                        height 100%
+                        width 100%
+                        top 0
+                        bottom 0
+                        right 0
+                        left 0
             right
+                title demo.html
                 css
                     left 68%
                     right 0
@@ -119,3 +166,118 @@ app
                                 font 30px JosefinSans
                                 font-size 27px
                                 padding-bottom 5px
+        info
+            css
+                position absolute
+                width 100%
+                top 205%
+                height 400px
+                background-color #1F1F1F
+        links
+            css
+                position absolute
+                width 100%
+                height 100px
+                background #222222
+            docs
+                val Documentation
+                href docs
+            demo
+                val Live Demo
+                href demo
+            source
+                val View Source
+                href https://github.com/anuvgupta/pocketjs
+        contact
+            css
+                position absolute
+                width 100%
+                height 400px
+                background-color #262626
+            main
+                author
+                    css
+                        height auto
+                    link
+                        a
+                            href http://anuv.me
+                            target _blank
+                            image
+                                src img/anuvgupta.png
+                                height 95px
+                                width 95px
+                                css
+                                    margin 0 auto
+                            text
+                                val anuv gupta
+                                css
+                                    font-size 25px
+                            css
+                                text-decoration none
+                        css
+                            background-color #1F1F1F
+                            padding 10px 15px
+                            border-radius 8px
+                            cursor pointer
+                            width 150px
+                            margin 0 auto
+                            transition background-color 0.25s ease
+                            -moz-transition background-color 0.25s ease
+                            -webkit-transition background-color 0.25s ease
+                    text
+                        val creator of pocketjs
+                        css
+                            //font-size 17px
+                            font-family JosefinSans
+                            padding-top -2px
+                            display block
+                    github
+                        css
+                            padding-top 8px
+                email
+                    text
+                        val Contact&nbsp;
+                    link
+                        text
+                            val pocketjs@anuv.me
+                        href mailto:pocketjs@anuv.me
+                license
+                    css
+                        padding-bottom 3px
+                    name
+                        val pocketjs
+                        css
+                            font-size 14px
+                    text
+                        val &nbsp;is licensed under the&nbsp;
+                        css
+                            font-size 13px
+                    link
+                        text
+                            val MIT License
+                            css
+                                font-size 14px
+                                cursor pointer
+                        href https://github.com/anuvgupta/pocketjs/blob/master/LICENSE.md
+                        target _blank
+                github
+                    css
+                        padding-top 8px
+                        padding-bottom 20px
+            footer
+                css
+                    position absolute
+                    bottom 1px
+                    height 45px
+                    font-size 16px
+                copyright
+                    css
+                        font-size inherit
+                textA
+                    val &nbsp;2016 Anuv Gupta.
+                    css
+                        font-size inherit
+                breakB
+                    val &nbsp;
+                textB
+                    val All rights reserved.

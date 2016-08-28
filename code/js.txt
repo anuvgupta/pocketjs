@@ -1,30 +1,30 @@
-<pre class = 'code'>&lt;<span class = 'var'>script</span>&gt;
+<pre class = 'syntax code'>&lt;<span class = 'syntax var'>script</span>&gt;
 
-<span class = 'keyword'>var</span> name = <span class = 'primitive'>null</span>;
-<span class = 'var'>Pocket</span>.<span class = 'method'>bind</span>(<span class = 'string'>'username'</span>,
-  <span class = 'keyword'>function</span> (yes, username) {
-    <span class = 'keyword'>if</span> (yes) name <span class = 'operator'>=</span> username;
+<span class = 'syntax keyword'>var</span> name = <span class = 'syntax primitive'>null</span>;
+<span class = 'syntax var'>Pocket</span>.<span class = 'syntax method'>bind</span>(<span class = 'syntax string'>'username'</span>,
+  <span class = 'syntax keyword'>function</span> (yes, username) {
+    <span class = 'syntax keyword'>if</span> (yes) name <span class = 'syntax operator'>=</span> username;
 });
-<span class = 'var'>Pocket</span>.<span class = 'method'>bind</span>(<span class = 'string'>'message'</span>,
-  <span class = 'keyword'>function</span> (user, message) {
-    <span class = 'method'>node</span>(<span class = 'string'>'output'</span>).<span class = 'var'>innerHTML</span>
-      <span class = 'operator'>+=</span> user <span class = 'operator'>+</span> <span class = 'string'>': '</span> <span class = 'operator'>+</span> message;
+<span class = 'syntax var'>Pocket</span>.<span class = 'syntax method'>bind</span>(<span class = 'syntax string'>'message'</span>,
+  <span class = 'syntax keyword'>function</span> (user, message) {
+    <span class = 'syntax method'>node</span>(<span class = 'syntax string'>'output'</span>).<span class = 'syntax var'>innerHTML</span>
+      <span class = 'syntax operator'>+=</span> user <span class = 'syntax operator'>+</span> <span class = 'syntax string'>': '</span> <span class = 'syntax operator'>+</span> message;
 });
-<span class = 'method'>node</span>(<span class = 'string'>'input'</span>)
-  .<span class = 'method'>addEventListener</span>(<span class = 'string'>'keyup'</span>,
-    <span class = 'keyword'>function</span> (e) {
-      <span class = 'keyword'>if</span> (<span class = 'var'>e</span>.<span class = 'var'>keyCode</span> <span class = 'operator'>==</span> <span class = 'primitive'>13</span>)
-        <span class = 'var'>Pocket</span>.<span class = 'method'>send</span>(
-          name ? <span class = 'string'>'username'</span>:
-            <span class = 'string'>'message'</span>,
-          <span class = 'method'>node</span>(<span class = 'string'>'input'</span>).<span class = 'var'>value</span>
+<span class = 'syntax method'>node</span>(<span class = 'syntax string'>'input'</span>)
+  .<span class = 'syntax method'>addEventListener</span>(<span class = 'syntax string'>'keyup'</span>,
+    <span class = 'syntax keyword'>function</span> (e) {
+      <span class = 'syntax keyword'>if</span> (<span class = 'syntax var'>e</span>.<span class = 'syntax var'>keyCode</span> <span class = 'syntax operator'>==</span> <span class = 'syntax primitive'>13</span>)
+        <span class = 'syntax var'>Pocket</span>.<span class = 'syntax method'>send</span>(
+          name ? <span class = 'syntax string'>'username'</span>:
+            <span class = 'syntax string'>'message'</span>,
+          <span class = 'syntax method'>node</span>(<span class = 'syntax string'>'input'</span>).<span class = 'syntax var'>value</span>
         );
 });
 
-<span class = 'var'>Pocket</span>.<span class = 'method'>connect</span>(
-  <span class = 'string'>'pocketjs.ml'</span>,
-  <span class = 'primitive'>8000</span>, <span class = 'string'>'chat.php'</span>
+<span class = 'syntax var'>Pocket</span>.<span class = 'syntax method'>connect</span>(
+  <span class = 'syntax string'>'pocketjs.ml'</span>,
+  <span class = 'syntax primitive'>8000</span>, <span class = 'syntax string'>'chat.php'</span>
 );
 
-&lt;/<span class = 'var'>script</span>&gt;
+&lt;/<span class = 'syntax var'>script</span>&gt;
 </pre>

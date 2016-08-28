@@ -1,10 +1,10 @@
 @font-face {
 	font-family: CenturyGothic;
-	src: url("fonts/centurygothic.ttf");
+	src: url('fonts/centurygothic.ttf');
 }
 @font-face {
 	font-family: JosefinSans;
-	src: url("fonts/JosefinSans-Regular.ttf");
+	src: url('fonts/JosefinSans-Regular.ttf');
 	font-weight: normal;
 }
 
@@ -20,15 +20,15 @@
 }
 
 ::selection {
-	background-color: rgba(156, 156, 156, 0.99);
+	background-color: rgba(200, 200, 200, 0.99);
 	color: #1A1A1A;
 }
 ::-moz-selection {
-	background-color: rgba(156, 156, 156, 0.99);
+	background-color: rgba(200, 200, 200, 0.99);
 	color: #1A1A1A;
 }
 ::-webkit-scrollbar {
-	/*display: none;*/
+	/* display: none; */
 }
 
 * {
@@ -95,4 +95,9 @@ html, body {
 }
 .primitive {
     color: #de9357;
+}
+
+.syntax::selection {
+	background-color: #a2a9b3;
+	color: inherit;
 }

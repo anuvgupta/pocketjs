@@ -90,7 +90,7 @@ Block('panel', function () {
         	bottom: '10%',
         	position: 'absolute'
         })
-        .add(Block()
+        .add(Block('block', 1)
             .__child('content')
                 .css({
                     paddingTop: '3%',
@@ -98,8 +98,74 @@ Block('panel', function () {
                     position: 'relative'
                 })
                 .__parent()
+            .add('text', 'title')
             .add(inner)
         )
         .setAdd(inner);
     return block;
-}, function (block, data) { });
+}, function (block, data) {
+    var title = data('title');
+    if (title != null && title != undefined) {
+        block.key('title', title)
+            .child('block/title')
+                .css({
+                    display: 'block',
+                    paddingBottom: '6px',
+                    fontSize: '19px'
+                })
+                .data(title)
+        ;
+    }
+});
+
+Block('link button', function () {
+    var block = Block('a');
+    var reg = {
+        height: '100%',
+        width: '33.3%'
+    };
+    var alt = {
+        height: '80px',
+        width: '100%'
+    };
+    block
+        .attribute('target', '_blank')
+        .css('text-decoration', 'none')
+        .__add(Block('block', 1)
+            .css('display', 'inline-table')
+            .css(reg)
+        )
+        .setAdd(block.__child('block'))
+        .add(Block('block', 'button')
+            .css({
+                height: '60px',
+                width: '218px',
+                backgroundColor: '#2B2B2B',
+                borderRadius: '7px',
+                margin: '0 auto',
+                transition: 'background-color 0.25s ease'
+            })
+            .on('mouseenter', function () {
+                block.child('button').css('background-color', '#313131');
+            })
+            .on('mouseleave', function () {
+                block.child('button').css('background-color', '#2B2B2B');
+            })
+            .add(Block('text', 1)
+                .css({
+                    textTransform: 'uppercase',
+                    color: '#C7C7C7'
+                })
+            )
+        )
+        .on('alt', function () {
+            block.__child('block').css(alt);
+        })
+        .on('reg', function () {
+            block.__child('block').css(reg);
+        })
+    ;
+    return block
+}, function (block, data) {
+    block.child('button/text').data(data('val'));
+});
