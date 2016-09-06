@@ -1,30 +1,5 @@
 var body;
 body = Block('div', 'app')
-    // .add(Block('div', 'menu')
-    //     .add(Block('block', 'github')
-    //         .add(Block('a', 'link')
-    //             .add('image', 1)
-    //             .add('text', 1)
-    //         )
-    //         .on('mouseenter', function () {
-    //             body.child('menu/github')
-    //                     .css('opacity', '0.85')
-    //                     .child('link/text')
-    //                         .css('opacity', '1')
-    //             ;
-    //         })
-    //         .on('mouseleave', function () {
-    //             body.child('menu/github')
-    //                 .css('opacity', '0.6')
-    //                 .child('link/text')
-    //                     .css('opacity', '0')
-    //             ;
-    //         })
-    //     )
-    //     .add(Block('div', 'docs')
-    //
-    //     )
-    // )
     .add(Block('div', 'main')
         .add(Block('block', 'intro')
             .id('intro')
@@ -92,6 +67,7 @@ body = Block('div', 'app')
             )
         )
         .add(Block('block', 'info')
+            .id('info')
             .add('text', 'title')
         )
         .add(Block('block', 'links')
@@ -120,7 +96,9 @@ body = Block('div', 'app')
                     )
                     .add('text', 1)
                     .add(Block('div', 'github')
-                        .html('<a class="github-button" href="https://github.com/anuvgupta" data-style="mega" data-count-href="/anuvgupta/followers" data-count-api="/users/anuvgupta#followers" data-count-aria-label="# followers on GitHub" aria-label="Follow @anuvgupta on GitHub">Follow Me</a>')
+                        .bind('html', function (html) {
+                            body.child('main/contact/main/author/github').html(html);
+                        })
                     )
                 )
                 .add('break')
@@ -138,8 +116,9 @@ body = Block('div', 'app')
                     )
                 )
                 .add(Block('div', 'github')
-                    .html('<a class="github-button" href="https://github.com/anuvgupta/pocketjs" data-icon="octicon-star" data-style="mega" data-count-href="/anuvgupta/pocketjs/stargazers" data-count-api="/repos/anuvgupta/pocketjs#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star anuvgupta/pocketjs on GitHub">Star</a>&nbsp;&nbsp;', true)
-                    .html('<a class="github-button" href="https://github.com/anuvgupta/pocketjs/fork" data-icon="octicon-repo-forked" data-style="mega" data-count-href="/anuvgupta/pocketjs/network" data-count-api="/repos/anuvgupta/pocketjs#forks_count" data-count-aria-label="# forks on GitHub" aria-label="Fork anuvgupta/pocketjs on GitHub">Fork</a>', true)
+                    .bind('html', function (html) {
+                        body.child('main/contact/main/github').html(html.A + '&nbsp;&nbsp;' + html.B);
+                    })
                 )
             )
             .add(Block('block', 'footer')
@@ -150,6 +129,7 @@ body = Block('div', 'app')
                 .add('text', 'textA')
                 .add('text', 'breakB')
                 .add('text', 'textB')
+                .add('text', 'breakC')
             )
         )
     )
@@ -158,64 +138,72 @@ body = Block('div', 'app')
 
 
 $(document).ready(function () {
-    var scroll = function () {
-        var index = window.location.href.indexOf('#');
-        if (index == -1) return false;
-        var id = window.location.href.substring(index + 1);
-        if (document.getElementById(id) == null) return false;
-        $(document.body).animate({
-            scrollTop: $('#' + id).offset().top + 'px'
-        }, 700);
-    };
     var size = function () {
         var _main = body.child('main').node();
         _main.style.paddingRight = (_main.offsetWidth - _main.clientWidth) + 'px';
         var intro = body.child('main/intro');
+        intro
+            .css({
+                top: '0',
+                height: window.innerHeight + 'px'
+            })
+        .sibling('hook')
+            .css({
+                top: window.innerHeight + 'px',
+                height:  window.innerHeight + 'px'
+            })
+        .sibling('info')
+            .css({
+                top: (window.innerHeight * 2.05) + 'px',
+                height:  '400px'
+            })
+        .sibling('links')
+            .css({
+                top: (window.innerHeight * 2.05 + 400) + 'px',
+                height:  '100px'
+            })
+        .sibling('contact')
+            .css({
+                top: (window.innerHeight * 2.05 + 400 + 100) + 'px',
+                height:  '400px'
+            })
+        ;
         var reset = function () {
             intro.child('logo')
-                .css('height', '400px')
-                .css('width', '400px')
+                .css('height', (0.48 * window.innerHeight) + 'px')
+                .css('width', (0.48 * window.innerHeight) + 'px')
             .sibling('nav')
                 .css('display', 'block')
             .sibling('title')
-                .css('font-size',  '150px')
+                .css('font-size',  '138px')
             .sibling('text')
-                .css('font-size', '24px')
-                .child('space').html(' ');
+                .css('font-size', '23px')
+                .child('space').html(' ')
+            ;
             body.child('main/contact/footer/breakB')
-                    .html(' ')
+                        .html(' ')
+                    .sibling('breakC')
+                        .html('')
                     .parent()
+                .css('bottom', '1px')
                 .sibling('main')
                     .css('padding-bottom', '0px')
                     .parent()
-                .css('top', (window.innerHeight * 2.05 + 400 + 100) + 'px')
+                .css({
+                    top: (window.innerHeight * 2.05 + 400 + 100) + 'px',
+                    height: '400px'
+                })
                 .sibling('links')
                     .css('height', '100px')
-                    .css('top', (window.innerHeight * 2.05 + 400) + 'px')
             ;
             var children = body.child('main/links').children();
             for (var i in children)
                 children[i].on('reg');
         };
-        var off = function () {
-            return intro.child('text').$().offset().top + 24 + parseFloat(intro.child('text').css('font-size')) > intro.child('nav').$().offset().top;
-        };
         var phone = function () {
-            return (window.innerHeight > window.innerWidth) || (window.innerWidth < 700);
+            // return (window.innerHeight > window.innerWidth) || (window.innerWidth < 700);
+            return (window.innerWidth < 700);
         };
-        if (off()) {
-            setTimeout(function () {
-                intro.child('logo')
-                    .css('height', (0.48 * window.innerHeight) + 'px')
-                    .css('width', (0.48 * window.innerHeight) + 'px')
-                .sibling('title')
-                    .css('font-size',  '138px')
-                .sibling('text')
-                    .css('font-size', '23px')
-                ;
-            }, 5);
-            if (off()) intro.child('nav').css('display', 'none');
-        } else reset();
         if (phone()) {
             intro.child('logo')
                 .css('height', (0.43 * window.innerHeight) + 'px')
@@ -226,28 +214,46 @@ $(document).ready(function () {
                 .css('font-size', '22.5px')
                 .child('space').html('<br/>');
                 body.child('main/contact/footer/breakB')
-                        .html('<br/>')
+                            .html('<br/>')
+                        .sibling('breakC')
+                            .html('<br/>')
                         .parent()
+                    .css('bottom', '8px')
                     .sibling('main')
                         .css('padding-bottom', '20px')
                         .parent()
-                    .css('top', (window.innerHeight * 2.05 + 400 + 280) + 'px')
+                        .css({
+                            top: (window.innerHeight * 2.05 + 400 + 280) + 'px',
+                            height: '410px'
+                        })
                     .sibling('links')
                         .css('height', '280px')
-                        .css('top', (window.innerHeight * 2.05 + 400) + 'px')
                 ;
                 var children = body.child('main/links').children();
                 for (var i in children)
                     children[i].on('alt');
         } else reset();
     }
-    $(document).scroll(function () {
-        var nav = body.child('main/intro/nav');
-        if (nav.$().offset().top - $(window).scrollTop() < window.innerHeight/3.2)
-            nav.css('opacity', '0');
-        else nav.css('opacity', '1');
-    });
 
+    // make down arrow disappear when scrolled too far
+    // $(document).scroll(function () {
+    //     var nav = body.child('main/intro/nav');
+    //     if (nav.$().offset().top - $(window).scrollTop() < window.innerHeight/3.2)
+    //         nav.css('opacity', '0');
+    //     else nav.css('opacity', '1');
+    // });
+
+    // convenience function for scrolling to div by id
+    var scroll = function () {
+        var index = window.location.href.indexOf('#');
+        if (index == -1) return false;
+        var id = window.location.href.substring(index + 1);
+        if (document.getElementById(id) == null) return false;
+        $(document.body).animate({
+            scrollTop: $('#' + id).offset().top + 'px'
+        }, 700);
+    };
+    // load blockfile
     body.load(function (b) {
         b.fill(document.body);
         size();
@@ -256,19 +262,20 @@ $(document).ready(function () {
             b.css('opacity', '1');
             scroll();
         }, 10);
-    }, 'app', true);
+    }, 'app', 'jQuery');
+    // load code html
     $.ajax({
         url: 'code/php.txt',
         dataType: 'text',
         success: function (data) {
-            body.child('main/hook/left/div').node().innerHTML = data;
+            body.child('main/hook/left/div').html(data);
         }
     });
     $.ajax({
         url: 'code/js.txt',
         dataType: 'text',
         success: function (data) {
-            body.child('main/hook/right/div').node().innerHTML = data;
+            body.child('main/hook/right/div').html(data);
         }
     });
 });

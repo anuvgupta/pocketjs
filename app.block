@@ -8,43 +8,6 @@ app
         transition opacity 0.35s ease-in-out
         -moz-transition opacity 0.35s ease-in-out
         -webkit-transition opacity 0.35s ease-in-out
-    menu
-        github
-            link
-                target _blank
-                href https://github.com/anuvgupta/pocketjs
-                image
-                    src img/github.png
-                    height 45px
-                    width 45px
-                    css
-                        margin 14px auto 5px auto
-                text
-                    val View Source
-                    css
-                        font-size 14px
-                        text-transform uppercase
-                        opacity 0
-                        transition opacity 0.15s ease
-                        -moz-transition opacity 0.15s ease
-                        -webkit-transition opacity 0.15s ease
-                css
-                    cursor pointer
-                    text-decoration none
-            css
-                width 65px
-                opacity 0.6
-                transition opacity 0.25s ease
-                -moz-transition opacity 0.25s ease
-                -webkit-transition opacity 0.25s ease
-        css
-            position fixed
-            top 0
-            left 0
-            right 0
-            width 100%
-            z-index 5
-            display none
     main
         css
             width 100%
@@ -52,6 +15,9 @@ app
             padding-right 15px
             overflow-y scroll
         intro
+            css
+                position absolute
+                width 100%
             logo
                 css
                     transform scale(1.025)
@@ -118,9 +84,7 @@ app
         hook
             css
                 position absolute
-                top 100%
                 width 100%
-                height 100%
             left
                 title chat.php
                 css
@@ -166,18 +130,18 @@ app
                                 font 30px JosefinSans
                                 font-size 27px
                                 padding-bottom 5px
+                        css
+                            padding-top 20px
         info
             css
                 position absolute
                 width 100%
-                top 205%
-                height 400px
                 background-color #1F1F1F
         links
             css
                 position absolute
                 width 100%
-                height 100px
+                transition height 0.35s ease
                 background #222222
             docs
                 val Documentation
@@ -192,7 +156,7 @@ app
             css
                 position absolute
                 width 100%
-                height 400px
+                transition top 0.35s ease
                 background-color #262626
             main
                 author
@@ -229,11 +193,12 @@ app
                         css
                             //font-size 17px
                             font-family JosefinSans
-                            padding-top -2px
+                            padding-top 4px
                             display block
                     github
                         css
-                            padding-top 8px
+                            padding-top 4px
+                        html <a class="github-button" href="https://github.com/anuvgupta" data-count-href="/anuvgupta/followers" data-count-api="/users/anuvgupta#followers" data-count-aria-label="# followers on GitHub" aria-label="Follow @anuvgupta on GitHub">Follow Me</a>
                 email
                     text
                         val Contact&nbsp;
@@ -264,6 +229,9 @@ app
                     css
                         padding-top 8px
                         padding-bottom 20px
+                    html
+                        A <a class="github-button" href="https://github.com/anuvgupta/pocketjs" data-icon="octicon-star" data-count-href="/anuvgupta/pocketjs/stargazers" data-count-api="/repos/anuvgupta/pocketjs#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star anuvgupta/pocketjs on GitHub">Star</a>
+                        B <a class="github-button" href="https://github.com/anuvgupta/pocketjs/fork" data-icon="octicon-repo-forked" data-count-href="/anuvgupta/pocketjs/network" data-count-api="/repos/anuvgupta/pocketjs#forks_count" data-count-aria-label="# forks on GitHub" aria-label="Fork anuvgupta/pocketjs on GitHub">Fork</a>
             footer
                 css
                     position absolute
