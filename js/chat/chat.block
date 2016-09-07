@@ -35,6 +35,7 @@ chat
                 border-left 1px solid #222222
                 outline none
                 fontSize 19px
+                color #CFCFCF
                 padding 0
                 transition background-color 0.1s ease
                 -moz-transition background-color 0.1s ease
