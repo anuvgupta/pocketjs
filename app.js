@@ -277,8 +277,11 @@ $(document).ready(function () {
 
         // mobile resizing
         if (mobileAgent()) {
-            body.child('main/intro/title').css('font-size', '80px');
-            body.child('main/intro/text').css('font-size', '12px');
+            body.child('main/intro/title')
+                .css('font-size', '75px')
+            .sibling('text')
+                .css('font-size', '10px')
+            ;
         }
     }
 
