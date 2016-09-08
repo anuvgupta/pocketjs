@@ -303,10 +303,7 @@ $(document).ready(function () {
         setTimeout(function () {
             // display body
             b.css('opacity', '1');
-            // fix background color
-            setTimeout(function () {
-                document.body.style.backgroundColor = '#262626';
-            }, 400);
+            $.getScript('https://buttons.github.io/buttons.js');
             // scroll to id in url
             var index = window.location.href.indexOf('#');
             if (index == -1) return false;
