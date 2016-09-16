@@ -339,6 +339,8 @@ class Pocket {
         elseif ($length >= 65536) $header = pack('CCNN', $b1, 127, $length);
         return $header.$text;
     }
+
+    // TESTING ADMIN FEATURES
     //static function start called to execute a pocket server script
     public static function start($path) {
         ignore_user_abort(true);
@@ -385,4 +387,72 @@ class Pocket {
         else return 'process not killed' . $eol;
     }
 }
+
+class PocketClient {
+    protected $on;
+    protected $socket;
+    public function __construct() {
+        $this->on = array();
+    }
+    public function bind($message, $function) {
+        $this->on[$message] = $function;
+    }
+    public function connect($local, $domain, $port, $server) {
+        $timeout = 5;
+        $context = stream_context_create();
+        $this->socket = @stream_socket_client(
+            $domain . ':' . $port,
+            $errno, $errstr, $timeout,
+            STREAM_CLIENT_CONNECT,
+            $context
+        );
+        stream_set_timeout($this->socket, $timeout);
+        $key = $this->key();
+        $headers = array(
+            'host' => $domain . ":" . $port,
+            'user-agent' => 'websocket-client-php',
+            'connection' => 'Upgrade',
+            'upgrade' => 'websocket',
+            'sec-websocket-key' => $key,
+            'sec-websocket-version' => '13',
+        );
+        $header = "GET /" . $server . " HTTP/1.1\r\n"
+        . implode("\r\n", array_map(function($key, $value) {
+                return "$key: $value";
+            }, array_keys($headers), $headers)
+        ) . "\r\n\r\n";
+        fwrite($this->socket, $header);
+        $response = stream_get_line($this->socket, 1024, "\r\n\r\n");
+        if (!preg_match('#Sec-WebSocket-Accept:\s(.*)$#mUi', $response, $matches)) {
+            return false;
+        }
+        $accept = trim($matches[1]);
+        if ($accept !== base64_encode(pack('H*', sha1($key . '258EAFA5-E914-47DA-95CA-C5AB0DC85B11')))) {
+            return false;
+        }
+    }
+    public function close() {
+        fclose($this->socket);
+        $this->socket = null;
+    }
+    public function send($message) {
+        fwrite($this->socket, $this->mask('{"call":"' . $message . '"}'));
+    }
+    protected function key() {
+        $key = '';
+        $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!"$&/()=[]{}0123456789';
+        for ($i = 0; $i < 16; $i++)
+            $key .= $chars[mt_rand(0, strlen($chars) - 1)];
+        return base64_encode($key);
+    }
+    private function mask($text) { //parameter text (unmasked string data) to be masked
+        $b1 = 0x80 | (0x1 & 0x0f);
+        $length = strlen($text);
+        if ($length <= 125) $header = pack('CC', $b1, $length);
+        elseif ($length > 125 && $length < 65536) $header = pack('CCn', $b1, 126, $length);
+        elseif ($length >= 65536) $header = pack('CCNN', $b1, 127, $length);
+        return $header.$text;
+    }
+}
+
 ?>
