@@ -1,18 +1,26 @@
 <?php
 
+/*
+  pocketjs v1.0
+  [http://anuv.me/pocketjs]
+  File: pocket.php (pocketjs server)
+  Source: [https://github.com/anuvgupta/pocketjs]
+  License: MIT [https://github.com/anuvgupta/pocketjs/blob/master/LICENSE.md]
+  Copyright: (c) 2016 Anuv Gupta
+*/
+
 if (@$argv[2] == 'web') { //if library is included from web
     $cli = 2; //set cli to 2 to prevent bash commands
     $eol = '<br/>'; //set eol to line break for html
+    @ini_set('output_buffering', 'off'); //turn off output buffering
+    @ini_set('zlib.output_compression', false); //turn off output compression
+    while (@ob_end_flush()); //flush output buffer, again turn off output buffering
+    @ini_set('implicit_flush', true); //allow implicit flushing
+    @ob_implicit_flush(true); //implicitly flush buffers
 } elseif (@$argv[2] == 'nobash') $cli = 2; //if library is included with no bash
 if (!isset($cli)) $cli = php_sapi_name() == 'cli'; //if script does not have permission to be run from elsewhere, get cli status
 if (!$cli) header('Location: .'); //if script is not run from cli or is not allowed, redirect
 if (!isset($eol)) $eol = PHP_EOL; //if the eol string isn't defaulted, default to platform default
-
-// @ini_set('output_buffering', 'off'); //turn off output buffering
-// @ini_set('zlib.output_compression', false); //turn off output compression
-// while (@ob_end_flush()); //flush output buffer, again turn off output buffering
-// @ini_set('implicit_flush', true); //allow implicit flushing
-// @ob_implicit_flush(true); //implicitly flush buffers
 
 class Pocket {
     //instance fields
@@ -340,6 +348,8 @@ class Pocket {
         elseif ($length >= 65536) $header = pack('CCNN', $b1, 127, $length);
         return $header.$text;
     }
+
+    // TESTING ADMIN FEATURES
     //static function start called to execute a pocket server script
     public static function start($path) {
         ignore_user_abort(true);
@@ -386,4 +396,72 @@ class Pocket {
         else return 'process not killed' . $eol;
     }
 }
+
+class PocketClient {
+    protected $on;
+    protected $socket;
+    public function __construct() {
+        $this->on = array();
+    }
+    public function bind($message, $function) {
+        $this->on[$message] = $function;
+    }
+    public function connect($local, $domain, $port, $server) {
+        $timeout = 5;
+        $context = stream_context_create();
+        $this->socket = @stream_socket_client(
+            $domain . ':' . $port,
+            $errno, $errstr, $timeout,
+            STREAM_CLIENT_CONNECT,
+            $context
+        );
+        stream_set_timeout($this->socket, $timeout);
+        $key = $this->key();
+        $headers = array(
+            'host' => $domain . ":" . $port,
+            'user-agent' => 'websocket-client-php',
+            'connection' => 'Upgrade',
+            'upgrade' => 'websocket',
+            'sec-websocket-key' => $key,
+            'sec-websocket-version' => '13',
+        );
+        $header = "GET /" . $server . " HTTP/1.1\r\n"
+        . implode("\r\n", array_map(function($key, $value) {
+                return "$key: $value";
+            }, array_keys($headers), $headers)
+        ) . "\r\n\r\n";
+        fwrite($this->socket, $header);
+        $response = stream_get_line($this->socket, 1024, "\r\n\r\n");
+        if (!preg_match('#Sec-WebSocket-Accept:\s(.*)$#mUi', $response, $matches)) {
+            return false;
+        }
+        $accept = trim($matches[1]);
+        if ($accept !== base64_encode(pack('H*', sha1($key . '258EAFA5-E914-47DA-95CA-C5AB0DC85B11')))) {
+            return false;
+        }
+    }
+    public function close() {
+        fclose($this->socket);
+        $this->socket = null;
+    }
+    public function send($message) {
+        fwrite($this->socket, $this->mask('{"call":"' . $message . '"}'));
+    }
+    protected function key() {
+        $key = '';
+        $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!"$&/()=[]{}0123456789';
+        for ($i = 0; $i < 16; $i++)
+            $key .= $chars[mt_rand(0, strlen($chars) - 1)];
+        return base64_encode($key);
+    }
+    private function mask($text) { //parameter text (unmasked string data) to be masked
+        $b1 = 0x80 | (0x1 & 0x0f);
+        $length = strlen($text);
+        if ($length <= 125) $header = pack('CC', $b1, $length);
+        elseif ($length > 125 && $length < 65536) $header = pack('CCn', $b1, 126, $length);
+        elseif ($length >= 65536) $header = pack('CCNN', $b1, 127, $length);
+        return $header.$text;
+    }
+}
+
 ?>
