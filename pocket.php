@@ -3,10 +3,10 @@
 /*
   pocketjs v1.0
   [http://anuv.me/pocketjs]
+  Copyright: (c) 2016 Anuv Gupta
   File: pocket.php (pocketjs server)
   Source: [https://github.com/anuvgupta/pocketjs]
   License: MIT [https://github.com/anuvgupta/pocketjs/blob/master/LICENSE.md]
-  Copyright: (c) 2016 Anuv Gupta
 */
 
 if (@$argv[2] == 'web') { //if library is included from web

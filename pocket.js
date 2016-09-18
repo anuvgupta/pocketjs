@@ -1,10 +1,10 @@
 /*
   pocketjs v1.0
   [http://anuv.me/pocketjs]
+  Copyright: (c) 2016 Anuv Gupta
   File: pocket.js (pocketjs client)
   Source: [https://github.com/anuvgupta/pocketjs]
   License: MIT [https://github.com/anuvgupta/pocketjs/blob/master/LICENSE.md]
-  Copyright: (c) 2016 Anuv Gupta
 */
 
 var Pocket = function () {
