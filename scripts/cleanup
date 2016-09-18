@@ -1,0 +1,13 @@
+#!/bin/bash
+args=("$@")
+if [ -e "./${args[0]}_log.log" ]; then
+        rm ${args[0]}_log.log
+else
+    	echo "Log for process ${args[0]} does not exist"
+fi
+
+if [ -e "./${args[0]}_pid.txt" ]; then
+        rm ${args[0]}_pid.txt
+else
+    	echo "PID file for process ${args[0]} does not exist"
+fi
