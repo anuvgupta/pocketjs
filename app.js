@@ -120,9 +120,8 @@ body = Block('div', 'app')
                 )
             )
             .add(Block('block', 'footer')
-                .add(Block('text', 'copyright')
-                    .html('Copyright &copy;')
-                )
+                .add('text', 'copyright')
+                .add(Block('text', 'year').data((new Date()).getFullYear().toString()))
                 .add('text', 'breakA')
                 .add('text', 'textA')
                 .add('text', 'breakB')
@@ -303,7 +302,10 @@ $(document).ready(function () {
         setTimeout(function () {
             // display body
             b.css('opacity', '1');
-            $.getScript('https://buttons.github.io/buttons.js');
+            // fix background color
+            setTimeout(function () {
+                document.body.style.backgroundColor = '#262626';
+            }, 400);
             // scroll to id in url
             var index = window.location.href.indexOf('#');
             if (index == -1) return false;

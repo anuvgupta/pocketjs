@@ -241,10 +241,14 @@ app
                     height 45px
                     font-size 16px
                 copyright
+                    html Copyright &copy;&nbsp;
+                    css
+                        font-size inherit
+                year
                     css
                         font-size inherit
                 textA
-                    val &nbsp;2016 Anuv Gupta.
+                    val &nbsp;Anuv Gupta.
                     css
                         font-size inherit
                 breakB

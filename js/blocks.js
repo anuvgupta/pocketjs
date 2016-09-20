@@ -19,6 +19,8 @@ Block('text', function () {
     var value = data('val');
     if (value != null)
         block.node().appendChild(document.createTextNode(value.replace(/&nbsp;/g, ' ')));
+    var html = data('html');
+    if (html != null) block.html(html);
 });
 
 Block('image', function () {
