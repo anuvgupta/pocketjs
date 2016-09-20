@@ -332,4 +332,10 @@ $(document).ready(function () {
             body.child('main/hook/right/div').html(data);
         }
     });
+
+    // load github buttons
+    $.getScript({
+        async: false,
+        url: 'js/buttons.github.io.min.js'
+    });
 });
