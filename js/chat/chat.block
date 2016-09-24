@@ -1,5 +1,23 @@
     *
 chat
+    output
+        css
+            position absolute
+            top 15px
+            left 15px
+            right 15px
+            bottom 60px
+            padding-top 5px
+            fontSize 17px
+            margin 0 auto
+            background-color #1e1e1f
+            border-radius 20px 20px 0 0
+        connecting
+            text
+                val status - connecting
+                css
+                    opacity 0.75
+                    font-style italic
     input
         css
             position absolute
@@ -11,6 +29,7 @@ chat
             height 60px
             margin 0 auto
         box
+            placeholder nickname
             css
                 borderRadius 0 0 0 10px
                 border none
@@ -23,6 +42,7 @@ chat
                 position absolute
                 left 0
         button
+            html join
             css
                 borderRadius 0 0 10px 0
                 backgroundColor #222222

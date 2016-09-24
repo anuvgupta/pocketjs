@@ -313,8 +313,10 @@ $(document).ready(function () {
             if (document.getElementById(id) == null) return false;
             $(document.body).animate({
                 scrollTop: $('#' + id).offset().top + 'px'
-            }, 700);
+            }, 0);
         }, 10);
+        // set up pocket
+        b.child('main/hook/middle/chat').on('connect');
     }, 'app', 'jQuery');
 
     // load code html

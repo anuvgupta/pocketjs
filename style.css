@@ -47,7 +47,7 @@ html, body {
 
 
 .code_container {
-	background-color: #1b1d1f;
+	background-color: #1e1e1f;
 	position: absolute;
 	top: 15px;
 	bottom: 15px;
@@ -60,7 +60,7 @@ html, body {
 	padding: 10px;
 }
 .code {
-    background-color: #1b1d1f;
+    background-color: #1e1e1f;
     color: #ddd;
 	font: 16px 'Courier New', Courier;
 	margin: 0;
