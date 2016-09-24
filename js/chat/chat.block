@@ -8,8 +8,10 @@ chat
             right 15px
             bottom 60px
             padding-top 5px
+            padding-bottom 10px
             fontSize 17px
             margin 0 auto
+            overflow auto
             background-color #1e1e1f
             border-radius 20px 20px 0 0
         connecting

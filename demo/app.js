@@ -37,5 +37,4 @@ window.addEventListener('load', function () {
         element('output').scrollTop += 50;
     });
     pocket.connect('aws.anuv.me', 8000, 'chat.php');
-    // pocket.connect('localhost', 8001, 'chat.php');
 });

@@ -3,7 +3,7 @@ Block('chat message', function () {
     block
         .add(Block('text', 1)
             .css({
-                fontSize: '15px',
+                fontSize: '16px',
                 color: '#DEDEDE'
             })
         )
@@ -21,7 +21,22 @@ Block('chat message', function () {
     var html = data('html');
     var val = data('val');
     if (user != null && msg != null)
-        block.child('text').html('<span><b>' + user + '</b>: ' + msg + '</span>');
+        block.child('text')
+            .add(Block('text', 'username').data(user).css({
+                fontWeight: 'bold',
+                fontSize: 'inherit',
+                color: 'inherit'
+            }))
+            .add(Block('text', 'colon').data(': ').css({
+                fontSize: 'inherit',
+                color: 'inherit'
+            }))
+            .add(Block('text', 'message').data(msg).css({
+                fontSize: 'inherit',
+                color: 'inherit'
+            }))
+        ;
+        // .html('<span><b>' + user + '</b>: ' + msg + '</span>');
     else if (html != null) block.child('text').html(html);
     else if (val != null) block.child('text').data(val);
 });
@@ -72,18 +87,52 @@ Block('chat', function () {
     var msgID = 0;
     if (block.key('connected') == false) {
         var pocket = block.key('pocket');
-        block.key('connected', true)
+        block.key('connected', true);
         pocket.bind('username', function (success, username) {
             if (success) {
                 block.key('username', username);
+                block.child('input/button')
+                        .html('send')
+                    .sibling('box')
+                        .attribute('placeholder', 'message')
+                        .node().value = '';
+                block.child('output').add(Block('chat message', 'ready')
+                    .child('text')
+                        .data('status - logged in as ' + username)
+                        .css({
+                            opacity: '0.75',
+                            fontStyle: 'italic'
+                        })
+                        .parent()
+                ).add(Block('chat message', 'receiving')
+                    .child('text')
+                        .data('status - receiving messages')
+                        .css({
+                            opacity: '0.75',
+                            fontStyle: 'italic'
+                        })
+                        .parent()
+                );
                 pocket.send('ready');
-            } else console.log('Username not accepted');
+            } else block.child('output').add(Block('chat message')
+                    .child('text')
+                        .data('status - invalid username')
+                        .css({
+                            opacity: '0.75',
+                            fontStyle: 'italic'
+                        })
+                        .parent()
+                )
+            ;
         });
         pocket.bind('message', function (user, message, id) {
             msgID++;
             block.child('output')
                 .add(Block('chat message', msgID.toString())
-                    .data(user, message)
+                    .data({
+                        user: user,
+                        msg: message
+                    })
                 ).node().scrollTop += 50
             ;
         });
@@ -99,6 +148,5 @@ Block('chat', function () {
             );
         });
         pocket.connect('aws.anuv.me', 8000, 'chat.php');
-        // pocket.connect('localhost', 29998, 'chat.php');
     }
 });

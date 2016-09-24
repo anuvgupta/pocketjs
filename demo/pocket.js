@@ -1,10 +1,10 @@
 /*
   pocketjs v1.0
   [http://anuv.me/pocketjs]
+  Copyright: (c) 2016 Anuv Gupta
   File: pocket.js (pocketjs client)
   Source: [https://github.com/anuvgupta/pocketjs]
   License: MIT [https://github.com/anuvgupta/pocketjs/blob/master/LICENSE.md]
-  Copyright: (c) 2016 Anuv Gupta
 */
 
 var Pocket = function () {
@@ -24,9 +24,9 @@ var Pocket = function () {
     // object
     var pocket;
     pocket = {
-        getWS: function () { return ws; },
-        connect: function (serverDomain, serverPort, serverProcess) {
-            var target = 'ws://' + serverDomain + ':' + serverPort.toString() + '/' + serverProcess;
+        connect: function (domain, port, server) {
+            var target = 'ws://' + domain + ':' + port + '/' + server;
+            target = 'ws://' + domain + ':' + port.toString() + '/';
             if ('WebSocket' in window) ws = new WebSocket(target);
             else if ('MozWebSocket' in window) ws = new MozWebSocket(target);
             else {
@@ -58,7 +58,7 @@ var Pocket = function () {
                     console.log('[POCKET] connected');
                     ev['open']();
                 }
-                ws.send(JSON.stringify({ command: 'alive', id: id }));
+                // ws.send(JSON.stringify({ command: 'alive', id: id }));
                 return false;
             };
             ws.onerror = function (e) {
@@ -75,7 +75,6 @@ var Pocket = function () {
                 var data = { call: n };
                 var args = [].slice.apply(arguments).slice(1);
                 if (args.length > 0) data.args = args;
-                console.log(JSON.stringify(data));
                 ws.send(JSON.stringify(data));
             } else console.log('[ERROR] pocket is offline/connecting - data cannot be sent');
         },
