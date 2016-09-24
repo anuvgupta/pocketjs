@@ -293,7 +293,7 @@ $(document).ready(function () {
     // });
 
     // load blockfile with jQuery
-    body.load(function (b) {
+    body.load(null, 'css', 'jQuery', false).load(function (b) {
         // load blocks into body
         b.fill(document.body);
         // resize on window resize

@@ -1,150 +1,40 @@
     *
 app
-    css
-        width 100%
-        height 100%
-        overflow hidden
-        opacity 0
-        transition opacity 0.35s ease-in-out
-        -moz-transition opacity 0.35s ease-in-out
-        -webkit-transition opacity 0.35s ease-in-out
     main
-        css
-            width 100%
-            height 100%
-            padding-right 15px
-            overflow-y scroll
         intro
-            css
-                position absolute
-                width 100%
-                background-color #161616
             logo
-                css
-                    transform scale(1.025)
-                    animation logopulse 3.5s ease-in-out infinite
-                    margin 0 auto
-                    cursor crosshair
                 src ./img/logo2.png
                 height 400px
                 width 400px
             title
-                css
-                    font-size 150px
-                    color #E5E5E5
-                    //line-height 85px
                 val pocketjs
             text
-                css
-                    font-size 24px
-                    color #E6E6E6
                 textL
                     val realtime websocket applications
-                    css
-                        font-size inherit
                 space
                     val &nbsp;
-                    css
-                        font-size inherit
                 textR
                     val with PHP and JavaScript
-                    css
-                        font-size inherit
-            spacer
-                css
-                    height 13%
             nav
-                css
-                    height 70px
-                    position absolute
-                    bottom 12px
-                    left 0
-                    right 0
-                    cursor pointer
-                    transition opacity 0.3s ease-in-out
-                    -moz-transition opacity 0.3s ease-in-out
-                    -webkit-transition opacity 0.3s ease-in-out
-                    -webkit-backface-visibility hidden
-                    animation none
                 text
-                    css
-                        font 25px JosefinSans
-                        color #DFDFDF
-                        display block
                     val check it out
                 down
                     src ./img/down.png
                     height 35px
                     width 60px
-                    css
-                        margin 10px auto
-                        opacity 0.65
-                        transition opacity 0.3s ease-in-out
-                        -moz-transition opacity 0.3s ease-in-out
-                        -webkit-transition opacity 0.3s ease-in-out
         hook
-            css
-                position absolute
-                width 100%
-                background-color #161616
             left
                 title chat.php
-                css
-                    left 0
-                    right 68%
-                    width 32%
-                    overflow hidden
             middle
                 title demo.pocketjs.ml
-                css
-                    left 32%
-                    right 32%
-                    width 36%
-                chat
-                    css
-                        position absolute
-                        height 100%
-                        width 100%
-                        top 0
-                        bottom 0
-                        right 0
-                        left 0
             right
                 title demo.html
-                css
-                    left 68%
-                    right 0
-                    width 32%
-                    overflow hidden
             bottom
-                css
-                    position absolute
-                    height 9%
-                    bottom 1%
-                    left 0
-                    right 0
-                    width 100%
                 block
                     block
                         text
                             val pocketjs simplifies server and client side realtime operations with an intuitive yet robust api
-                            css
-                                font 30px JosefinSans
-                                font-size 27px
-                                padding-bottom 5px
-                        css
-                            padding-top 20px
-        info
-            css
-                position absolute
-                width 100%
-                background-color #1F1F1F
         links
-            css
-                position absolute
-                width 100%
-                //transition height 0.22s, top 0.22s
-                background #222222
             docs
                 val Documentation
                 href docs
@@ -155,15 +45,8 @@ app
                 val View Source
                 href https://github.com/anuvgupta/pocketjs
         contact
-            css
-                position absolute
-                width 100%
-                //transition top 0.22s
-                background-color #262626
             main
                 author
-                    css
-                        height auto
                     link
                         a
                             href http://anuv.me
@@ -172,34 +55,11 @@ app
                                 src img/anuvgupta.png
                                 height 95px
                                 width 95px
-                                css
-                                    margin 0 auto
                             text
                                 val anuv gupta
-                                css
-                                    font-size 25px
-                            css
-                                text-decoration none
-                        css
-                            background-color #1F1F1F
-                            padding 10px 15px
-                            border-radius 8px
-                            cursor pointer
-                            width 150px
-                            margin 0 auto
-                            transition background-color 0.25s ease
-                            -moz-transition background-color 0.25s ease
-                            -webkit-transition background-color 0.25s ease
                     text
                         val creator of pocketjs
-                        css
-                            //font-size 17px
-                            font-family JosefinSans
-                            padding-top 4px
-                            display block
                     github
-                        css
-                            padding-top 4px
                         html <a class="github-button" href="https://github.com/anuvgupta" data-count-href="/anuvgupta/followers" data-count-api="/users/anuvgupta#followers" data-count-aria-label="# followers on GitHub" aria-label="Follow @anuvgupta on GitHub">Follow Me</a>
                 email
                     text
@@ -209,48 +69,25 @@ app
                             val pocketjs@anuv.me
                         href mailto:pocketjs@anuv.me
                 license
-                    css
-                        padding-bottom 3px
                     name
                         val pocketjs
-                        css
-                            font-size 14px
                     text
                         val &nbsp;is licensed under the&nbsp;
-                        css
-                            font-size 13px
                     link
                         text
                             val MIT License
-                            css
-                                font-size 14px
-                                cursor pointer
                         href https://github.com/anuvgupta/pocketjs/blob/master/LICENSE.md
                         target _blank
                 github
-                    css
-                        padding-top 8px
-                        padding-bottom 20px
                     html
                         A <a class="github-button" href="https://github.com/anuvgupta/pocketjs" data-icon="octicon-star" data-count-href="/anuvgupta/pocketjs/stargazers" data-count-api="/repos/anuvgupta/pocketjs#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star anuvgupta/pocketjs on GitHub">Star</a>
                         B <a class="github-button" href="https://github.com/anuvgupta/pocketjs/fork" data-icon="octicon-repo-forked" data-count-href="/anuvgupta/pocketjs/network" data-count-api="/repos/anuvgupta/pocketjs#forks_count" data-count-aria-label="# forks on GitHub" aria-label="Fork anuvgupta/pocketjs on GitHub">Fork</a>
             footer
-                css
-                    position absolute
-                    bottom 1px
-                    height 45px
-                    font-size 16px
                 copyright
                     html Copyright &copy;&nbsp;
-                    css
-                        font-size inherit
                 year
-                    css
-                        font-size inherit
                 textA
                     val &nbsp;Anuv Gupta.
-                    css
-                        font-size inherit
                 breakB
                     val &nbsp;
                 textB

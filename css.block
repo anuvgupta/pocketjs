@@ -1,0 +1,206 @@
+    *
+app
+    css
+        width 100%
+        height 100%
+        overflow hidden
+        opacity 0
+        transition opacity 0.35s ease-in-out
+        -moz-transition opacity 0.35s ease-in-out
+        -webkit-transition opacity 0.35s ease-in-out
+    main
+        css
+            width 100%
+            height 100%
+            padding-right 15px
+            overflow-y scroll
+        intro
+            css
+                position absolute
+                width 100%
+                background-color #161616
+            logo
+                css
+                    transform scale(1.025)
+                    animation logopulse 3.5s ease-in-out infinite
+                    margin 0 auto
+                    cursor crosshair
+            title
+                css
+                    font-size 150px
+                    color #E5E5E5
+                    //line-height 85px
+            text
+                css
+                    font-size 24px
+                    color #E6E6E6
+                textL
+                    css
+                        font-size inherit
+                space
+                    css
+                        font-size inherit
+                textR
+                    css
+                        font-size inherit
+            spacer
+                css
+                    height 13%
+            nav
+                css
+                    height 70px
+                    position absolute
+                    bottom 12px
+                    left 0
+                    right 0
+                    cursor pointer
+                    transition opacity 0.3s ease-in-out
+                    -moz-transition opacity 0.3s ease-in-out
+                    -webkit-transition opacity 0.3s ease-in-out
+                    -webkit-backface-visibility hidden
+                    animation none
+                text
+                    css
+                        font 25px JosefinSans
+                        color #DFDFDF
+                        display block
+                down
+                    css
+                        margin 10px auto
+                        opacity 0.65
+                        transition opacity 0.3s ease-in-out
+                        -moz-transition opacity 0.3s ease-in-out
+                        -webkit-transition opacity 0.3s ease-in-out
+                        height 35px
+                        width 60px
+        hook
+            css
+                position absolute
+                width 100%
+                background-color #161616
+            left
+                css
+                    left 0
+                    right 68%
+                    width 32%
+                    overflow hidden
+            middle
+                css
+                    left 32%
+                    right 32%
+                    width 36%
+                chat
+                    css
+                        position absolute
+                        height 100%
+                        width 100%
+                        top 0
+                        bottom 0
+                        right 0
+                        left 0
+            right
+                css
+                    left 68%
+                    right 0
+                    width 32%
+                    overflow hidden
+            bottom
+                css
+                    position absolute
+                    height 9%
+                    bottom 1%
+                    left 0
+                    right 0
+                    width 100%
+                block
+                    block
+                        text
+                            css
+                                font 30px JosefinSans
+                                font-size 27px
+                                padding-bottom 5px
+                        css
+                            padding-top 20px
+        info
+            css
+                position absolute
+                width 100%
+                background-color #1F1F1F
+        links
+            css
+                position absolute
+                width 100%
+                //transition height 0.22s, top 0.22s
+                background #222222
+        contact
+            css
+                position absolute
+                width 100%
+                //transition top 0.22s
+                background-color #262626
+            main
+                author
+                    css
+                        height auto
+                    link
+                        a
+                            image
+                                css
+                                    margin 0 auto
+                            text
+                                css
+                                    font-size 25px
+                            css
+                                text-decoration none
+                        css
+                            background-color #1F1F1F
+                            padding 10px 15px
+                            border-radius 8px
+                            cursor pointer
+                            width 150px
+                            margin 0 auto
+                            transition background-color 0.25s ease
+                            -moz-transition background-color 0.25s ease
+                            -webkit-transition background-color 0.25s ease
+                    text
+                        css
+                            //font-size 17px
+                            font-family JosefinSans
+                            padding-top 4px
+                            display block
+                    github
+                        css
+                            padding-top 4px
+                license
+                    css
+                        padding-bottom 3px
+                    name
+                        css
+                            font-size 14px
+                    text
+                        css
+                            font-size 13px
+                    link
+                        text
+                            css
+                                font-size 14px
+                                cursor pointer
+                github
+                    css
+                        padding-top 8px
+                        padding-bottom 20px
+            footer
+                css
+                    position absolute
+                    bottom 1px
+                    height 45px
+                    font-size 16px
+                copyright
+                    css
+                        font-size inherit
+                year
+                    css
+                        font-size inherit
+                textA
+                    css
+                        font-size inherit
