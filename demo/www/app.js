@@ -1,7 +1,7 @@
 var element = function (id) { return document.getElementById(id); };
+var pocket = Pocket();
 var name = '';
 window.addEventListener('load', function () {
-    var pocket = Pocket();
     var send = function () {
         var val = element('input').value;
         element('input').value = '';
