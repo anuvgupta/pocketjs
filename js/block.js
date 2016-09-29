@@ -1,7 +1,10 @@
 /*
- block.js v2.0
- (c) 2016 Anuv Gupta [http://anuv.me/block.js]
- License: MIT
+  block.js v2.0
+  [http://anuv.me/block.js]
+  File: block.js (block.js master)
+  Source: [https://github.com/anuvgupta/block.js]
+  License: MIT [https://github.com/anuvgupta/block.js/blob/v2/LICENSE.md]
+  Copyright: (c) 2016 Anuv Gupta
 */
 
 var __blocks = {  };
@@ -605,6 +608,7 @@ Block = function () {
             block.mark(marking);
         } else element = node(type);
     }
+    block.attribute('block', marking);
     return block;
 };
 // add default block style to document
