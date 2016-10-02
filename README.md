@@ -24,7 +24,7 @@ The WebSocket server runs independently from the Web Server, and can easily be a
 &nbsp;&nbsp;&nbsp;&nbsp;
 [![NGINX](http://anuv.me/pocketjs/img/logo/nginx_75.png)](http://www.nginx.com/)
 [![XAMPP](http://anuv.me/pocketjs/img/logo/xampp_75.png)](http://www.apachefriends.org)
-[![PHP](http://anuv.me/pocketjs/img/logo/php_75.png)](http://php.net)  [![RubyOnRails](http://anuv.me/pocketjs/img/logo/rails_75.png)](http://rubyonrails.org/)
+[![PHP](http://anuv.me/pocketjs/img/logo/php_75.png)](http://php.net)  [![RubyOnRails](http://anuv.me/pocketjs/img/logo/railsA_75.png)](http://rubyonrails.org/)
 [![Node.js](http://anuv.me/pocketjs/img/logo/node_75.png)](http://nodejs.org/)  
 pocketjs is compatible with many libraries and frameworks.  
 For more questions about compatibility, email me at [pocketjs@anuv.me](mailto:pocketjs@anuv.me?Subject=Compatibility%20Issue)  
