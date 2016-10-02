@@ -29,13 +29,21 @@ The WebSocket server runs independently from the Web Server, and can easily be a
  4. Host your own local chat app
     - Follow the steps below!
 
-&nbsp;  
 *Set up a local pocketjs chat demo in just* ***5*** *simple steps*
  1. Install PHP 5.4 or above, or PHP7
     - From [php.net/downloads.php](http://php.net/downloads.php)
     - Or your favorite package manager
  2. Clone [this](http://github.com/anuvgupta.pocketjs) repository
     - Copy the contents of `demo/www` into a new folder `pocketjs` in your web server's `www` or `htdocs` directory
+        - In that folder, open `pocketjs/app.js` in your favorite text editor (Atom)
+        - Scroll to the bottom and change
+        ```javascript
+        pocket.connect('aws.anuv.me', 8000, 'chat.php');
+        ```
+        to this (use `127.0.0.1` if `localhost does not work`)
+        ```javascript
+        pocket.connect('localhost', 30000, 'chat.php');
+        ```
     - Copy the folder `demo` (not including `www`) to somewhere convenient
  3. Start the pocketjs chat demo server
     - Navigate to the `demo` folder from step 2
@@ -49,12 +57,20 @@ The WebSocket server runs independently from the Web Server, and can easily be a
                 - Run `netstat`, `netstat -tulpn`, or `netstat -an | grep LISTEN` to see all running processes
                 - Run `sudo lsof -i :`*some_port*` | grep LISTEN` to check for processes running on a port
                     - Ex: `sudo lsof -i :30000 | grep LISTEN`
-        3. Go to the web server's `www` folder and open `pocketjs/app.js`
-            -
+        3. Go back to the `app.js` file you modified before and reopen it
+            - Change this line:
+            ```javascript
+            pocket.connect('localhost', 30000, 'chat.php');
+            ```
+            to this (use whatever port you chose instead of PORT)
+            ```javascript
+            pocket.connect('localhost', PORT, 'chat.php');
+            ```
  4. View the chat page
-    - Start your web server
     - Open your favorite web browser (Chrome)
-    - Navigate to `http://` (your IP/hostname+port, ie. `localhost` or `127.0.0.1:80`) `/pocketjs` in your browser
+    - One of two options:
+        1. Start your web server and navigate to `http://` (your IP/hostname+port, ie. `localhost` or `127.0.0.1:80`) `/pocketjs` in your browser
+        2. Or, open *your_web_server's_www_directory*`/pocketjs/index.html` in your browser
  5. Chat with yourself
     - Check the JavaScript console for any error messages that might appear
     - Check the [docs](#documentation) and [tutorials](#further-tutorials) for troubleshooting, or [contact me](mailto:pocketjs@anuv.me) through email
