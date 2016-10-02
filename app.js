@@ -291,7 +291,7 @@ $(document).ready(function () {
             if (index == -1) return false;
             var id = window.location.href.substring(index + 1);
             if (document.getElementById(id) == null) return false;
-            $(document.body).animate({
+            body.child('main').$().animate({
                 scrollTop: $('#' + id).offset().top + 'px'
             }, 0);
         }, 10);
