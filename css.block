@@ -16,7 +16,6 @@ app
             overflow-y scroll
         intro
             css
-                position absolute
                 width 100%
                 background-color #161616
             logo
@@ -75,7 +74,7 @@ app
                         width 60px
         hook
             css
-                position absolute
+                position relative
                 width 100%
                 background-color #161616
             left
@@ -104,37 +103,36 @@ app
                     right 0
                     width 32%
                     overflow hidden
-            bottom
-                css
-                    position absolute
-                    height 9%
-                    bottom 1%
-                    left 0
-                    right 0
-                    width 100%
+        line
+            css
+                width 94%
+                background-color #161616
+                margin-bottom 2%
+                padding-left 3%
+                padding-right 3%
+            block
                 block
-                    block
-                        text
-                            css
-                                font 30px JosefinSans
-                                font-size 27px
-                                padding-bottom 5px
+                    text
                         css
-                            padding-top 20px
+                            font 30px JosefinSans
+                            font-size 27px
+                            padding-bottom 5px
+                    css
+                        padding-top 20px
         info
             css
-                position absolute
+                //position absolute
                 width 100%
                 background-color #1F1F1F
         links
             css
-                position absolute
+                //position absolute
                 width 100%
                 //transition height 0.22s, top 0.22s
                 background #222222
         contact
             css
-                position absolute
+                position relative
                 width 100%
                 //transition top 0.22s
                 background-color #262626

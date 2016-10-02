@@ -29,11 +29,11 @@ app
                 title demo.pocketjs.ml
             right
                 title demo.html
-            bottom
+        line
+            block
                 block
-                    block
-                        text
-                            val pocketjs simplifies server and client side realtime operations with an intuitive yet robust api
+                    text
+                        val pocketjs simplifies server and client side realtime operations with an intuitive yet robust api
         links
             docs
                 val Documentation
@@ -60,7 +60,7 @@ app
                     text
                         val creator of pocketjs
                     github
-                        html <a class="github-button" href="https://github.com/anuvgupta" data-count-href="/anuvgupta/followers" data-count-api="/users/anuvgupta#followers" data-count-aria-label="# followers on GitHub" aria-label="Follow @anuvgupta on GitHub">Follow Me</a>
+                        html <a class="github-button" href="https://github.com/anuvgupta" data-count-href="/anuvgupta/followers" data-count-api="/users/anuvgupta#followers" data-count-aria-label="# followers on GitHub" data-style="mega" aria-label="Follow @anuvgupta on GitHub">Follow Me</a>
                 email
                     text
                         val Contact&nbsp;
@@ -80,8 +80,10 @@ app
                         target _blank
                 github
                     html
-                        A <a class="github-button" href="https://github.com/anuvgupta/pocketjs" data-icon="octicon-star" data-count-href="/anuvgupta/pocketjs/stargazers" data-count-api="/repos/anuvgupta/pocketjs#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star anuvgupta/pocketjs on GitHub">Star</a>
-                        B <a class="github-button" href="https://github.com/anuvgupta/pocketjs/fork" data-icon="octicon-repo-forked" data-count-href="/anuvgupta/pocketjs/network" data-count-api="/repos/anuvgupta/pocketjs#forks_count" data-count-aria-label="# forks on GitHub" aria-label="Fork anuvgupta/pocketjs on GitHub">Fork</a>
+                        A <a class="github-button" href="https://github.com/anuvgupta/pocketjs" data-icon="octicon-star" data-style="mega" data-count-href="/anuvgupta/pocketjs/stargazers" data-count-api="/repos/anuvgupta/pocketjs#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star anuvgupta/pocketjs on GitHub">Star</a>
+                        B <a class="github-button" href="https://github.com/anuvgupta/pocketjs/fork" data-icon="octicon-repo-forked" data-style="mega" data-count-href="/anuvgupta/pocketjs/network" data-count-api="/repos/anuvgupta/pocketjs#forks_count" data-count-aria-label="# forks on GitHub" aria-label="Fork anuvgupta/pocketjs on GitHub">Fork</a>
+                        // A <a class="github-button" href="https://github.com/anuvgupta/pocketjs" data-icon="octicon-star" data-count-href="/anuvgupta/pocketjs/stargazers" data-count-api="/repos/anuvgupta/pocketjs#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star anuvgupta/pocketjs on GitHub">Star</a>
+                        // B <a class="github-button" href="https://github.com/anuvgupta/pocketjs/fork" data-icon="octicon-repo-forked" data-count-href="/anuvgupta/pocketjs/network" data-count-api="/repos/anuvgupta/pocketjs#forks_count" data-count-aria-label="# forks on GitHub" aria-label="Fork anuvgupta/pocketjs on GitHub">Fork</a>
             footer
                 copyright
                     html Copyright &copy;&nbsp;

@@ -34,8 +34,9 @@ body = Block('div', 'app')
                     ;
                 })
                 .on('click', function () {
-                    $(document.body).animate({
-                        scrollTop: body.child('main/hook').$().offset().top /*+ $(document.body).scrollTop()*/ + 'px'
+                    var $body = body.child('main').$()
+                    $body.animate({
+                        scrollTop: body.child('main/hook').$().offset().top + $body.scrollTop() + 'px'
                     }, 700);
                 })
             )
@@ -55,26 +56,26 @@ body = Block('div', 'app')
                     .class('code_container')
                 )
             )
-            .add(Block('div', 'bottom')
+        )
+        .add(Block('div', 'line')
+            .add(Block('block', 1)
                 .add(Block('block', 1)
-                    .add(Block('block', 1)
-                        .__child('content')
-                            .css('padding', '0')
-                            .__parent()
-                        .add('text', 'text')
-                    )
+                    .__child('content')
+                        .css('padding', '0')
+                        .__parent()
+                    .add('text', 'text')
                 )
             )
-        )
-        .add(Block('block', 'info')
-            .id('info')
-            .add('text', 'title')
         )
         .add(Block('block', 'links')
             .id('links')
             .add('link button', 'demo')
             .add('link button', 'docs')
             .add('link button', 'source')
+        )
+        .add(Block('block', 'info')
+            .id('info')
+            .add('text', 'title')
         )
         .add(Block('div', 'contact')
             .id('contact')
@@ -156,30 +157,15 @@ $(document).ready(function () {
         // page positioning
         var introTop = mobileAgent() ? window.innerHeight * 2.125 : window.innerHeight * 2.05;
         body.child('main/intro')
-            .css({
-                top: '0',
-                height: window.innerHeight + 'px'
-            })
+            .css('height', window.innerHeight + 'px')
         .sibling('hook')
-            .css({
-                top: window.innerHeight + 'px',
-                height:  window.innerHeight + 'px'
-            })
+            .css('height',  window.innerHeight - body.child('main/line').$().height() + 'px')
         .sibling('info')
-            .css({
-                top: (introTop) + 'px',
-                height:  '400px'
-            })
+            .css('height',  '400px')
         .sibling('links')
-            .css({
-                top: (introTop + 400) + 'px',
-                height:  '100px'
-            })
+            .css('height',  '100px')
         .sibling('contact')
-            .css({
-                top: (introTop + 400 + 100) + 'px',
-                height:  '400px'
-            })
+            .css('height',  '400px')
         ;
 
         // width based resizing
@@ -204,10 +190,7 @@ $(document).ready(function () {
                     .sibling('main')
                         .css('padding-bottom', '20px')
                         .parent()
-                    .css({
-                        top: (introTop + 400 + 280) + 'px',
-                        height: '410px'
-                    })
+                    .css('height', '410px')
                 .sibling('links')
                     .css('height', '280px')
             ;
@@ -237,10 +220,7 @@ $(document).ready(function () {
                     .sibling('main')
                         .css('padding-bottom', '0px')
                     .parent()
-                .css({
-                    top: (introTop + 400 + 100) + 'px',
-                    height: '400px'
-                })
+                .css('height', '400px')
                 .sibling('links')
                     .css('height', '100px')
             ;

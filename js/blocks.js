@@ -81,6 +81,7 @@ Block('panel', function () {
         .css({
             top: '0',
         	bottom: '10%',
+            height: '100%',
         	position: 'absolute'
         })
         .add(Block('block', 1)
@@ -94,7 +95,8 @@ Block('panel', function () {
             .add('text', 'title')
             .add(inner)
         )
-        .setAdd(inner);
+        .setAdd(inner)
+    ;
     return block;
 }, function (block, data) {
     var title = data('title');

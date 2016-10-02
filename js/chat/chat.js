@@ -36,7 +36,6 @@ Block('chat message', function () {
                 color: 'inherit'
             }))
         ;
-        // .html('<span><b>' + user + '</b>: ' + msg + '</span>');
     else if (html != null) block.child('text').html(html);
     else if (val != null) block.child('text').data(val);
 });
@@ -75,7 +74,11 @@ Block('chat', function () {
                     if (val !== null && val != '' && val.trim() != '') {
                         if (name == false || name == null || name.trim() == '')
                             pocket.send('username', val);
-                        else pocket.send('message', val);
+                        else {
+                            pocket.send('message', val);
+                            block.child('input/box').node().value = '';
+                        }
+                        block.child('input/box').node().focus();
                     }
                 })
             )
@@ -140,6 +143,17 @@ Block('chat', function () {
             block.child('output').add(Block('chat message', 'connected')
                 .child('text')
                     .data('status - connected')
+                    .css({
+                        opacity: '0.75',
+                        fontStyle: 'italic'
+                    })
+                    .parent()
+            );
+        });
+        pocket.onClose(function () {
+            block.child('output').add(Block('chat message', 'connected')
+                .child('text')
+                    .data('status - disconnected')
                     .css({
                         opacity: '0.75',
                         fontStyle: 'italic'
