@@ -15,7 +15,7 @@ pocketjs blends well into existing web frameworks:
     - Handles WS/WSS requests
     - Runs on port 8000/8443 (or others)
     - Backgrounded PHP process of a pocketjs script
-        - ie. `nohup` on Linux, or or other
+        - ie. `nohup` on Linux, or other
 
 The WebSocket server runs independently from the Web Server, and can easily be appended to an existing application.
 
