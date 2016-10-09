@@ -106,7 +106,7 @@ class Pocket {
                         }
                         echo ' | ';
                         //generate and send back server socket handshake headers to client socket
-                        $accept = base64_encode(pack('H*', sha1($headers['Sec-WebSocket-Key'] . '258EAFA5-E914-47DA-95CA-C5AB0DC85B11')));
+                        $accept = base64_encode(pack('H*', sha1(@$headers['Sec-WebSocket-Key'] . '258EAFA5-E914-47DA-95CA-C5AB0DC85B11')));
                         $upgrade  = "HTTP/1.1 101 Web Socket Protocol Handshake\r\n" .
                             "Upgrade: websocket\r\n" .
                             "Connection: Upgrade\r\n" .
