@@ -36,5 +36,5 @@ window.addEventListener('load', function () {
         element('output').innerHTML += "<span id = 'message'><strong>" + user + '</strong>: ' + message + '</span><br/>';
         element('output').scrollTop += 50;
     });
-    pocket.connect('aws.anuv.me', 8000, 'chat.php');
+    pocket.connect('pocketjs.ml', 8000, 'chat.php');
 });
