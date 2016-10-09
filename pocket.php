@@ -96,7 +96,7 @@ class Pocket {
                         //display connecting client's details
                         if (socket_getpeername($this->c[$i], $addr, $port)) echo "[SERVER] client[$i] $addr : $port connecting" . $eol;
                         //accept client socket handshake headers
-                        $header = socket_read($this->c[$i], 1024); //read data from new client socket: contains handshake headers
+                        $header = @socket_read($this->c[$i], 1024); //read data from new client socket: contains handshake headers
                         echo '[SERVER] headers recieved';
                         $headers = array(); //init headers array
                         $lines = preg_split("/\r\n/", $header); //add each line of header to array
@@ -113,7 +113,7 @@ class Pocket {
                             "WebSocket-Origin: $this->d \r\n" .
                             "WebSocket-Location: ws://$this->d:$this->p/server.php\r\n".
                             "Sec-WebSocket-Accept:$accept\r\n\r\n";
-                        if (socket_write($this->c[$i], $upgrade, strlen($upgrade)) === false)
+                        if (@socket_write($this->c[$i], $upgrade, strlen($upgrade)) === false)
                             die ('socket_write: fail - [' . socket_last_error() . '] ' . socket_strerror(socket_last_error()) . $eol);
                         echo 'headers sent' . $eol;
                         //display connection details if connection successful
