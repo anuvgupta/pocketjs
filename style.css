@@ -28,7 +28,7 @@
 	color: #1A1A1A;
 }
 ::-webkit-scrollbar {
-	/* display: none; */
+	display: none;
 }
 
 * {

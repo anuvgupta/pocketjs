@@ -134,7 +134,6 @@ body = Block('div', 'app')
 ;
 
 
-
 $(document).ready(function () {
     // function for resizing elements
     var initialSize = window.innerHeight;
@@ -159,13 +158,13 @@ $(document).ready(function () {
         body.child('main/intro')
             .css('height', window.innerHeight + 'px')
         .sibling('hook')
-            .css('height',  window.innerHeight - body.child('main/line').$().height() + 'px')
+            .css('height', window.innerHeight - body.child('main/line').$().height() + 'px')
         .sibling('info')
-            .css('height',  '400px')
+            .css('min-height', '400px')
         .sibling('links')
-            .css('height',  '100px')
+            .css('height', '100px')
         .sibling('contact')
-            .css('height',  '400px')
+            .css('height', '420px')
         ;
 
         // width based resizing
@@ -175,7 +174,7 @@ $(document).ready(function () {
                 .css('height', (0.43 * window.innerHeight) + 'px')
                 .css('width', (0.43 * window.innerHeight) + 'px')
             .sibling('title')
-                .css('font-size',  '118px')
+                .css('font-size', '118px')
             .sibling('text')
                 .css('font-size', '22.5px')
                 .child('space')
@@ -220,7 +219,7 @@ $(document).ready(function () {
                     .sibling('main')
                         .css('padding-bottom', '0px')
                     .parent()
-                .css('height', '400px')
+                .css('height', '420px')
                 .sibling('links')
                     .css('height', '100px')
             ;
@@ -275,13 +274,15 @@ $(document).ready(function () {
     // load blockfile with jQuery
     body.load(null, 'css', 'jQuery', false).load(function (b) {
         // load blocks into body
-        b.fill(document.body);
+        // b.fill(document.body);
+        b.child('main').fill(document.body);
         // resize on window resize
         $(window).resize(size);
         size(); // initial sizing
         setTimeout(function () {
             // display body
-            b.css('opacity', '1');
+            //b.css('opacity', '1');
+            b.child('main').css('opacity', '1');
             // fix background color
             setTimeout(function () {
                 document.body.style.backgroundColor = '#262626';
@@ -315,9 +316,10 @@ $(document).ready(function () {
         }
     });
 
+
     // load github buttons
     $.getScript({
         async: false,
-        url: 'js/buttons.github.io.min.js'
+        url: 'https://buttons.github.io/buttons.js'
     });
 });
