@@ -8,6 +8,7 @@ app
         transition opacity 0.35s ease-in-out
         -moz-transition opacity 0.35s ease-in-out
         -webkit-transition opacity 0.35s ease-in-out
+        //-webkit-overflow-scrolling touch
     main
         css
             width 100%
@@ -16,7 +17,7 @@ app
             transition opacity 0.35s ease-in-out
             -moz-transition opacity 0.35s ease-in-out
             -webkit-transition opacity 0.35s ease-in-out
-            -webkit-overflow-scrolling touch
+            //-webkit-overflow-scrolling touch
         intro
             css
                 width 100%
@@ -110,9 +111,7 @@ app
             css
                 width 94%
                 background-color #161616
-                margin-bottom 2%
-                padding-left 3%
-                padding-right 3%
+                padding 0 3% 2% 3%
             block
                 block
                     text
