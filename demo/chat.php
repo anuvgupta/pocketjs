@@ -6,7 +6,7 @@ $users = array();
 
 $ip = $argv[3];
 $port = $argv[4];
-$pocket = new Pocket($ip, $port, 20);
+$pocket = new Pocket($ip, $port, 20, null);
 
 $pocket->onOpen(function ($id) {
     global $pocket;
