@@ -138,11 +138,9 @@ class Pocket {
                 if (in_array(@$this->c[$i] , $read)) { //if client socket is defined and is in read array, its status has changed and it is sending data
                     //recieve data from client
                     while (@socket_recv($this->c[$i], $masked_data, 1024, 0) >= 1) { //if client sends new data (0 bytes = disconnected, 1 byte = connected, >1 bytes = new data sent to server)
-                        //$data = json_decode(escapeshellcmd($this->unmask($masked_data)), true);
                         $textData = $this->unmask($masked_data);
                         // trim extra bytes
                         $textData = substr($textData, 0, strrpos($textData, '}') + 1);
-                        // echo $textData . $eol;
                         $data = json_decode($textData, true);
                         if (isset($data['command'])) {
                             if ($data['command'] == 'close') {
