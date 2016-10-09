@@ -274,15 +274,15 @@ $(document).ready(function () {
     // load blockfile with jQuery
     body.load(null, 'css', 'jQuery', false).load(function (b) {
         // load blocks into body
-        // b.fill(document.body);
-        b.child('main').fill(document.body);
+        b.fill(document.body);
+        // b.child('main').fill(document.body);
         // resize on window resize
         $(window).resize(size);
         size(); // initial sizing
         setTimeout(function () {
             // display body
-            //b.css('opacity', '1');
-            b.child('main').css('opacity', '1');
+            b.css('opacity', '1');
+            // b.child('main').css('opacity', '1');
             // fix background color
             setTimeout(function () {
                 document.body.style.backgroundColor = '#262626';
