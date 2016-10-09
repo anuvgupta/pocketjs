@@ -316,10 +316,14 @@ $(document).ready(function () {
         }
     });
 
-
     // load github buttons
     $.getScript({
         async: false,
         url: 'https://buttons.github.io/buttons.js'
     });
+
+    // mobile scroll
+    setTimeout(function(){
+		window.scrollTo(0, 1);
+	}, 0);
 });
