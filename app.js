@@ -323,7 +323,7 @@ $(document).ready(function () {
     });
 
     // mobile scroll
-    setTimeout(function(){
+    setTimeout(function () {
 		window.scrollTo(0, 1);
-	}, 0);
+	}, 1000);
 });
