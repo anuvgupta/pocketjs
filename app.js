@@ -330,6 +330,7 @@ $(document).ready(function () {
             var renderer = new marked.Renderer();
             body.child('main/info/content').html(marked(data, { renderer: renderer })).css('opacity', '1');
             setTimeout(function () {
+                alert('hi');
                 $('#pocketjs').html('What is pocketjs?');
                 var further = $('#further-tutorials');
                 further.prev().remove();
