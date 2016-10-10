@@ -7,15 +7,22 @@ Many web developers, such as myself, have many existing dynamic web applications
 
 ## Architecture
 pocketjs blends well into existing web frameworks:
- - Web Server
+ - Web Server - all are compatible
     - Handles HTTP/HTTPS requests
     - Runs on port 80/443, or with a reverse proxy
     - Apache, XAMPP, NGINX, Rails, macOS, node.js, etc.
- - pocketjs WebSocket Server
+    - Serves static/dynamic HTML/CSS/JS content
+        - Provides WebSocket client for pocketjs server
+ - WebSocket Server - pocketjs
     - Handles WS/WSS requests
-    - Runs on port 8000/8443 (or others)
+    - Runs on port 8000/8443 (or custom)
     - Backgrounded PHP process of a pocketjs script
-        - ie. `nohup` on Linux, or other
+        - ie. `nohup php` on Linux, or other
+    - Receives and sends updates to/from clients
+ - WebSocket Client - pocketjs
+    - Provided by web server over HTTP/HTTPS
+    - Connects to WebSocket server over WS/WSS
+    - Receives and sends updates to/from server
 
 The WebSocket server runs independently from the Web Server, and can easily be appended to an existing application.
 
