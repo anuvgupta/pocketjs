@@ -135,6 +135,7 @@ body = Block('div', 'app')
 
 
 $(document).ready(function () {
+    var viewfull = Block('div', 'viewfull').key('ready', false);
     // function for resizing elements
     var initialSize = window.innerHeight;
     var mobileAgent = function () {
@@ -169,13 +170,9 @@ $(document).ready(function () {
 
         // width based resizing
         var infoContent = body.child('main/info/content');
-        if (window.innerWidth < 800) {
+        if (window.innerWidth < 800)
             infoContent.css('width', '100%');
-            // $('#info code').css('white-space', 'normal');
-        } else {
-            infoContent.css('width', '80%');
-            // $('#info code').css('white-space', 'nowrap');
-        }
+        else infoContent.css('width', '80%');
         if (window.innerWidth < 700) {
             // switch to mobile view
             body.child('main/intro/logo')
@@ -235,6 +232,15 @@ $(document).ready(function () {
             for (var i in children)
                 children[i].on('reg');
         }
+        if (window.innerWidth < 500)
+            viewfull.data({
+                wide: false,
+                text: 'View Full Readme'
+            });
+        else viewfull.data({
+            wide: true,
+            text: 'View Full Readme on GitHub'
+        });
 
         // height based resizing
         if (window.innerHeight < 600) {
@@ -335,7 +341,18 @@ $(document).ready(function () {
             var further = $('#further-tutorials');
             further.prev().remove();
             further.nextAll().remove();
-            var viewfull = Block('div', 'viewfull')
+            viewfull
+                .key('ready', true)
+                .bind('text', function (text) {
+                    viewfull.child('button').data({
+                        val: text,
+                        replace: true
+                    });
+                })
+                .bind('wide', function (wide) {
+                    if (wide) viewfull.child('button/button').css('width', '345px');
+                    else viewfull.child('button/button').css('width', '215px');
+                })
                 .add(Block('link button', 'button')
                     .data({
                         val: 'View Full Readme on GitHub',
@@ -346,16 +363,13 @@ $(document).ready(function () {
                             display: 'block'
                         }
                     })
-                    .child('button')
-                        .css('width', '345px')
-                        .parent()
                 )
                 .css({
                     width: '100%',
                     padding: '20px 0'
                 })
+                .data({ wide: true })
             ;
-            console.log(viewfull);
             further.after(viewfull.node());
             further.remove();
         }

@@ -17,8 +17,10 @@ Block('text', function () {
     return block;
 }, function (block, data) {
     var value = data('val');
-    if (value != null)
+    if (value != null) {
+        if (data('replace')) block.node().innerHTML = '';
         block.node().appendChild(document.createTextNode(value.replace(/&nbsp;/g, ' ')));
+    }
     var html = data('html');
     if (html != null) block.html(html);
 });
@@ -163,5 +165,8 @@ Block('link button', function () {
     ;
     return block
 }, function (block, data) {
-    block.child('button/text').data(data('val'));
+    block.child('button/text').data({
+        val: data('val'),
+        replace: data('replace')
+    });
 });
