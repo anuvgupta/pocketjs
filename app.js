@@ -34,7 +34,7 @@ body = Block('div', 'app')
                     ;
                 })
                 .on('click', function () {
-                    var $body = body.child('main').$()
+                    var $body = body.$();
                     $body.animate({
                         scrollTop: body.child('main/hook').$().offset().top + $body.scrollTop() + 'px'
                     }, 700);
@@ -298,7 +298,7 @@ $(document).ready(function () {
             if (index == -1) return false;
             var id = window.location.href.substring(index + 1);
             if (document.getElementById(id) == null) return false;
-            body.child('main').$().animate({
+            body.$().animate({
                 scrollTop: $('#' + id).offset().top + 'px'
             }, 0);
         }, 10);
@@ -373,9 +373,9 @@ $(document).ready(function () {
     });
 
     // mobile scrolling
-    setTimeout(function () {
-		window.scrollTo(0, 1);
-	}, 10);
+    // setTimeout(function () {
+	// 	window.scrollTo(0, 1);
+	// }, 10);
 
     // load github buttons
     $.getScript({
