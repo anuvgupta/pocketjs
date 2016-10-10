@@ -329,49 +329,51 @@ $(document).ready(function () {
         success: function (data) {
             var renderer = new marked.Renderer();
             body.child('main/info/content').html(marked(data, { renderer: renderer })).css('opacity', '1');
-            $('#pocketjs').html('What is pocketjs?');
-            var further = $('#further-tutorials');
-            further.prev().remove();
-            further.nextAll().remove();
-            viewfull
-                .key('ready', true)
-                .on('resize', function (e) {
-                    if (window.innerWidth < 500) {
-                        viewfull.child('button').data({
-                                val: 'View Full Readme',
-                                replace: true
-                            })
-                            .child('button').css('width', '215px')
-                        ;
-                    } else {
-                        viewfull.child('button').data({
-                                val: 'View Full Readme on GitHub',
-                                replace: true
-                            })
-                            .child('button').css('width', '345px')
-                        ;
-                    }
-                    e.stopPropagation();
-                })
-                .add(Block('link button', 'button')
-                    .data({
-                        val: 'View Full Readme on GitHub',
-                        href: 'https://github.com/anuvgupta/pocketjs/blob/master/README.md',
-                        target: '__blank',
-                        css: {
-                            margin: '0 auto',
-                            display: 'block'
+            setTimeout(function () {
+                $('#pocketjs').html('What is pocketjs?');
+                var further = $('#further-tutorials');
+                further.prev().remove();
+                further.nextAll().remove();
+                viewfull
+                    .key('ready', true)
+                    .on('resize', function (e) {
+                        if (window.innerWidth < 500) {
+                            viewfull.child('button').data({
+                                    val: 'View Full Readme',
+                                    replace: true
+                                })
+                                .child('button').css('width', '215px')
+                            ;
+                        } else {
+                            viewfull.child('button').data({
+                                    val: 'View Full Readme on GitHub',
+                                    replace: true
+                                })
+                                .child('button').css('width', '345px')
+                            ;
                         }
+                        e.stopPropagation();
                     })
-                )
-                .css({
-                    width: '100%',
-                    padding: '20px 0'
-                })
-                .on('resize')
-            ;
-            further.after(viewfull.node());
-            further.remove();
+                    .add(Block('link button', 'button')
+                        .data({
+                            val: 'View Full Readme on GitHub',
+                            href: 'https://github.com/anuvgupta/pocketjs/blob/master/README.md',
+                            target: '__blank',
+                            css: {
+                                margin: '0 auto',
+                                display: 'block'
+                            }
+                        })
+                    )
+                    .css({
+                        width: '100%',
+                        padding: '20px 0'
+                    })
+                    .on('resize')
+                ;
+                further.after(viewfull.node());
+                further.remove();
+            }, 10);
         }
     });
 
