@@ -232,16 +232,7 @@ $(document).ready(function () {
             for (var i in children)
                 children[i].on('reg');
         }
-        if (window.innerWidth < 500) {
-            alert(window.innerWidth);
-            viewfull.data({
-                wide: false,
-                text: 'View Full Readme'
-            });
-        } else viewfull.data({
-            wide: true,
-            text: 'View Full Readme on GitHub'
-        });
+        viewfull.on('resize');
 
         // height based resizing
         if (window.innerHeight < 600) {
@@ -344,15 +335,23 @@ $(document).ready(function () {
             further.nextAll().remove();
             viewfull
                 .key('ready', true)
-                .bind('text', function (text) {
-                    viewfull.child('button').data({
-                        val: text,
-                        replace: true
-                    });
-                })
-                .bind('wide', function (wide) {
-                    if (wide) viewfull.child('button/button').css('width', '345px');
-                    else viewfull.child('button/button').css('width', '215px');
+                .on('resize', function (e) {
+                    if (window.innerWidth < 500) {
+                        viewfull.child('button').data({
+                                val: 'View Full Readme',
+                                replace: true
+                            })
+                            .child('button').css('width', '215px')
+                        ;
+                    } else {
+                        viewfull.child('button').data({
+                                val: 'View Full Readme on GitHub',
+                                replace: true
+                            })
+                            .child('button').css('width', '345px')
+                        ;
+                    }
+                    e.stopPropagation();
                 })
                 .add(Block('link button', 'button')
                     .data({
@@ -369,7 +368,7 @@ $(document).ready(function () {
                     width: '100%',
                     padding: '20px 0'
                 })
-                .data({ wide: true })
+                .on('resize')
             ;
             further.after(viewfull.node());
             further.remove();
