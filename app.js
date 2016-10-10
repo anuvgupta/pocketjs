@@ -331,6 +331,33 @@ $(document).ready(function () {
         success: function (data) {
             var renderer = new marked.Renderer();
             body.child('main/info/content').html(marked(data, { renderer: renderer })).css('opacity', '1');
+            $('#pocketjs').html('What is pocketjs?');
+            var further = $('#further-tutorials');
+            further.prev().remove();
+            further.nextAll().remove();
+            var viewfull = Block('div', 'viewfull')
+                .add(Block('link button', 'button')
+                    .data({
+                        val: 'View Full Readme on GitHub',
+                        href: 'https://github.com/anuvgupta/pocketjs/blob/master/README.md',
+                        target: '__blank',
+                        css: {
+                            margin: '0 auto',
+                            display: 'block'
+                        }
+                    })
+                    .child('button')
+                        .css('width', '345px')
+                        .parent()
+                )
+                .css({
+                    width: '100%',
+                    padding: '20px 0'
+                })
+            ;
+            console.log(viewfull);
+            further.after(viewfull.node());
+            further.remove();
         }
     });
 

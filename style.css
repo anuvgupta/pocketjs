@@ -63,7 +63,7 @@ html, body {
 	color: #CFCFCF;
 	font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
 	background-color: rgba(200, 200, 200, 0.12);
-	border-radius: 5px;
+	border-radius: 3px;
 	padding: 1px 8px;
 	margin: 2px;
 	display: inline-block;
@@ -75,13 +75,12 @@ html, body {
 	padding: 6px 14px;
 }
 #info a {
-    color: #4078c0;
+    color: #EEE;
     text-align: center;
-    text-decoration: none;
 	cursor: pointer;
 }
 #info a:hover {
-    text-decoration: underline;
+    color: #BBB;
 }
 #info p,ol,ul,li {
 	font-size: 15.5px;
