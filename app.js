@@ -232,13 +232,13 @@ $(document).ready(function () {
             for (var i in children)
                 children[i].on('reg');
         }
-        alert(window.innerWidth);
-        if (window.innerWidth < 500)
+        if (window.innerWidth < 500) {
+            alert(window.innerWidth);
             viewfull.data({
                 wide: false,
                 text: 'View Full Readme'
             });
-        else viewfull.data({
+        } else viewfull.data({
             wide: true,
             text: 'View Full Readme on GitHub'
         });
