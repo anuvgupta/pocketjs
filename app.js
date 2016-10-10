@@ -327,7 +327,7 @@ $(document).ready(function () {
         url: 'https://raw.githubusercontent.com/anuvgupta/pocketjs/master/README.md',
         dataType: 'text',
         success: function (data) {
-            data = data.substring(0, data.indexOf(' 1. Install PHP 5.4'));
+            data = data.substring(0, data.indexOf(' 1. Install PHP 5.4')).replace('#### Visit [anuv.me/pocketjs](http://anuv.me/pocketjs)', '');
             var renderer = new marked.Renderer();
             body.child('main/info/content').html(marked(data, { renderer: renderer })).css('opacity', '1');
             $('#pocketjs').html('What is pocketjs?');
