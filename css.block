@@ -2,8 +2,7 @@
 app
     css
         width 100%
-        height 100%
-        overflow scroll
+        height auto
         opacity 0
         transition opacity 0.35s ease-in-out
         -moz-transition opacity 0.35s ease-in-out
