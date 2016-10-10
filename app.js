@@ -73,9 +73,9 @@ body = Block('div', 'app')
             .add('link button', 'docs')
             .add('link button', 'source')
         )
-        .add(Block('block', 'info')
+        .add(Block('div', 'info')
             .id('info')
-            .add('text', 'title')
+            .add('div', 'content')
         )
         .add(Block('div', 'contact')
             .id('contact')
@@ -168,6 +168,14 @@ $(document).ready(function () {
         ;
 
         // width based resizing
+        var infoContent = body.child('main/info/content');
+        if (window.innerWidth < 800) {
+            infoContent.css('width', '100%');
+            // $('#info code').css('white-space', 'normal');
+        } else {
+            infoContent.css('width', '80%');
+            // $('#info code').css('white-space', 'nowrap');
+        }
         if (window.innerWidth < 700) {
             // switch to mobile view
             body.child('main/intro/logo')
@@ -316,14 +324,24 @@ $(document).ready(function () {
         }
     });
 
+    // load readme
+    $.ajax({
+        url: 'https://raw.githubusercontent.com/anuvgupta/pocketjs/master/README.md',
+        dataType: 'text',
+        success: function (data) {
+            var renderer = new marked.Renderer();
+            body.child('main/info/content').html(marked(data, { renderer: renderer })).css('opacity', '1');
+        }
+    });
+
+    // mobile scrolling
+    setTimeout(function () {
+		window.scrollTo(0, 1);
+	}, 10);
+
     // load github buttons
     $.getScript({
         async: false,
         url: 'https://buttons.github.io/buttons.js'
     });
-
-    // mobile scroll
-    setTimeout(function () {
-		window.scrollTo(0, 1);
-	}, 1000);
 });

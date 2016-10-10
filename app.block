@@ -44,9 +44,6 @@ app
             source
                 val View Source
                 href https://github.com/anuvgupta/pocketjs
-        info
-            css
-                height 400px
         contact
             main
                 author

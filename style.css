@@ -32,7 +32,7 @@
 }
 
 * {
-	font: 20px CenturyGothic;
+	/*font: 20px CenturyGothic;*/
 	color: #E5E5E5;
 }
 
@@ -43,8 +43,67 @@ html, body {
 	background: #161616 url('') no-repeat;
 	background-size: cover;
 	background-attachment: fixed;
+	font: 20px CenturyGothic;
 }
 
+#hook input,button {
+	font: 20px CenturyGothic;
+}
+
+#info {
+	color: #DDD;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+#info * {
+	line-height: 1.3;
+}
+#info code {
+	font-size: 16px;
+	color: #CFCFCF;
+	font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+	background-color: rgba(200, 200, 200, 0.12);
+	border-radius: 5px;
+	padding: 1px 8px;
+	margin: 2px;
+	display: inline-block;
+	word-wrap: break-word;
+	white-space: normal;
+}
+#info code.lang-javascript {
+	padding: 6px 14px;
+}
+#info a {
+    color: #4078c0;
+    text-align: center;
+    text-decoration: none;
+	cursor: pointer;
+}
+#info a:hover {
+    text-decoration: underline;
+}
+#info p,ol,ul,li {
+	font-size: 15.5px;
+	color: #CCC;
+}
+#info h1,h2 {
+	border-bottom: 1px solid #EDEDED;
+}
+#info h1 {
+	font-size: 1.8em;
+	font-family: JosefinSans;
+}
+#info h2 {
+	font-size: 1.63em;
+	font-family: JosefinSans;
+}
+#info h3 {
+	font-size: 1.47em;
+	font-family: JosefinSans;
+}
+#info h4 {
+	font-size: 1.3em;
+	font-family: JosefinSans;
+}
 
 .code_container {
 	background-color: #1e1e1f;

@@ -2,7 +2,7 @@
 
 <span class = 'syntax var'>$users</span> <span class = 'syntax operator'>=</span> [];
 <span class = 'syntax var'>$pocket</span> <span class = 'syntax operator'>=</span> <span class = 'syntax keyword'>new</span> <span class = 'syntax class'>Pocket</span>(
-  <span class = 'syntax string'>'pocketjs.ml'</span>, <span class = 'syntax primitive'>8000</span>, <span class = 'syntax primitive'>20</span>
+  <span class = 'syntax string'>'pocketjs.ml'</span>, <span class = 'syntax primitive'>8000</span>, <span class = 'syntax primitive'>20</span>, <span class = 'syntax primitive'>null</span>
 );
 
 <span class = 'syntax var'>$pocket</span><span class = 'syntax operator'>-></span><span class = 'syntax method'>bind</span>(<span class = 'syntax string'>'username'</span>,
