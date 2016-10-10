@@ -232,7 +232,7 @@ $(document).ready(function () {
             for (var i in children)
                 children[i].on('reg');
         }
-        console.log(window.innerWidth);
+        alert(window.innerWidth);
         if (window.innerWidth < 500)
             viewfull.data({
                 wide: false,
