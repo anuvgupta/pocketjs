@@ -34,9 +34,8 @@ body = Block('div', 'app')
                     ;
                 })
                 .on('click', function () {
-                    var $body = body.$();
-                    $body.animate({
-                        scrollTop: body.child('main/hook').$().offset().top + $body.scrollTop() + 'px'
+                    $(document.body).animate({
+                        scrollTop: body.child('main/hook').$().offset().top + 'px'
                     }, 700);
                 })
             )
@@ -298,7 +297,7 @@ $(document).ready(function () {
             if (index == -1) return false;
             var id = window.location.href.substring(index + 1);
             if (document.getElementById(id) == null) return false;
-            body.$().animate({
+            $(document.body).animate({
                 scrollTop: $('#' + id).offset().top + 'px'
             }, 0);
         }, 10);
