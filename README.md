@@ -31,7 +31,7 @@ The WebSocket server runs independently from the Web Server, and can easily be a
  1. View a live demo online at [anuv.me/pocketjs/demo](http://anuv.me/pocketjs/demo)
  2. View an improved demo online at [anuv.me/pocketjs/#hook](http://anuv.me/pocketjs/#hook)
  3. View a local demo
-    - Clone this repository onto your machine
+    - Clone [this](http://github.com/anuvgupta/pocketjs) repository onto your machine
     - Open `demo/www/index.html` in your favorite web browser (Chrome)
  4. Host your own local chat app
     - Follow the steps below!
