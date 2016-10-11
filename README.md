@@ -24,7 +24,9 @@ pocketjs blends well into existing web frameworks:
     - Connects to WebSocket server over WS/WSS
     - Receives and sends updates to/from server
 
-The WebSocket server runs independently from the Web Server, and can easily be appended to an existing application.
+The WebSocket server runs independently from the Web Server, and can easily be appended to an existing application.  
+&nbsp;  
+Regarding program structure, pocketjs utilizes an *event-driven flow* model to simplify operations as much as possible within the bounds of PHP.  
 
 ## Getting Started
 *View a live demo!*
