@@ -293,6 +293,7 @@ $(document).ready(function () {
                 children[i].on('reg');
         }
         if (window.innerWidth < 500) {
+            body.child('main/intro/title').css('font-size', '90px');
             for (var i in panels)
                 panels[i].css('width', '99%')
         }
