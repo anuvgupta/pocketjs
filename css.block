@@ -95,6 +95,7 @@ app
                         margin-bottom 8px
                         margin-top 10px
                         text-align center
+                        text-align-last center
                         outline none
             left
                 css
