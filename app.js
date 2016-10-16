@@ -200,6 +200,8 @@ $(document).ready(function () {
             var children = body.child('main/links').children();
             for (var i in children)
                 children[i].on('alt');
+
+            // resize hook here
         } else {
             // or switch to regular view
             body.child('main/intro/logo')
@@ -230,6 +232,8 @@ $(document).ready(function () {
             var children = body.child('main/links').children();
             for (var i in children)
                 children[i].on('reg');
+
+            // reset hook here
         }
         viewfull.on('resize');
 
@@ -354,7 +358,7 @@ $(document).ready(function () {
                     .data({
                         val: 'View Full Readme on GitHub',
                         href: 'https://github.com/anuvgupta/pocketjs/blob/master/README.md',
-                        target: '__blank',
+                        // target: '__blank',
                         css: {
                             margin: '0 auto',
                             display: 'block'

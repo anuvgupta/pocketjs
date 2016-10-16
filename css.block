@@ -85,6 +85,9 @@ app
                     right 68%
                     width 32%
                     overflow hidden
+                div
+                    css
+                        -webkit-overflow-scrolling touch
             middle
                 css
                     left 32%
@@ -105,6 +108,9 @@ app
                     right 0
                     width 32%
                     overflow hidden
+                div
+                    css
+                        -webkit-overflow-scrolling touch
         line
             css
                 width 94%

@@ -11,7 +11,8 @@ chat
             padding-bottom 10px
             fontSize 17px
             margin 0 auto
-            overflow auto
+            overflow scroll
+            -webkit-overflow-scrolling touch
             background-color #1e1e1f
             border-radius 20px 20px 0 0
         connecting

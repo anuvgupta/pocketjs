@@ -127,7 +127,7 @@ Block('link button', function () {
         width: '100%'
     };
     block
-        .attribute('target', '_blank')
+        // .attribute('target', '_blank')
         .css('text-decoration', 'none')
         .__add(Block('block', 1)
             .css('display', 'inline-table')
