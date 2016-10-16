@@ -23,10 +23,17 @@ app
                     height 35px
                     width 60px
         hook
+            options
+                selection
+                    default B
+                    A chat.php
+                    B chat demo
+                    C demo.html
             left
                 title chat.php
             middle
-                title demo.pocketjs.ml
+                //title demo.pocketjs.ml
+                title chat demo
             right
                 title demo.html
         line

@@ -4,13 +4,14 @@ Block('chat message', function () {
         .add(Block('text', 1)
             .css({
                 fontSize: '16px',
-                color: '#DEDEDE'
+                color: '#DEDEDE',
+                wordWrap: 'break-word'
             })
         )
         .css({
-            height: '20px',
-            width: '100%',
-            padding: '2px 16px',
+            // height: '20px',
+            width: 'auto',
+            padding: '2px 0 2px 16px',
             textAlign: 'left'
         })
     ;

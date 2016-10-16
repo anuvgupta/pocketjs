@@ -79,6 +79,23 @@ app
                 position relative
                 width 100%
                 background-color #161616
+            options
+                css
+                    height 50px
+                    width 100%
+                    z-index 5
+                    position relative
+                selection
+                    css
+                        font 21px CenturyGothic
+                        color #CDCDCD
+                        background-color inherit
+                        width 180px
+                        height 42px
+                        margin-bottom 8px
+                        margin-top 10px
+                        text-align center
+                        outline none
             left
                 css
                     left 0

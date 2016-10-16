@@ -42,6 +42,15 @@ body = Block('div', 'app')
         )
         .add(Block('div', 'hook')
             .id('hook')
+            .add(Block('block', 'options')
+                .add(Block('selection', 1)
+                    .on('change', function (e) {
+                        var select = body.child('main/hook/options/selection');
+                        body.child('main/hook').on('show', { panel: select.key('value') });
+                        e.stopPropagation();
+                    })
+                )
+            )
             .add(Block('panel', 'left')
                 .add(Block('div', 1)
                     .class('code_container')
@@ -55,6 +64,20 @@ body = Block('div', 'app')
                     .class('code_container')
                 )
             )
+            .on('show', function (e) {
+                var panel = e.detail.panel;
+                if (panel != undefined && panel != null) {
+                    var children = body.child('main/hook').children();
+                    for (i in children) {
+                        if (i != 'options') {
+                            if (children[i].key('title') == panel)
+                                children[i].css('display', 'block');
+                            else children[i].css('display', 'none');
+                        }
+                    }
+                }
+                e.stopPropagation();
+            })
         )
         .add(Block('div', 'line')
             .add(Block('block', 1)
@@ -169,9 +192,47 @@ $(document).ready(function () {
 
         // width based resizing
         var infoContent = body.child('main/info/content');
-        if (window.innerWidth < 800)
+        if (window.innerWidth < 800) {
             infoContent.css('width', '100%');
-        else infoContent.css('width', '80%');
+            // resize hook
+            var panels = body.child('main/hook').children();
+            for (var i in panels) {
+                if (panels[i].mark() != 'options')
+                    panels[i]
+                        .css({
+                            display: 'none',
+                            width: '75%',
+                            position: 'static',
+                            margin: '-35px auto 0 auto'
+                        })
+                        .child('block/title')
+                            .css('display', 'none')
+                    ;
+            }
+            body.child('main/hook/options')
+                .css('display', 'table')
+                .child('selection')
+                    .on('change')
+            ;
+        } else {
+            infoContent.css('width', '80%');
+            // reset hook
+            var panels = body.child('main/hook').children();
+            for (var i in panels) {
+                if (panels[i].mark() != 'options')
+                    panels[i]
+                        .css({
+                            display: 'block',
+                            width: panels[i].blockdata('css').css.width,
+                            position: 'absolute',
+                            margin: '0'
+                        })
+                        .child('block/title')
+                            .css('display', 'block')
+                    ;
+            }
+            body.child('main/hook/options').css('display', 'none');
+        }
         if (window.innerWidth < 700) {
             // switch to mobile view
             body.child('main/intro/logo')
@@ -200,23 +261,6 @@ $(document).ready(function () {
             var children = body.child('main/links').children();
             for (var i in children)
                 children[i].on('alt');
-
-            // resize hook here
-            var panels = body.child('main/hook').children();
-            for (var i in panels)
-                panels[i].css({
-                    display: 'none',
-                    width: '75%',
-                    position: 'static',
-                    margin: '0 auto'
-                });
-
-            body.child('main/hook')
-                .child('middle')
-                    .css({
-                        display: 'block'
-                    })
-            ;
         } else {
             // or switch to regular view
             body.child('main/intro/logo')
@@ -247,16 +291,6 @@ $(document).ready(function () {
             var children = body.child('main/links').children();
             for (var i in children)
                 children[i].on('reg');
-
-            // reset hook here
-            var panels = body.child('main/hook').children();
-            for (var i in panels)
-                panels[i].css({
-                    display: 'block',
-                    width: panels[i].blockdata('css').css.width,
-                    position: 'absolute',
-                    margin: '0'
-                });
         }
         if (window.innerWidth < 500) {
             for (var i in panels)

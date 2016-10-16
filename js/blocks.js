@@ -62,6 +62,33 @@ Block('image', function () {
     else element.style.width = 'auto';
 });
 
+Block('selection', function () {
+    var block = Block('select');
+    block.on('change', function (e) {
+        var select = block.node();
+        var selected = select.options[select.selectedIndex].value;
+        block.key('value', selected);
+        e.stopPropagation();
+    });
+    return block;
+}, function (block, data) {
+    var options = data('this');
+    var defaultOption = null;
+    for (i in options) {
+        if (i == 'default') {
+            defaultOption = data(i);
+            continue;
+        }
+        var option = data(i);
+        block.add(Block('option', i)
+            .html(option)
+            .attribute('value', option)
+        );
+    }
+    if (defaultOption != null)
+        block.child(defaultOption).node().selected = true;
+});
+
 Block('panel', function () {
     var inner = Block()
         .css({
