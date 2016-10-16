@@ -332,11 +332,11 @@ $(document).ready(function () {
                 .css('font-size', '10px')
             ;
             body.child('main/hook/options/selection')
-                .css('12px auto 20px auto');
+                .css('margin', '12px auto 20px auto');
             body.child('main/line').css('padding', '5px 3% 2%');
         } else {
             body.child('main/hook/options/selection')
-                .css('12px auto');
+                .css('margin', '12px auto');
             body.child('main/line').css('padding', '0px 3% 2%');
         }
     }
