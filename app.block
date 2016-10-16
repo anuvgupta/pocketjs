@@ -25,10 +25,10 @@ app
         hook
             options
                 selection
-                    default B
-                    A chat.php
-                    B chat demo
-                    C demo.html
+                    default 1
+                    0 chat.php
+                    1 chat demo
+                    2 demo.html
             left
                 title chat.php
             middle

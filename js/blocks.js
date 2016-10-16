@@ -63,13 +63,108 @@ Block('image', function () {
 });
 
 Block('selection', function () {
-    var block = Block('select');
-    block.on('change', function (e) {
-        var select = block.node();
-        var selected = select.options[select.selectedIndex].value;
-        block.key('value', selected);
-        e.stopPropagation();
-    });
+    var block = Block('div')
+        .css('position', 'relative')
+        .add(Block('img', 'left')
+            .data({
+                src: 'img/down.png',
+                height: '27px',
+                css: {
+                    margin: '0',
+                    transform: 'rotate(90deg)',
+                    display: 'inline-block',
+                    opacity: '0.7',
+                    cursor: 'pointer'
+                }
+            })
+            .key('able', true)
+            .on('mouseover', function () {
+                if (block.child('left').key('able') === true)
+                    block.child('left').css('opacity', '0.95');
+            })
+            .on('mouseout', function () {
+                if (block.child('left').key('able') === true)
+                    block.child('left').css('opacity', '0.7');
+            })
+            .on('click', function () {
+                var index = block.key('index');
+                var newIndex = (parseInt(index) - 1).toString();
+                if (block.key(newIndex) != block && typeof block.key(newIndex) === 'string')
+                    block.on('choose', { index: newIndex });
+                block.child('left').on('refresh').sibling('right').on('refresh');
+            })
+            .on('refresh', function () {
+                var index = block.key('index');
+                var nextIndex = (parseInt(index) - 1).toString();
+                if (block.key(nextIndex) == block || typeof block.key(nextIndex) !== 'string')
+                    block.child('left').key('able', false).css('opacity', '0.3');
+                else block.child('left').key('able', true).css('opacity', '0.7');
+            })
+        )
+        .add(Block('block', 'text')
+            .css({
+                height: '100%',
+                width: 'auto',
+                display: 'inline-table',
+                margin: '0 10px'
+            })
+            .add('text', 1)
+        )
+        .add(Block('img', 'right')
+            .data({
+                src: 'img/down.png',
+                height: '27px',
+                css: {
+                    margin: '0',
+                    transform: 'rotate(-90deg)',
+                    display: 'inline-block',
+                    opacity: '0.7',
+                    cursor: 'pointer'
+                }
+            })
+            .key('able', true)
+            .on('mouseover', function () {
+                if (block.child('right').key('able') === true)
+                    block.child('right').css('opacity', '0.95');
+            })
+            .on('mouseout', function () {
+                if (block.child('right').key('able') === true)
+                    block.child('right').css('opacity', '0.7');
+            })
+            .on('click', function () {
+                var index = block.key('index');
+                var newIndex = (parseInt(index) + 1).toString();
+                if (block.key(newIndex) != block && typeof block.key(newIndex) === 'string')
+                    block.on('choose', { index: newIndex });
+                block.child('left').on('refresh').sibling('right').on('refresh');
+            })
+            .on('refresh', function () {
+                var index = block.key('index');
+                var nextIndex = (parseInt(index) + 1).toString();
+                if (block.key(nextIndex) == block || typeof block.key(nextIndex) !== 'string')
+                    block.child('right').key('able', false).css('opacity', '0.3');
+                else block.child('right').key('able', true).css('opacity', '0.7');
+            })
+        )
+        .on('choose', function (e) {
+            var i = e.detail.index;
+            if (i != undefined && i != null) {
+                var value = block.key(i);
+                block
+                    .key('index', i)
+                    .key('value', value)
+                    .on('change')
+                    .child('text/text').html(value)
+                ;
+            }
+        })
+    ;
+    // block.on('change', function (e) {
+    //     var select = block.node();
+    //     var selected = select.options[select.selectedIndex].value;
+    //     block.key('value', selected);
+    //     e.stopPropagation();
+    // });
     return block;
 }, function (block, data) {
     var options = data('this');
@@ -80,13 +175,10 @@ Block('selection', function () {
             continue;
         }
         var option = data(i);
-        block.add(Block('option', i)
-            .html(option)
-            .attribute('value', option)
-        );
+        block.key(i, option);
     }
     if (defaultOption != null)
-        block.child(defaultOption).node().selected = true;
+        block.on('choose', { index: defaultOption });
 });
 
 Block('panel', function () {
