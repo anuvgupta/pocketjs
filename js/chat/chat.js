@@ -129,15 +129,18 @@ Block('chat', function () {
             ;
         });
         pocket.bind('message', function (user, message, id) {
-            msgID++;
-            block.child('output')
-                .add(Block('chat message', msgID.toString())
-                    .data({
-                        user: user,
-                        msg: message
-                    })
-                ).node().scrollTop += 50
-            ;
+            var username = block.key('username');
+            if (username != null && username !== false && (typeof username === 'string') && username.trim() != '') {
+                msgID++;
+                block.child('output')
+                    .add(Block('chat message', msgID.toString())
+                        .data({
+                            user: user,
+                            msg: message
+                        })
+                    ).node().scrollTop += 50
+                ;
+            }
         });
         pocket.onOpen(function () {
             block.child('output').add(Block('chat message', 'connected')

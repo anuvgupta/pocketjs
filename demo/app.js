@@ -33,8 +33,10 @@ window.addEventListener('load', function () {
         } else console.log('Username not accepted');
     });
     pocket.bind('message', function (user, message, id) {
-        element('output').innerHTML += "<span id = 'message'><strong>" + user + '</strong>: ' + message + '</span><br/>';
-        element('output').scrollTop += 50;
+        if (!((name == null) || (name == '') || (name.trim() == ''))) {
+            element('output').innerHTML += "<span id = 'message'><strong>" + user + '</strong>: ' + message + '</span><br/>';
+            element('output').scrollTop += 50;
+        }
     });
     pocket.connect('pocketjs.ml', 8000, 'chat.php');
 });
