@@ -326,11 +326,10 @@ $(document).ready(function () {
 
         // mobile resizing
         if (mobileAgent) {
-            body.child('main/intro/title')
-                .css('font-size', '75px')
-            .sibling('text')
-                .css('font-size', '20px')
-            ;
+            body.child('main/intro/title').css('font-size', '75px');
+            setTimeout(function () {
+                body.child('main/intro/text').css('font-size', '20px')
+            }, 100);
             body.child('main/hook/options/selection')
                 .css('margin', '12px auto 20px auto');
             body.child('main/line').css('padding', '5px 3% 2%');
