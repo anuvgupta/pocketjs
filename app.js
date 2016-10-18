@@ -337,11 +337,11 @@ $(document).ready(function () {
             body.child('main/intro/title').css('font-size', '75px');
             body.child('main/intro/text')
                 .child('space')
-                    .css('font-size', '17px')
+                    .css('font-size', '20px')
                 .sibling('textL')
-                    .css('font-size', '17px')
+                    .css('font-size', '20px')
                 .sibling('textR')
-                    .css('font-size', '17px')
+                    .css('font-size', '20px')
             ;
             body.child('main/hook/options/selection')
                 .css('margin', '12px auto 20px auto');
