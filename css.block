@@ -28,21 +28,26 @@ app
                     cursor crosshair
             title
                 css
+                    font-family CenturyGothic, JosefinSans, -apple-system, BlinkMacSystemFont, Helvetica, Verdana
                     font-size 150px
                     color #E5E5E5
                     //line-height 85px
             text
                 css
                     color #E6E6E6
+                    font-family JosefinSans, -apple-system, BlinkMacSystemFont, Helvetica, Verdana
                 textL
                     css
-                        font-size 24px
+                        font-size 26px
+                        font-family inherit
                 space
                     css
-                        font-size 24px
+                        font-size 26px
+                        font-family inherit
                 textR
                     css
-                        font-size 24px
+                        font-size 26px
+                        font-family inherit
             spacer
                 css
                     height 13%
