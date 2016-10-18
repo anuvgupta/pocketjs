@@ -35,7 +35,7 @@ body = Block('div', 'app')
                 })
                 .on('click', function () {
                     $(document.body).animate({
-                        scrollTop: body.child('main/hook').$().offset().top + 'px'
+                        scrollTop: (body.child('main/hook').$().offset().top + 14) + 'px'
                     }, 700);
                 })
             )
