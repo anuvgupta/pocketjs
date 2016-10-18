@@ -241,9 +241,13 @@ $(document).ready(function () {
             .sibling('title')
                 .css('font-size', '118px')
             .sibling('text')
-                .css('font-size', '22.5px')
                 .child('space')
                     .html('<br/>')
+                    .css('font-size', '22.5px')
+                .sibling('textL')
+                    .css('font-size', '22.5px')
+                .sibling('textR')
+                    .css('font-size', '22.5px')
             ;
             body.child('main/contact/footer/breakB')
                             .html('<br/>')
@@ -271,9 +275,13 @@ $(document).ready(function () {
             .sibling('title')
                 .css('font-size',  '138px')
             .sibling('text')
-                .css('font-size', '23px')
                 .child('space')
                     .html(' ')
+                    .css('font-size', '23px')
+                .sibling('textL')
+                    .css('font-size', '23px')
+                .sibling('textR')
+                    .css('font-size', '23px')
             ;
             body.child('main/contact/footer/breakB')
                             .html(' ')
@@ -328,7 +336,14 @@ $(document).ready(function () {
         if (mobileAgent) {
             body.child('main/intro/title').css('font-size', '75px');
             setTimeout(function () {
-                body.child('main/intro/text').css('font-size', '14px')
+                body.child('main/intro/text')
+                    .child('space')
+                        .css('font-size', '14px')
+                    .sibling('textL')
+                        .css('font-size', '14px')
+                    .sibling('textR')
+                        .css('font-size', '14px')
+                ;
             }, 100);
             body.child('main/hook/options/selection')
                 .css('margin', '12px auto 20px auto');

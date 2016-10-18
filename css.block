@@ -33,17 +33,16 @@ app
                     //line-height 85px
             text
                 css
-                    font-size 24px
                     color #E6E6E6
                 textL
                     css
-                        font-size inherit
+                        font-size 24px
                 space
                     css
-                        font-size inherit
+                        font-size 24px
                 textR
                     css
-                        font-size inherit
+                        font-size 24px
             spacer
                 css
                     height 13%
