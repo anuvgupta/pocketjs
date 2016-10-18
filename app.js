@@ -328,7 +328,7 @@ $(document).ready(function () {
         if (mobileAgent) {
             body.child('main/intro/title').css('font-size', '75px');
             setTimeout(function () {
-                body.child('main/intro/text').css('font-size', '16px')
+                body.child('main/intro/text').css('font-size', '14px')
             }, 100);
             body.child('main/hook/options/selection')
                 .css('margin', '12px auto 20px auto');
