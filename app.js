@@ -335,16 +335,14 @@ $(document).ready(function () {
         // mobile resizing
         if (mobileAgent) {
             body.child('main/intro/title').css('font-size', '75px');
-            setTimeout(function () {
-                body.child('main/intro/text')
-                    .child('space')
-                        .css('font-size', '14px')
-                    .sibling('textL')
-                        .css('font-size', '14px')
-                    .sibling('textR')
-                        .css('font-size', '14px')
-                ;
-            }, 100);
+            body.child('main/intro/text')
+                .child('space')
+                    .css('font-size', '14px')
+                .sibling('textL')
+                    .css('font-size', '14px')
+                .sibling('textR')
+                    .css('font-size', '14px')
+            ;
             body.child('main/hook/options/selection')
                 .css('margin', '12px auto 20px auto');
             body.child('main/line').css('padding', '5px 3% 2%');
@@ -370,6 +368,7 @@ $(document).ready(function () {
         // resize on window resize
         $(window).resize(size);
         size(); // initial sizing
+        setTimeout(size, 500);
         setTimeout(function () {
             // display body
             b.css('opacity', '1');
