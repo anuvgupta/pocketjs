@@ -21,6 +21,11 @@ var Pocket = function () {
     };
     var on = { };
 
+    // convenience
+    var encode = function (text) {
+        return '~pocketjs~' + text + '~pocketjs~';
+    };
+
     // object
     var pocket;
     pocket = {
@@ -35,12 +40,12 @@ var Pocket = function () {
             }
             ws.onopen = function (e) {
                 console.log('[POCKET] connecting');
-                ws.send(JSON.stringify({ command: 'alive', id: id }));
+                ws.send(encode(JSON.stringify({ command: 'alive', id: id })));
                 return false;
             }
             ws.onclose = function (e) {
                 ol = false;
-                ws.send(JSON.stringify({ command: 'close', id: id, ad: address, p: port}));
+                ws.send(encode(JSON.stringify({ command: 'close', id: id, ad: address, p: port})));
                 console.log('[POCKET] disconnected');
                 ev['close']();
                 return false;
@@ -58,7 +63,7 @@ var Pocket = function () {
                     console.log('[POCKET] connected');
                     ev['open']();
                 }
-                // ws.send(JSON.stringify({ command: 'alive', id: id }));
+                // ws.send(encode(JSON.stringify({ command: 'alive', id: id })));
                 return false;
             };
             ws.onerror = function (e) {
@@ -75,7 +80,7 @@ var Pocket = function () {
                 var data = { call: n };
                 var args = [].slice.apply(arguments).slice(1);
                 if (args.length > 0) data.args = args;
-                ws.send(JSON.stringify(data));
+                ws.send(encode(JSON.stringify(data)));
             } else console.log('[ERROR] pocket is offline/connecting - data cannot be sent');
         },
         bind: function (n, f) {

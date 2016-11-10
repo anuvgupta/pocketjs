@@ -5,5 +5,5 @@ if [ -e "./${args[1]}_pid.txt" ]; then
 	exit 1
 else
 	nohup ${args[0]} > ${args[1]}_log.log 2>&1&
-        echo $! > "./${args[1]}_pid.txt"
+	echo $! > "./${args[1]}_pid.txt"
 fi

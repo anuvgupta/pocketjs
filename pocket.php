@@ -138,10 +138,16 @@ class Pocket {
                 if (in_array(@$this->c[$i] , $read)) { //if client socket is defined and is in read array, its status has changed and it is sending data
                     //recieve data from client
                     while (@socket_recv($this->c[$i], $masked_data, 1024, 0) >= 1) { //if client sends new data (0 bytes = disconnected, 1 byte = connected, >1 bytes = new data sent to server)
-                        $textData = $this->unmask($masked_data);
-                        // trim extra bytes
+                        $encodedData = $this->unmask($masked_data);
+                        // decode and trim trailing bytes
+                        echo "\$encodedData = $encodedData";
+                        $beginningPos = strpos($encodedData, '~pocketjs~') + 10;
+                        $textData = substr($encodedData, $beginningPos, strrpos($encodedData, '~pocketjs~') - $beginningPos);
+                        echo "\$textData = $textData";
                         $textData = substr($textData, 0, strrpos($textData, '}') + 1);
+                        echo "\$textData = $textData";
                         $data = json_decode($textData, true);
+                        // handle data
                         if (isset($data['command'])) {
                             if ($data['command'] == 'close') {
                                 $this->close($data['id']);
@@ -149,7 +155,8 @@ class Pocket {
                             }
                             //elseif ($data['command'] == 'alive') ;
                         } elseif (!isset($data['call'])) {
-                            echo "[SERVER] client[$i] kicked for: sending illegal data: no event specified" . $eol;
+                            // echo ($textData);
+                            echo "[SERVER] client[$i] kicked for: sending illegal data: no event specified $textData" . $eol;
                             $this->close($i);
                         } elseif (isset($this->on[$data['call']])) {
                             if (isset($data['args'])) {
