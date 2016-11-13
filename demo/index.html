@@ -10,13 +10,23 @@
         <script type = 'text/javascript' src = 'pocket.js'></script>
         <script type = 'text/javascript' src = 'app.js'></script>
     </head>
-    <body>
-        <div id = 'content'>
+    <body class = 'block'>
+        <div id = 'content' class = 'content'>
             <span id ='title'>PocketJS Chat</span>
             <div id = 'output'></div>
             <div id = 'inputwrap'>
                 <input id = 'input' type = 'text' placeholder = 'nickname'/>
                 <button id = 'submit'>join</button>
+            </div>
+            <div id = 'info'>
+                <div id = 'top'>
+                    What's this?
+                </div>
+                <div id = 'bottom'>
+                    This is a demo of a chat application created with <a href = '../'>pocketjs</a>.
+                    The code for this demo is located <a href = 'http://github.com/anuvgupta/pocketjs/tree/master/demo'>here</a>, on GitHub.
+                    To view an improved demo, visit <a href = '../#hook'>this page</a>.
+                </div>
             </div>
         </div>
     </body>

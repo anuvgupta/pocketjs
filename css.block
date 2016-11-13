@@ -26,6 +26,8 @@ app
                     animation logopulse 3.5s ease-in-out infinite
                     margin 0 auto
                     cursor crosshair
+                    max-height 500px
+                    max-width 500px
             title
                 css
                     font-family CenturyGothic, JosefinSans, -apple-system, BlinkMacSystemFont, Helvetica, Verdana
@@ -83,6 +85,9 @@ app
                 position relative
                 width 100%
                 background-color #161616
+                max-height 1000px
+                max-width 1600px
+                margin 0 auto
             options
                 css
                     height 50px

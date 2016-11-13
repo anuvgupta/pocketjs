@@ -19,15 +19,15 @@ body = Block('div', 'app')
             .add(Block('div', 'nav')
                 .add('text', 'text')
                 .add('image', 'down')
-                .on('mouseover', function () {
-                    body.child('main/intro/nav')
+                .on('mouseover', function (e, nav) {
+                    nav
                         .css('animation', 'slowbounce 1s ease-in-out infinite')
                         .child('down')
                             .css('opacity', '0.97')
                     ;
                 })
-                .on('mouseout', function () {
-                    body.child('main/intro/nav')
+                .on('mouseout', function (e, nav) {
+                    nav
                         .css('animation', 'none')
                         .child('down')
                             .css('opacity', '0.65')
@@ -35,7 +35,7 @@ body = Block('div', 'app')
                 })
                 .on('click', function () {
                     $(document.body).animate({
-                        scrollTop: body.child('main/hook').$().offset().top + 'px'
+                        scrollTop: (body.child('main/hook').$().offset().top + 14) + 'px'
                     }, 700);
                 })
             )
@@ -44,9 +44,10 @@ body = Block('div', 'app')
             .id('hook')
             .add(Block('block', 'options')
                 .add(Block('selection', 1)
-                    .on('change', function (e) {
-                        var select = body.child('main/hook/options/selection');
-                        body.child('main/hook').on('show', { panel: select.key('value') });
+                    .on('change', function (e, selection) {
+                        body.child('main/hook').on('show', {
+                            panel: selection.key('value')
+                        });
                         e.stopPropagation();
                     })
                 )
@@ -64,10 +65,10 @@ body = Block('div', 'app')
                     .class('code_container')
                 )
             )
-            .on('show', function (e) {
-                var panel = e.detail.panel;
+            .on('show', function (e, hook, data) {
+                var panel = data.panel;
                 if (panel != undefined && panel != null) {
-                    var children = body.child('main/hook').children();
+                    var children = hook.children();
                     for (i in children) {
                         if (i != 'options') {
                             if (children[i].key('title') == panel)
@@ -108,17 +109,17 @@ body = Block('div', 'app')
                             .add('image', 1)
                             .add('text', 1)
                         )
-                        .on('mouseenter', function () {
-                            body.child('main/contact/main/author/link').css('background-color', '#222222');
+                        .on('mouseenter', function (e, link) {
+                            link.css('background-color', '#222222');
                         })
-                        .on('mouseleave', function () {
-                            body.child('main/contact/main/author/link').css('background-color', '#1F1F1F');
+                        .on('mouseleave', function (e, link) {
+                            link.css('background-color', '#1F1F1F');
                         })
                     )
                     .add('text', 1)
                     .add(Block('div', 'github')
-                        .bind('html', function (html) {
-                            body.child('main/contact/main/author/github').html(html);
+                        .bind('html', function (html, github) {
+                            github.html(html);
                         })
                     )
                 )
@@ -137,8 +138,8 @@ body = Block('div', 'app')
                     )
                 )
                 .add(Block('div', 'github')
-                    .bind('html', function (html) {
-                        body.child('main/contact/main/github').html(html.A + '&nbsp;&nbsp;' + html.B);
+                    .bind('html', function (html, github) {
+                        github.html(html.A + '&nbsp;&nbsp;' + html.B);
                     })
                 )
             )

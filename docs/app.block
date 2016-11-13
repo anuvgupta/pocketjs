@@ -1,0 +1,13 @@
+    *
+app
+    navbar
+        logo
+            image
+                src ../img/pocketjs.png
+                height 50px
+                width 50px
+        title
+            text
+                val pocketjs
+            subtext
+                val &nbsp;documentation

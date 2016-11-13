@@ -1,0 +1,45 @@
+    *
+app
+    navbar
+        css
+            position absolute
+            top 0
+            right 0
+            left 0
+            height 55px
+            border-bottom 1px solid #AAA
+            z-index 2
+        logo
+            css
+                display inline-table
+                width 70px
+            image
+                css
+                    display inline-block
+        title
+            css
+                display inline-block
+            text
+                css
+                    font-size 25px
+                    font-family CenturyGothic
+            subtext
+                css
+                    font-size 25px
+    menu
+        css
+            top 55px
+            left 0
+            bottom 0
+            width 255px
+            padding 10px
+            position absolute
+            border-right 1px solid #BBB
+    body
+        css
+            top 55px
+            right 0
+            bottom 0
+            left 275px
+            position absolute
+            border-left 1px solid #BBB
