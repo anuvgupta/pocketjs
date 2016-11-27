@@ -123,7 +123,7 @@ class Pocket {
                             //send client's data to client
                             $this->data = $this->mask(json_encode(array('id' => $i, 'address' => $addr, 'port' => $port)));
                             socket_write($this->c[$i], $this->data, strlen($this->data));
-                            $this->onOpen($i);
+                            $this->onConn($i);
                         }
                         break;
                     }
@@ -278,19 +278,19 @@ class Pocket {
         call_user_func_array($this->on[$n], $a);
         return true;
     }
-    //function onOpen called to assign callback to or run event for user connection
-    public function onOpen($arg = null) {
+    //function onConn called to assign callback to or run event for user connection
+    public function onConn($arg = null) {
         global $eol, $cli;
         if (!isset($arg)) {
             $e = array_shift(debug_backtrace());
-            echo "[ERROR] event 'onOpen' must be given client id or callback function ({$e['file']}:{$e['line']})" . $eol;
+            echo "[ERROR] event 'onConn' must be given client id or callback function ({$e['file']}:{$e['line']})" . $eol;
             return false; //error out of function
         }
         else if (is_callable($arg)) {
             $x = new ReflectionFunction($arg);
             if ($x->getNumberOfRequiredParameters() > 1) {
                 $e = array_shift(debug_backtrace());
-                echo "[ERROR] callback for event 'onOpen' must have only 1 argument: client id ({$e['file']}:{$e['line']})" . $eol;
+                echo "[ERROR] callback for event 'onConn' must have only 1 argument: client id ({$e['file']}:{$e['line']})" . $eol;
                 return false;
             } else $this->ev['open'] = $arg;
         }
