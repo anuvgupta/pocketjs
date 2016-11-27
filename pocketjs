@@ -1,0 +1,106 @@
+#!/bin/bash
+args=("$@")
+if [ "$1" = "forever" ]; then
+    if [ -e "./$3_pid.txt" ]; then
+    	printf "Application '$3' already running \n"
+    	exit 1
+    else
+        echo "$2" > "./$3_cmd.txt"
+    	nohup $2 > $3_log.txt 2>&1&
+    	echo $! > "./$3_pid.txt"
+    fi
+elif [ "$1" = "pid" ]; then
+    if [ -e "./$2_pid.txt" ]; then
+    	pid=`cat $2_pid.txt`
+    	echo $pid
+    else
+        printf "PID file for application '$2' does not exist \n"
+    fi
+elif [ "$1" = "txt" ]; then
+    if [ -e "./$2_log.txt" ]; then
+    	log=`cat $2_log.txt`
+    	printf "$log\n"
+    else
+        printf "Log file for application '$2' does not exist \n"
+    fi
+elif [ "$1" = "never" ]; then
+    if [ -e "./$2_pid.txt" ]; then
+    	pid=`cat $2_pid.txt`
+    	kill -9 $pid
+    else
+    	echo "PID file for application '$2' does not exist"
+    fi
+elif [ "$1" = "cleanup" ]; then
+    if [ -e "./$2_log.txt" ]; then
+        rm $2_log.txt
+    else
+        echo "Log for application '$2' does not exist"
+    fi
+    if [ -e "./$2_pid.txt" ]; then
+        rm $2_pid.txt
+    else
+        echo "PID file for application '$2' does not exist"
+    fi
+elif [ "$1" = "utility" ]; then
+    numeric='^[0-9]+$'
+    while [ true ]; do
+        clear
+        printf "\e[1mpocketjs utility\e[0m \n\n"
+        printf " applications \n"
+        printf " \e[4m  #        name           PID        command      \e[0m \n"
+        num=1
+        for f in ./*
+        do
+            printf "   $num      $f \n"
+            ((num++))
+        done
+        printf "\n"
+        printf " options \n"
+        printf "   a. refresh list \n"
+        printf "   b. new application \n"
+        printf "   #. manage application \n"
+        printf "   x. quit \n"
+        while [ true ]; do
+            printf "     choice: "
+            read choice
+            if [ "$choice" = "a" ] || [ "$choice" = "b" ] || [ "$choice" = "x" ]; then
+                break
+            elif [[ $choice =~ $numeric ]]; then
+                if [ $choice -gt 0 ] && [ $choice -lt $num ]; then
+                    break
+                fi
+            fi
+            printf " invalid choice \n"
+        done
+        if [ "$choice" = "a" ]; then
+            continue
+        elif [ "$choice" = "b" ]; then
+            printf "new application \n"
+            # new application
+            break
+        elif [ "$choice" = 'x' ]; then
+            exit 1
+        else
+            printf "manage application $choice \n"
+            # manage application
+            break
+        fi
+    done
+elif [ "$1" = "help" ]; then
+    printf "pocketjs help \n"
+    printf "    'pocketjs utility' - run utility for managing pocketjs applications \n"
+    printf "    'pocketjs forever {command} {name}' - background a pocketjs script \n"
+    printf "        command = 'php /absolute/path/to/pocketjs_server_script.php' \n"
+    printf "        name = name for pocketjs application \n"
+    printf "    'pocketjs never {name}' - stop a pocketjs script backgrounded by 'pocketjs forever' \n"
+    printf "        name = name of backgrounded pocketjs application \n"
+    printf "    'pocketjs cleanup {name}' - clean up log and PID files of a pocketjs script stopped by 'pocketjs never' \n"
+    printf "        name = name of backgrounded pocketjs application \n"
+    printf "    'pocketjs pid {name}' - get the PID of a pocketjs script backgrounded by 'pocketjs forever' \n"
+    printf "        name = name of backgrounded pocketjs application \n"
+    printf "    'pocketjs log {name}' - get the logs of a pocketjs script backgrounded by 'pocketjs forever' \n"
+    printf "        name = name of backgrounded pocketjs application \n"
+    printf "    'pocketjs help' - view possible operations \n"
+else
+    echo "Invalid Argument: (run 'pocketjs help' for help)"
+fi

@@ -1,8 +1,0 @@
-#!/bin/bash
-args=("$@")
-if [ -e "./${args[0]}_pid.txt" ]; then
-	pid=`cat ${args[0]}_pid.txt`
-	kill -9 $pid
-else
-	echo "Process ${args[0]} does not exist"
-fi
