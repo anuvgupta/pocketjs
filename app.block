@@ -46,8 +46,8 @@ app
                 val Documentation
                 href docs
             demo
-                val Live Demo
-                href demo
+                val Live Demos
+                href demos
             source
                 val View Source
                 href https://github.com/anuvgupta/pocketjs
