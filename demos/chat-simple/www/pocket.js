@@ -1,5 +1,5 @@
 /*
-  pocketjs v1.0
+  pocketjs v1.1
   [http://anuv.me/pocketjs]
   Copyright: (c) 2016 Anuv Gupta
   File: pocket.js (pocketjs client)

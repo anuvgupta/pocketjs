@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>pocketjs chat-simple</title>
+        <script src = 'pocket.js'></script>
+    </head>
+    <body>
+        <h1>chat-simple</h1><h4>pocketjs demo</h4>
+        Code for this demo is on <a href = 'http://github.com/anuvgupta/pocketjs/tree/master/demos/chat-simple'>GitHub</a><br/>
+        <input id = 'input' placeholder = 'message'/>
+        <button id = 'send'>send</button><br/><br/>
+        <div id = 'output'></div>
+        <script>
+            // pocketjs WebSocket client
+            var pocket = Pocket();
+
+            // sending messages to server
+            document.getElementById('send').addEventListener('click', function () { // when send button clicked
+                var msg = document.getElementById('input').value; // get user input from text input box
+                if (msg != null && msg.trim() != '') // if input is not blank
+                    pocket.send('sendmsg', msg); // send it over pocketjs WebSocket
+            });
+
+            // receiving messages from server
+            pocket.bind('newmsg', function (msg) {
+                console.log(msg);
+                if (msg != null && msg.trim() != '') { // if received message is not blank
+                    var span = document.createElement('span'); // create a span
+                    span.appendChild(document.createTextNode(msg)); // add message to span
+                    span.appendChild(document.createElement('br')); // add a line break to span
+                    document.getElementById('output').appendChild(span); // add the span with message to the page
+                }
+            });
+
+            // connect to pocketjs WebSocket server
+            pocket.connect('localhost', 30000, 'chat-simple.php');
+        </script>
+    </body>
+</html>

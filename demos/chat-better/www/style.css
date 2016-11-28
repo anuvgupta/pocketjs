@@ -1,3 +1,5 @@
+
+/* selection color  */
 ::-moz-selection {
     color: #1B1B1B;
     background: #F3F3F3;
@@ -7,12 +9,15 @@
     background: #F3F3F3;
 }
 
+/* monospace font */
 * {
-    font: 22px Courier New, Courier, sans-serif;
+    font: 22px Courier New, Courier, Consolas, monospace, sans-serif;
 }
+
+/* layout styling */
 html {
-  height: 99%;
-  overflow-y: hidden;
+    height: 99%;
+    overflow-y: hidden;
 }
 body {
     background-color: #111111;
@@ -22,6 +27,9 @@ body {
     height: 99%;
     overflow-y: hidden;
 }
+
+
+/* individual element styling */
 
 #content {
     height: 100%;
@@ -38,13 +46,18 @@ body {
     font-size: 50px;
 }
 
+#help {
+    color: #EFEFEF;
+    font-size: 26px;
+}
+
 #output {
-    height: 40px; //70%;
+    height: 40px;
     width: 500px;
-    background-color: #111111; //222222;
+    background-color: #111111;
     margin: 0 auto;
     margin-top: 12px;
-    border: 20px hidden #222222; //solid
+    border: 20px hidden #222222;
     font-size: 20px;
     color: #EEEEEE;
     overflow-y: hidden;
@@ -52,9 +65,10 @@ body {
     border-radius: 10px 10px 0 0;
     transition: height 0.5s;
     -webkit-transition: height 0.5s;
+    -webkit-overflow-scrolling: touch;
 }
 
-#message {
+.message {
     width: 500px;
     overflow-x: hidden;
     white-space: pre-wrap;
@@ -69,8 +83,8 @@ body {
     height: 70px;
     position: relative;
     padding: 0;
-    margin: 0 auto;
-    top: -40px; //0;
+    margin: 0 auto -22px auto;
+    top: -40px;
     transition: top 0.5s;
     -webkit-transition: top 0.5s;
     background-color: none;
@@ -79,7 +93,7 @@ body {
 #input {
     left: 0;
     top: 0;
-    border-radius: 10px 0 0 10px; //0 0 0 10px;
+    border-radius: 10px 0 0 10px;
     width: 69%;
     height: 100%;
     display: inline-block;
@@ -115,7 +129,7 @@ body {
     display: inline-block;
     width: 20%;
     height: 100%;
-    border-radius: 0 10px 10px 0; //0 0 10px 0;
+    border-radius: 0 10px 10px 0;
     border-width: 0 0 0 2px;
     transition: border-radius 0.3s;
     -webkit-transition: border-radius 0.3s;
