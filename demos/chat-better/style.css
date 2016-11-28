@@ -1,3 +1,5 @@
+
+/* selection color  */
 ::-moz-selection {
     color: #1B1B1B;
     background: #F3F3F3;
@@ -7,42 +9,33 @@
     background: #F3F3F3;
 }
 
+/* monospace font */
 * {
-    font: 22px Courier New, Courier, sans-serif;
+    font: 22px Courier New, Courier, Consolas, monospace, sans-serif;
 }
+
+/* layout styling */
 html {
-  height: 99%;
-  overflow-y: hidden;
+    height: 99%;
+    overflow-y: hidden;
 }
 body {
     background-color: #111111;
+    display: table;
     min-height: 99%;
     width: 99%;
     height: 99%;
     overflow-y: hidden;
 }
 
-.block {
-    display: table;
-}
 
-.content {
-    display: table-cell;
-    vertical-align: middle;
-}
-
-a {
-    color: #E0E0E0;
-    text-decoration: underline;
-    cursor: pointer;
-}
-a: hover {
-    color: #EFEFEF;
-}
+/* individual element styling */
 
 #content {
     height: 100%;
     width: 100%;
+    display: table-cell;
+    vertical-align: middle;
     padding-top: 30px;
     margin: auto;
     text-align: center;
@@ -53,13 +46,26 @@ a: hover {
     font-size: 50px;
 }
 
+#help {
+    color: #EFEFEF;
+    font-size: 26px;
+}
+
+#link {
+    color: #EFEFEF;
+    font-size: 22px;
+}
+#link a {
+    color: #2F5FAF;
+}
+
 #output {
-    height: 40px; //70%;
+    height: 40px;
     width: 500px;
-    background-color: #111111; //222222;
+    background-color: #111111;
     margin: 0 auto;
     margin-top: 12px;
-    border: 20px hidden #222222; //solid
+    border: 20px hidden #222222;
     font-size: 20px;
     color: #EEEEEE;
     overflow-y: hidden;
@@ -67,9 +73,10 @@ a: hover {
     border-radius: 10px 10px 0 0;
     transition: height 0.5s;
     -webkit-transition: height 0.5s;
+    -webkit-overflow-scrolling: touch;
 }
 
-#message {
+.message {
     width: 500px;
     overflow-x: hidden;
     white-space: pre-wrap;
@@ -84,8 +91,8 @@ a: hover {
     height: 70px;
     position: relative;
     padding: 0;
-    margin: 0 auto;
-    top: -40px; //0;
+    margin: 0 auto -22px auto;
+    top: -40px;
     transition: top 0.5s;
     -webkit-transition: top 0.5s;
     background-color: none;
@@ -94,7 +101,7 @@ a: hover {
 #input {
     left: 0;
     top: 0;
-    border-radius: 10px 0 0 10px; //0 0 0 10px;
+    border-radius: 10px 0 0 10px;
     width: 69%;
     height: 100%;
     display: inline-block;
@@ -130,33 +137,8 @@ a: hover {
     display: inline-block;
     width: 20%;
     height: 100%;
-    border-radius: 0 10px 10px 0; //0 0 10px 0;
+    border-radius: 0 10px 10px 0;
     border-width: 0 0 0 2px;
-    transition: border-radius 0.3s, background-color 0.14s;
-    -webkit-transition: border-radius 0.3s, background-color 0.14s;
-}
-
-#info {
-    background-color: #2B2B2B;
-    width: 260px;
-    height: 65px;
-    margin: 0 auto;
-    border-radius: 7px;
-    color: #CFCFCF;
-    cursor: pointer;
-    overflow: hidden;
-    transition: background-color 0.15s, width 0.45s ease, height 0.45s ease;
-}
-#info:hover {
-    background-color: #323232;
-}
-#info #top {
-    font-size: 27px;
-    height: 65px;
-    padding-top: 18px;
-    transition: padding 0.85s ease, height 0.45s ease;
-}
-#info #bottom {
-    font-size: 18px;
-    padding: 2px 18px;
+    transition: border-radius 0.3s;
+    -webkit-transition: border-radius 0.3s;
 }

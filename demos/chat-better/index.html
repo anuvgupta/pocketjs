@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>pocketjs chat-better</title>
+        <link rel = 'icon' type = 'image/png' href = '../../img/pocketjs_40.png'/>
+        <link rel = 'stylesheet' type = 'text/css' href = 'style.css'/>
+        <script type = 'text/javascript' src = '../../js/chat/pocket.js'></script>
+        <script type = 'text/javascript'>
+            // covenience function for getting element
+            function getElement(id) {
+                return document.getElementById(id);
+            }
+
+            var name = ''; // username
+            var pocket = Pocket(); // pocketjs WebSocket client
+            // when page loads
+            window.addEventListener('load', function () {
+                // get elements in advance
+                var outDiv = getElement('output');
+                var inBox = getElement('input');
+                var subButton = getElement('submit');
+                var helpLine = getElement('help');
+
+                // sending messages to server
+                var send = function () {
+                    var val = inBox.value; // get input box value
+                    if ((val !== null) && (val != '') && val.trim() != '') { // if input is not empty
+                        if ((name == null) || (name == '') || (name.trim() == '')) // if client has no name yet
+                            pocket.send('join', val); // client wants to join room, so send the input as username
+                        else pocket.send('sendmsg', val); // client is already in room, so send the input as message
+                        inBox.value = ''; // clear the input box
+                    }
+                };
+                // send when submit button clicked
+                subButton.addEventListener('click', send);
+                // send when enter hit in textbox
+                inBox.addEventListener('keyup', function (e) {
+                    if ((e.keyCode ? e.keyCode : e.which) == '13') send();
+                });
+
+                // receivinig authentication after attempting to join
+                pocket.bind('username', function (success, username) {
+                    if (success) { // if username accepted by server
+                        // modify UI with CSS to show output div
+                        outDiv.style.height = (0.66 * window.innerHeight) + 'px';
+                        setTimeout(function () {
+                            outDiv.style.overflowY = 'scroll';
+                        }, 500);
+                        outDiv.style.backgroundColor = '#222222';
+                        outDiv.style.borderStyle = 'solid';
+                        outDiv.style.borderBottomWidth = '45px';
+                        inBox.style.borderRadius = '0 0 0 10px';
+                        subButton.style.borderRadius = '0 0 10px 0';
+                        // change input elements' values for sending messages
+                        inBox.placeholder = 'message';
+                        subButton.innerHTML = 'send';
+                        // set username
+                        name = username; // now, input will be sent as message rather than username
+                        helpLine.innerHTML = 'Username accepted'; // notify user of acceptance
+                        // ask server for all previous messages (chat history)
+                        pocket.send('ready');
+                    } else helpLine.innerHTML = 'Username not accepted'; // if username not accepted by server, notify user
+                });
+                // receiving messages from server
+                pocket.bind('newmsg', function (user, msg, id) {
+                    // if user has already joined room and message is not blank
+                    if (!((name == null) || (name == '') || (name.trim() == '')) && (msg != null && msg.trim() != '')) {
+                        var span = document.createElement('span'); // create a span
+                        span.className = 'message'; // for styling
+                        var strong = document.createElement('strong'); // create a strong (bold)
+                        strong.appendChild(document.createTextNode(user)); // add username to span
+                        span.appendChild(strong); // add bolded username to span
+                        span.appendChild(document.createTextNode(': ' + msg)); // add message to span
+                        span.appendChild(document.createElement('br')); // add a line break ot span
+                        outDiv.appendChild(span); // add the span with message to the page
+                        outDiv.scrollTop += 50;
+                    }
+                });
+                // when disconnected from server
+                pocket.onClose(function () {
+                    helpLine.innerHTML = 'Disconnected from server'; // notify user
+                });
+                // when connected to server
+                pocket.onOpen(function () {
+                    if (helpLine.innerHTML != 'pocketjs demo') helpLine.innerHTML = 'Connected to server'; // notify user
+                });
+
+                // connect to pocketjs WebSocket server
+                pocket.connect('aws.anuv.me', 8002, 'chat-better.php');
+            });
+        </script>
+    </head>
+    <body>
+        <div id = 'content'>
+            <span id = 'title'>chat-better</span>
+            <div id = 'output'></div>
+            <div id = 'inputwrap'>
+                <input id = 'input' type = 'text' placeholder = 'nickname'/>
+                <button id = 'submit'>join</button>
+            </div>
+            <span id = 'help'>pocketjs demo</span><br/>
+            <span id = 'link'>Code for this demo is on <a href = 'http://github.com/anuvgupta/pocketjs/tree/master/demos/chat-better'>GitHub</a><br/></span>
+        </div>
+    </body>
+</html>
