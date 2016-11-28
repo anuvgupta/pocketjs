@@ -30,60 +30,18 @@ Regarding program structure, pocketjs utilizes an *event-driven flow* model to s
 
 ## Getting Started
 *View a live demo!*
- 1. View a live demo online at [anuv.me/pocketjs/demo](http://anuv.me/pocketjs/demo)
- 2. View an improved demo online at [anuv.me/pocketjs/#hook](http://anuv.me/pocketjs/#hook)
- 3. View a local demo
-    - Clone [this](http://github.com/anuvgupta/pocketjs) repository onto your machine
-    - Open `demo/www/index.html` in your favorite web browser (Chrome)
- 4. Host your own local chat app
+ 1. View live demos online at [anuv.me/pocketjs/demos](http://anuv.me/pocketjs/demos)
+ 2. View a chat demo alongside code online at [anuv.me/pocketjs/#hook](http://anuv.me/pocketjs/#hook)
+ 3. Host your own local chat app
     - Follow the steps below!
 
-*Set up a local pocketjs chat demo in just* ***5*** *simple steps*
+*Set up a local pocketjs chat demo in just* ***3*** *simple steps*
  1. Install PHP 5.4 or above, or PHP7
     - From [php.net/downloads.php](http://php.net/downloads.php)
     - Or your favorite package manager
  2. Clone [this](http://github.com/anuvgupta.pocketjs) repository
-    - Copy the contents of `demo/www` into a new folder `pocketjs` in your web server's `www` or `htdocs` directory
-        - In that folder, open `pocketjs/app.js` in your favorite text editor (Atom)
-        - Scroll to the bottom and change
-        ```javascript
-        pocket.connect('aws.anuv.me', 8000, 'chat.php');
-        ```
-        to this (use `127.0.0.1` if `localhost does not work`)
-        ```javascript
-        pocket.connect('localhost', 30000, 'chat.php');
-        ```
-    - Copy the folder `demo` (not including `www`) to somewhere convenient
- 3. Start the pocketjs chat demo server
-    - Navigate to the `demo` folder from step 2
-    - Run the following command in a shell: `php chat.php -- nobash`
-    - If you see an error like: `Warning: socket_bind(): unable to bind address [48]: Address already in use`
-        1. By default, the chat demo binds a WebSocket server to port `30000`, because this port is usually unused. However, in this case, it is being used by another process on your machine.
-        2. Choose an open port on your machine
-            - `8000` and `8443` are typical for WebSockets, and ports around `30000` are often left unused
-            - Check [this article](https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers) for conventional port usages
-            - On a linux/macOS machine
-                - Run `netstat`, `netstat -tulpn`, or `netstat -an | grep LISTEN` to see all running processes
-                - Run `sudo lsof -i :`*some_port*` | grep LISTEN` to check for processes running on a port
-                    - Ex: `sudo lsof -i :30000 | grep LISTEN`
-        3. Go back to the `app.js` file you modified before and reopen it
-            - Change this line:
-            ```javascript
-            pocket.connect('localhost', 30000, 'chat.php');
-            ```
-            to this (use whatever port you chose instead of PORT)
-            ```javascript
-            pocket.connect('localhost', PORT, 'chat.php');
-            ```
- 4. View the chat page
-    - Open your favorite web browser (Chrome)
-    - One of two options:
-        1. Start your web server and navigate to `http://` (your IP/hostname+port, ie. `localhost` or `127.0.0.1:80`) `/pocketjs` in your browser
-        2. Or, open *your_web_server's_www_directory*`/pocketjs/index.html` in your browser
- 5. Chat with yourself
-    - Check the JavaScript console for any error messages that might appear
-    - Check the [docs](#documentation) and [tutorials](#further-tutorials) for troubleshooting, or [contact me](mailto:pocketjs@anuv.me) through email
-    - Open the page in a new window, place them side by side, and enjoy the realtime updates!
+ 3. Go to the [demos](http://github.com/anuvgupta/pocketjs/tree/master/demos) folder and try out some demos!
+
 
 ## Further Tutorials
 &nbsp;&nbsp;View this tutorial and others at [anuv.me/pocketjs/docs?tutorials](http://anuv.me/pocketjs/docs?tutorials)
