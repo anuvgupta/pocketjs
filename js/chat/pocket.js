@@ -1,5 +1,5 @@
 /*
-  pocketjs v1.0
+  pocketjs v1.1
   [http://anuv.me/pocketjs]
   Copyright: (c) 2016 Anuv Gupta
   File: pocket.js (pocketjs client)
@@ -42,6 +42,7 @@ Pocket = function () {
                 online = false;
                 websocket.send(Pocket.encode(JSON.stringify({ command: 'close', id: id, ad: address, p: port})));
                 console.log('[POCKET] disconnected');
+                console.log(ev);
                 ev['close']();
                 return false;
             };
@@ -101,7 +102,7 @@ Pocket = function () {
         onOpen: function () {
             var args = [].slice.apply(arguments);
             if (args.length > 0) {
-                if (typeof f == 'function' && f instanceof Function)
+                if (typeof args[0] == 'function' && args[0] instanceof Function)
                     ev['open'] = args[0];
                 else ev['open'].apply(ev['open'], args);
             } else ev['open']();
@@ -110,7 +111,7 @@ Pocket = function () {
         onRun: function () {
             var args = [].slice.apply(arguments);
             if (args.length > 0) {
-                if (typeof f == 'function' && f instanceof Function)
+                if (typeof args[0] == 'function' && args[0] instanceof Function)
                     ev['run'] = args[0];
                 else ev['run'].apply(ev['run'], args);
             } else ev['run']();
@@ -119,7 +120,7 @@ Pocket = function () {
         onClose: function () {
             var args = [].slice.apply(arguments);
             if (args.length > 0) {
-                if (typeof f == 'function' && f instanceof Function)
+                if (typeof args[0] == 'function' && args[0] instanceof Function)
                     ev['close'] = args[0];
                 else ev['close'].apply(ev['close'], args);
             } else ev['close']();

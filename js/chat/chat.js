@@ -74,9 +74,9 @@ Block('chat', function () {
                     var val = block.child('input/box').node().value;
                     if (val !== null && val != '' && val.trim() != '') {
                         if (name == false || name == null || name.trim() == '')
-                            pocket.send('username', val);
+                            pocket.send('join', val);
                         else {
-                            pocket.send('message', val);
+                            pocket.send('sendmsg', val);
                             block.child('input/box').node().value = '';
                         }
                         block.child('input/box').node().focus();
@@ -129,7 +129,7 @@ Block('chat', function () {
                 )
             ;
         });
-        pocket.bind('message', function (user, message, id) {
+        pocket.bind('newmsg', function (user, message, id) {
             var username = block.key('username');
             if (username != null && username !== false && (typeof username === 'string') && username.trim() != '') {
                 msgID++;
@@ -144,6 +144,7 @@ Block('chat', function () {
             }
         });
         pocket.onOpen(function () {
+            console.log('hey');
             block.child('output').add(Block('chat message', 'connected')
                 .child('text')
                     .data('status - connected')
@@ -155,7 +156,7 @@ Block('chat', function () {
             );
         });
         pocket.onClose(function () {
-            block.child('output').add(Block('chat message', 'connected')
+            block.child('output').add(Block('chat message', 'disconnected')
                 .child('text')
                     .data('status - disconnected')
                     .css({
@@ -165,6 +166,6 @@ Block('chat', function () {
                     .parent()
             );
         });
-        pocket.connect('aws.anuv.me', 8000, 'chat.php');
+        pocket.connect('aws.anuv.me', 8002, 'chat-better.php');
     }
 });

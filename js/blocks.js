@@ -182,11 +182,12 @@ Block('selection', function () {
 });
 
 Block('panel', function () {
-    var inner = Block()
+    var inner = Block('block', 'inner')
         .css({
             backgroundColor: '#222',
             borderRadius: '20px',
             height: '93%',
+            maxHeight: '600px',
             width: '85%',
             margin: '0 auto'
         })
