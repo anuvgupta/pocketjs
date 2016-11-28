@@ -40,7 +40,6 @@ $pocket->bind('ready', function ($id) use (&$pocket, &$log) {
 
 // when a client sends a message
 $pocket->bind('sendmsg', function ($message, $id) use (&$pocket, &$log, &$users) {
-    print_r($log);
     $username = $users[$id]; // get client's username
     array_push($log, array('user' => "$username", 'id' => $id, 'message' => "$message")); // save message to log
     $pocket->log("user[$id] $username: $message"); // log event
