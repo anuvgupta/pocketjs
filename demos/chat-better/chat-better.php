@@ -6,8 +6,8 @@ $log = array(); // log of all past messages
 $users = array(); // record of usernames
 
 // get ip and port from arguments
-$ip = $argv[3];
-$port = $argv[4];
+$ip = $argv[2];
+$port = $argv[3];
 // create new pocketjs WebSocket server
 $pocket = new Pocket($ip, $port, 20, null);
 

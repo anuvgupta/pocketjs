@@ -1,45 +1,96 @@
 #!/bin/bash
 args=("$@")
 if [ "$1" = "forever" ]; then
-    if [ -e "./$3_pid.txt" ]; then
-    	printf "Application '$3' already running \n"
-    	exit 1
+    if [ "$2" = "" ]; then
+        printf "Invalid name \n"
+        exit 1
+    fi
+    if [ "$3" = "" ]; then
+        printf "Invalid command \n"
+        exit 1
+    fi
+    if [ -d "$2" ]; then
+    	printf "Application '$2' already running \n"
     else
-        echo "$2" > "./$3_cmd.txt"
-    	nohup $2 > $3_log.txt 2>&1&
-    	echo $! > "./$3_pid.txt"
+        mkdir $2
+        echo "$3" > "$2/cmd.txt"
+    	nohup $3 > $2/log.txt 2>&1&
+    	echo $! > "$2/pid.txt"
+        echo "$2" > "$2/name.txt"
     fi
 elif [ "$1" = "pid" ]; then
-    if [ -e "./$2_pid.txt" ]; then
-    	pid=`cat $2_pid.txt`
-    	echo $pid
+    if [ -d "$2" ]; then
+        if [ -e "$2/pid.txt" ]; then
+        	pid=`cat $2/pid.txt`
+        	echo $pid
+        else
+            printf "PID file for application '$2' does not exist \n"
+        fi
     else
-        printf "PID file for application '$2' does not exist \n"
+        printf "Application '$2' does not exist \n"
     fi
-elif [ "$1" = "txt" ]; then
-    if [ -e "./$2_log.txt" ]; then
-    	log=`cat $2_log.txt`
-    	printf "$log\n"
+elif [ "$1" = "log" ]; then
+    if [ -d "$2" ]; then
+        if [ -e "$2/log.txt" ]; then
+        	log=`cat $2/log.txt`
+        	printf "$log\n"
+        else
+            printf "LOG file for application '$2' does not exist \n"
+        fi
     else
-        printf "Log file for application '$2' does not exist \n"
+        printf "Application '$2' does not exist \n"
+    fi
+elif [ "$1" = "cmd" ]; then
+    if [ -d "$2" ]; then
+        if [ -e "$2/cmd.txt" ]; then
+        	cmd=`cat $2/cmd.txt`
+        	echo $cmd
+        else
+            printf "CMD file for application '$2' does not exist \n"
+        fi
+    else
+        printf "Application '$2' does not exist \n"
     fi
 elif [ "$1" = "never" ]; then
-    if [ -e "./$2_pid.txt" ]; then
-    	pid=`cat $2_pid.txt`
-    	kill -9 $pid
+    if [ -d "$2" ]; then
+        if [ -e "$2/pid.txt" ]; then
+        	pid=`cat $2/pid.txt`
+        	kill -9 $pid
+            printf "SIGKILL sent to process $pid \n"
+        else
+        	printf "PID file for application '$2' does not exist \n"
+        fi
     else
-    	echo "PID file for application '$2' does not exist"
+        printf "Application '$2' does not exist \n"
     fi
 elif [ "$1" = "cleanup" ]; then
-    if [ -e "./$2_log.txt" ]; then
-        rm $2_log.txt
+    if [ -d "$2" ]; then
+        if [ -e "$2/log.txt" ]; then
+            rm $2/log.txt
+        else
+            printf "LOG file for application '$2' does not exist \n"
+        fi
+        if [ -e "$2/pid.txt" ]; then
+            rm $2/pid.txt
+        else
+            printf "PID fil for application '$2' does not exist \n"
+        fi
+        if [ -e "$2/cmd.txt" ]; then
+            rm $2/cmd.txt
+        else
+            printf "CMD file for application '$2' does not exist \n"
+        fi
+        if [ -e "$2/name.txt" ]; then
+            rm $2/name.txt
+        else
+            printf "NAME file for application '$2' does not exist \n"
+        fi
+        if [ -e "$2/temp.txt" ]; then
+            rm $2/temp.txt
+        fi
+        rm -Rf $2
     else
-        echo "Log for application '$2' does not exist"
-    fi
-    if [ -e "./$2_pid.txt" ]; then
-        rm $2_pid.txt
-    else
-        echo "PID file for application '$2' does not exist"
+        printf "Application '$2' does not exist \n"
     fi
 elif [ "$1" = "utility" ]; then
     numeric='^[0-9]+$'
@@ -47,13 +98,53 @@ elif [ "$1" = "utility" ]; then
         clear
         printf "\e[1mpocketjs utility\e[0m \n\n"
         printf " applications \n"
-        printf " \e[4m  #        name           PID        command      \e[0m \n"
+        printf " \e[4m  #        name               PID       running      \e[0m \n"
         num=1
-        for f in ./*
+        declare -a applicationDirs
+        declare -a applicationNames
+        for d in ./*/
         do
-            printf "   $num      $f \n"
-            ((num++))
+            if [ -e "$d/pid.txt" ] && [ -e "$d/log.txt" ] && [ -e "$d/cmd.txt" ] && [ -e "$d/name.txt" ]; then
+                applicationDirs[(($num-1))]=$d
+                name=`cat $d/name.txt`
+                applicationNames[(($num-1))]=$name
+                pid=`cat $d/pid.txt`
+                printf "   $num        "
+                for i in `seq 0 17`;
+                do
+                    char=${name:$i:1}
+                    if [ "$char" = "" ]; then
+                        printf " "
+                    else
+                        printf "$char"
+                    fi
+                done
+                for i in `seq 0 8`;
+                do
+                    char=${pid:$i:1}
+                    if [ "$char" = "" ]; then
+                        printf " "
+                    else
+                        printf "$char"
+                    fi
+                done
+                kill -0 $pid > $d/temp.txt 2>&1&
+                temp=`cat $d/temp.txt`
+                if [ -z "$temp" ]; then
+                    printf "yes"
+                else
+                    printf "no"
+                fi
+                if [ -e "$d/temp.txt" ]; then
+                    rm $d/temp.txt
+                fi
+                printf "\n"
+                ((num++))
+            fi
         done
+        if [ "$num" = "1" ]; then
+            printf "  no applications \n"
+        fi
         printf "\n"
         printf " options \n"
         printf "   a. refresh list \n"

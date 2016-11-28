@@ -51,6 +51,14 @@ body {
     font-size: 26px;
 }
 
+#link {
+    color: #EFEFEF;
+    font-size: 22px;
+}
+#link a {
+    color: #2F5FAF;
+}
+
 #output {
     height: 40px;
     width: 500px;
