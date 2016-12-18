@@ -143,7 +143,7 @@ elif [ "$1" = "utility" ]; then
                         printf "$char"
                     fi
                 done
-                cmd=name=`cat $d/cmd.txt`
+                cmd=`cat $d/cmd.txt`
                 running=`ps -p $pid -o command=`
                 if [ "$running" != "" ] && [ "$running" = "$cmd" ]; then
                     printf "yes"
@@ -210,8 +210,8 @@ elif [ "$1" = "utility" ]; then
                 run=true
                 while [ "$run" = "true" ]; do
                     clear
-                    printf "pocketjs utility \n\n"
-                    printf " manage application $choice \n\n"
+                    printf "\e[1mpocketjs utility\e[0m \n\n"
+                    printf " managing application #$choice \n\n"
                     pid=`cat $dir/pid.txt`
                     cmd=`cat $dir/cmd.txt`
                     printf " APP: $name \n"
@@ -252,7 +252,7 @@ elif [ "$1" = "utility" ]; then
                             printf "\n"
                             never=`$0 never $name`
                             cleanup=`$0 cleanup $name`
-                            forever=`$0 forever $name $cmd`
+                            forever=`$0 forever $name "$cmd"`
                             printf " stop: $never \n"
                             printf " delete: $cleanup \n"
                             printf " start: $forever \n"
@@ -266,7 +266,7 @@ elif [ "$1" = "utility" ]; then
                                 fi
                                 printf " invalid name \n"
                             done
-                            forever=`$0 forever $newname $cmd`
+                            forever=`$0 forever $newname "$cmd"`
                             printf " \n $forever \n"
                         elif [ "$choice2" = "x" ]; then
                             break 2
