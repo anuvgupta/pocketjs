@@ -226,7 +226,7 @@ elif [ "$1" = "utility" ]; then
                     printf "   f. duplicate app \n"
                     printf "   x. back \n"
                     while [ true ]; do
-                        printf "     choice: "
+                        printf " choice: "
                         read choice2
                         if [ "$choice2" = "a" ]; then
                             printf "\n"
