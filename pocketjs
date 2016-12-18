@@ -2,21 +2,22 @@
 args=("$@")
 if [ "$1" = "forever" ]; then
     if [ "$2" = "" ]; then
-        printf "Invalid name \n"
+        printf "invalid name \n"
         exit 1
     fi
     if [ "$3" = "" ]; then
-        printf "Invalid command \n"
+        printf "invalid command \n"
         exit 1
     fi
     if [ -d "$2" ]; then
-    	printf "Application '$2' already running \n"
+    	printf "application '$2' already exists \n"
     else
         mkdir $2
         echo "$3" > "$2/cmd.txt"
     	nohup $3 > $2/log.txt 2>&1&
     	echo $! > "$2/pid.txt"
         echo "$2" > "$2/name.txt"
+        printf "application '$2' created \n"
     fi
 elif [ "$1" = "pid" ]; then
     if [ -d "$2" ]; then
@@ -27,7 +28,7 @@ elif [ "$1" = "pid" ]; then
             printf "PID file for application '$2' does not exist \n"
         fi
     else
-        printf "Application '$2' does not exist \n"
+        printf "application '$2' does not exist \n"
     fi
 elif [ "$1" = "log" ]; then
     if [ -d "$2" ]; then
@@ -38,7 +39,7 @@ elif [ "$1" = "log" ]; then
             printf "LOG file for application '$2' does not exist \n"
         fi
     else
-        printf "Application '$2' does not exist \n"
+        printf "application '$2' does not exist \n"
     fi
 elif [ "$1" = "cmd" ]; then
     if [ -d "$2" ]; then
@@ -49,19 +50,32 @@ elif [ "$1" = "cmd" ]; then
             printf "CMD file for application '$2' does not exist \n"
         fi
     else
-        printf "Application '$2' does not exist \n"
+        printf "application '$2' does not exist \n"
     fi
 elif [ "$1" = "never" ]; then
     if [ -d "$2" ]; then
-        if [ -e "$2/pid.txt" ]; then
-        	pid=`cat $2/pid.txt`
-        	kill -9 $pid
-            printf "SIGKILL sent to process $pid \n"
+        if [ -e "$2/cmd.txt" ]; then
+            if [ -e "$2/pid.txt" ]; then
+            	cmd=`cat $2/cmd.txt`
+            	pid=`cat $2/pid.txt`
+                running=`ps -p $pid -o command=`
+                if [ "$running" = "" ]; then
+                    # perhaps a different message
+                    printf "application '$2' is not running on process $pid \n"
+                elif [ "$running" != "$cmd" ]; then
+                    printf "application '$2' is not running on process $pid \n"
+                else
+                    kill -9 $pid
+                    printf "SIGKILL sent to process $pid \n"
+                fi
+            else
+            	printf "PID file for application '$2' does not exist \n"
+            fi
         else
-        	printf "PID file for application '$2' does not exist \n"
+            printf "CMD file for application '$2' does not exist \n"
         fi
     else
-        printf "Application '$2' does not exist \n"
+        printf "application '$2' does not exist \n"
     fi
 elif [ "$1" = "cleanup" ]; then
     if [ -d "$2" ]; then
@@ -73,7 +87,7 @@ elif [ "$1" = "cleanup" ]; then
         if [ -e "$2/pid.txt" ]; then
             rm $2/pid.txt
         else
-            printf "PID fil for application '$2' does not exist \n"
+            printf "PID file for application '$2' does not exist \n"
         fi
         if [ -e "$2/cmd.txt" ]; then
             rm $2/cmd.txt
@@ -89,6 +103,7 @@ elif [ "$1" = "cleanup" ]; then
             rm $2/temp.txt
         fi
         rm -Rf $2
+        printf "application '$2' deleted \n"
     else
         printf "Application '$2' does not exist \n"
     fi
@@ -119,7 +134,7 @@ elif [ "$1" = "utility" ]; then
                         printf "$char"
                     fi
                 done
-                for i in `seq 0 8`;
+                for i in `seq 0 10`;
                 do
                     char=${pid:$i:1}
                     if [ "$char" = "" ]; then
@@ -128,15 +143,12 @@ elif [ "$1" = "utility" ]; then
                         printf "$char"
                     fi
                 done
-                kill -0 $pid > $d/temp.txt 2>&1&
-                temp=`cat $d/temp.txt`
-                if [ -z "$temp" ]; then
+                cmd=name=`cat $d/cmd.txt`
+                running=`ps -p $pid -o command=`
+                if [ "$running" != "" ] && [ "$running" = "$cmd" ]; then
                     printf "yes"
                 else
                     printf "no"
-                fi
-                if [ -e "$d/temp.txt" ]; then
-                    rm $d/temp.txt
                 fi
                 printf "\n"
                 ((num++))
@@ -152,7 +164,7 @@ elif [ "$1" = "utility" ]; then
         printf "   #. manage application \n"
         printf "   x. quit \n"
         while [ true ]; do
-            printf "     choice: "
+            printf " choice: "
             read choice
             if [ "$choice" = "a" ] || [ "$choice" = "b" ] || [ "$choice" = "x" ]; then
                 break
@@ -166,32 +178,136 @@ elif [ "$1" = "utility" ]; then
         if [ "$choice" = "a" ]; then
             continue
         elif [ "$choice" = "b" ]; then
-            printf "new application \n"
-            # new application
-            break
+            printf " new application \n"
+            newname=""
+            while [ true ]; do
+                printf "     name: "
+                read newname
+                if [ "$newname" != "" ]; then
+                    break
+                fi
+                printf " invalid name \n"
+            done
+            newcmd=""
+            while [ true ]; do
+                printf "     command: "
+                read newcmd
+                if [ "$newcmd" != "" ]; then
+                    break
+                fi
+                printf " invalid command \n"
+            done
+            msg=`$0 forever "$newname" "$newcmd"`
+            printf " $msg \n"
+            printf " hit enter to continue "
+            read next
         elif [ "$choice" = 'x' ]; then
             exit 1
         else
-            printf "manage application $choice \n"
-            # manage application
-            break
+            dir=${applicationDirs[(($choice-1))]}
+            name=${applicationNames[(($choice-1))]}
+            if [ -e "$dir/pid.txt" ] && [ -e "$dir/log.txt" ] && [ -e "$dir/cmd.txt" ] && [ -e "$dir/name.txt" ]; then
+                run=true
+                while [ "$run" = "true" ]; do
+                    clear
+                    printf "pocketjs utility \n\n"
+                    printf " manage application $choice \n\n"
+                    pid=`cat $dir/pid.txt`
+                    cmd=`cat $dir/cmd.txt`
+                    printf " APP: $name \n"
+                    printf " PID: $pid \n"
+                    echo " CMD: $cmd "; printf "\n"
+                    printf "\n options: \n"
+                    printf "   a. read logs \n"
+                    printf "   b. check status \n"
+                    printf "   c. stop app \n"
+                    printf "   d. delete app \n"
+                    printf "   e. restart app \n"
+                    printf "   f. duplicate app \n"
+                    printf "   x. back \n"
+                    while [ true ]; do
+                        printf "     choice: "
+                        read choice2
+                        if [ "$choice2" = "a" ]; then
+                            printf "\n"
+                            logs=`$0 log $name`
+                            printf "LOG: \n $logs \n\n"
+                        elif [ "$choice2" = "b" ]; then
+                            printf "\n"
+                            running=`ps -p $pid -o command=`
+                            if [ "$running" != "" ] && [ "$running" = "$cmd" ]; then
+                                printf " app is running on PID $pid"
+                            else
+                                printf " app is NOT running on PID $pid"
+                            fi
+                            printf "\n"
+                        elif [ "$choice2" = "c" ]; then
+                            never=`$0 never $name`
+                            printf "\n $never \n"
+                        elif [ "$choice2" = "d" ]; then
+                            cleanup=`$0 cleanup $name`
+                            printf "\n $cleanup \n"
+                            run=false
+                        elif [ "$choice2" = "e" ]; then
+                            printf "\n"
+                            never=`$0 never $name`
+                            cleanup=`$0 cleanup $name`
+                            forever=`$0 forever $name $cmd`
+                            printf " stop: $never \n"
+                            printf " delete: $cleanup \n"
+                            printf " start: $forever \n"
+                        elif [ "$choice2" = "f" ]; then
+                            newname=""
+                            while [ true ]; do
+                                printf "     duplicate name: "
+                                read newname
+                                if [ "$newname" != "" ]; then
+                                    break
+                                fi
+                                printf " invalid name \n"
+                            done
+                            forever=`$0 forever $newname $cmd`
+                            printf " \n $forever \n"
+                        elif [ "$choice2" = "x" ]; then
+                            break 2
+                        else
+                            printf " invalid choice \n"
+                            continue
+                        fi
+                        break
+                    done
+                    printf " \n hit enter to continue "
+                    read next
+                done
+            else
+                printf " application does not exist \n"
+                printf " hit enter to continue "
+                read next
+            fi
         fi
     done
 elif [ "$1" = "help" ]; then
     printf "pocketjs help \n"
-    printf "    'pocketjs utility' - run utility for managing pocketjs applications \n"
-    printf "    'pocketjs forever {command} {name}' - background a pocketjs script \n"
+    printf "    pocketjs utility \n"
+    printf "        run utility for managing pocketjs apps \n"
+    printf "    pocketjs forever {name} {command} \n"
+    printf "        background a pocketjs script \n"
+    printf "        name = name for app \n"
     printf "        command = 'php /absolute/path/to/pocketjs_server_script.php' \n"
-    printf "        name = name for pocketjs application \n"
-    printf "    'pocketjs never {name}' - stop a pocketjs script backgrounded by 'pocketjs forever' \n"
-    printf "        name = name of backgrounded pocketjs application \n"
-    printf "    'pocketjs cleanup {name}' - clean up log and PID files of a pocketjs script stopped by 'pocketjs never' \n"
-    printf "        name = name of backgrounded pocketjs application \n"
-    printf "    'pocketjs pid {name}' - get the PID of a pocketjs script backgrounded by 'pocketjs forever' \n"
-    printf "        name = name of backgrounded pocketjs application \n"
-    printf "    'pocketjs log {name}' - get the logs of a pocketjs script backgrounded by 'pocketjs forever' \n"
-    printf "        name = name of backgrounded pocketjs application \n"
-    printf "    'pocketjs help' - view possible operations \n"
+    printf "    pocketjs never {name} \n"
+    printf "        stop a running pocketjs app \n"
+    printf "        name = name of app \n"
+    printf "    pocketjs cleanup {name} \n"
+    printf "        clean up files of a stopped pocketjs app \n"
+    printf "        name = name of app \n"
+    printf "    pocketjs pid {name} \n"
+    printf "        get PID of a pocketjs app \n"
+    printf "        name = name of app \n"
+    printf "    pocketjs log {name} \n"
+    printf "        get logs of a pocketjs app \n"
+    printf "        name = name of app \n"
+    printf "    pocketjs help \n"
+    printf "        view possible operations \n"
 else
-    echo "Invalid Argument: (run 'pocketjs help' for help)"
+    echo "invalid argument (run 'pocketjs help' for help)"
 fi
