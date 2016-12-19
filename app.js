@@ -417,7 +417,7 @@ $(document).ready(function () {
             data = data.substring(0, data.indexOf(' 1. Install PHP 5.4')).replace('#### Visit [anuv.me/pocketjs](http://anuv.me/pocketjs)', '');
             var renderer = new marked.Renderer();
             body.child('main/info/content').html(marked(data, { renderer: renderer })).css('opacity', '1');
-            $('#pocketjs').html('What is pocketjs?');
+            $('#pocketjs').html('pocketjs?');
             viewfull
                 .key('ready', true)
                 .on('resize', function (e) {
