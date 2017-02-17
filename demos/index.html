@@ -3,11 +3,64 @@
     <head>
         <meta charset = 'utf-8'>
         <title>pocketjs demos</title>
+        <style type = 'text/css'>
+
+            /* selection color  */
+            ::-moz-selection {
+                color: #1B1B1B;
+                background: #F3F3F3;
+            }
+            ::selection {
+                color: #1B1B1B;
+                background: #F3F3F3;
+            }
+
+            /* monospace font */
+            * {
+                font: 22px Courier New, Courier, Consolas, monospace, sans-serif;
+            }
+
+            /* layout styling */
+            html {
+                height: 99%;
+                overflow-y: hidden;
+            }
+            body {
+                background-color: #111111;
+                display: table;
+                min-height: 99%;
+                width: 99%;
+                height: 99%;
+                overflow-y: hidden;
+            }
+
+            /* individual element styling */
+            #content {
+                height: 100%;
+                width: 100%;
+                display: table-cell;
+                vertical-align: middle;
+                padding-top: 30px;
+                margin: auto;
+                text-align: center;
+            }
+            #title {
+                color: #EFEFEF;
+                font-size: 50px;
+            }
+            a {
+                color: #2F5FAF;
+                font-size: 22px;
+            }
+
+        </style>
     </head>
     <body>
-        <h1>pocketjs demos</h1>
-        <a href = 'chat-simple'>chat-simple</a>
-        <br/>
-        <a href = 'chat-better'>chat-better</a>
+        <div id = 'content'>
+            <h1 id = 'title'>pocketjs demos</h1>
+            <a href = 'chat-simple'>chat-simple</a>
+            <br/>
+            <a href = 'chat-better'>chat-better</a>
+        </div>
     </body>
 </html>
