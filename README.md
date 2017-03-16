@@ -39,7 +39,7 @@ Regarding program structure, pocketjs utilizes an *event-driven flow* model to s
  1. Install PHP 5.4 or above, or PHP7
     - From [php.net/downloads.php](http://php.net/downloads.php)
     - Or your favorite package manager
- 2. Clone [this](http://github.com/anuvgupta.pocketjs) repository
+ 2. Clone [this](http://github.com/anuvgupta/pocketjs) repository
  3. Go to the [demos](http://github.com/anuvgupta/pocketjs/tree/master/demos) folder and try out some demos!
 
 
