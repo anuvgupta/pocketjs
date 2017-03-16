@@ -3,7 +3,7 @@
 /*
   pocketjs v1.1
   [http://anuv.me/pocketjs]
-  Copyright: (c) 2016 Anuv Gupta
+  Copyright: (c) 2017 Anuv Gupta
   File: pocket.php (pocketjs server)
   Source: [https://github.com/anuvgupta/pocketjs]
   License: MIT [https://github.com/anuvgupta/pocketjs/blob/master/LICENSE.md]

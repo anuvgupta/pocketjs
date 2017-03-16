@@ -1,8 +1,8 @@
 /*
   pocketjs v1.1
   [http://anuv.me/pocketjs]
-  Copyright: (c) 2016 Anuv Gupta
-  File: pocket.js (pocketjs client)
+  Copyright: (c) 2017 Anuv Gupta
+  File: pocket.js (pocketjs javascript client)
   Source: [https://github.com/anuvgupta/pocketjs]
   License: MIT [https://github.com/anuvgupta/pocketjs/blob/master/LICENSE.md]
 */
@@ -42,7 +42,6 @@ Pocket = function () {
                 online = false;
                 websocket.send(Pocket.encode(JSON.stringify({ command: 'close', id: id, ad: address, p: port})));
                 console.log('[POCKET] disconnected');
-                console.log(ev);
                 ev['close']();
                 return false;
             };
