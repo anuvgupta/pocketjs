@@ -166,6 +166,6 @@ Block('chat', function () {
                     .parent()
             );
         });
-        pocket.connect('aws.anuv.me', 8002, 'chat-better.php');
+        pocket.connect('aws.anuv.me', 8003, 'chat-better.php');
     }
 });
