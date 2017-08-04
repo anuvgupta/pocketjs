@@ -26,6 +26,7 @@ class Pocket {
     protected $on; //custom event listeners
     protected $v; //verbose run
     protected $bt; //blocking timeout
+    protected $op; //options
     //constructor method called when new Pocket constructed
     public function __construct($d, $p, $mc, $bt, $v = null) {
         global $eol, $cli;
@@ -41,6 +42,9 @@ class Pocket {
         );
         $this->on = array();
         $this->v = true;
+        $this->op = [
+            'kick-bad-events' => true
+        ];
         $this->n = 'LOG';
         if (is_string($v)) $this->n = strtoupper($v);
         else $this->v = ($v !== null) ? $v : true;
@@ -145,8 +149,11 @@ class Pocket {
                             //elseif ($data['command'] == 'alive') ;
                         } elseif (!isset($data['call'])) {
                             // echo ($textData);
-                            echo "[SERVER] client[$i] kicked for: sending illegal data: no event specified $textData" . $eol;
-                            $this->close($i);
+                            // echo 'kick-bad-events: ' . $this->op['kick-bad-events'] . $eol;
+                            if ($this->op['kick-bad-events']) {
+                                echo "[SERVER] client[$i] kicked for: sending illegal data: no event specified $textData" . $eol;
+                                $this->close($i);
+                            } else echo "[SERVER] client[$i] sent illegal data: no event specified $textData" . $eol;
                         } elseif (isset($this->on[$data['call']])) {
                             if (isset($data['args'])) {
                                 array_push($data['args'], $i);
@@ -319,6 +326,14 @@ class Pocket {
             echo "[$name] non-string data: " . $eol;
             print_r($text);
         }
+    }
+    // function setOpt to set options
+    function setOpt($option, $val) {
+        if (isset($this->op[$option])) {
+            $this->op[$option] = $val;
+            return true;
+        }
+        return false;
     }
     //function unmask called to unmask masked data received from client
     private function unmask($text) { //parameter text (masked string data) to be unmasked
