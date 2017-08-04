@@ -43,6 +43,7 @@ class Pocket {
         $this->on = array();
         $this->v = true;
         $this->op = [
+            'kick-bad-data' => true,
             'kick-bad-events' => true
         ];
         $this->n = 'LOG';
@@ -150,7 +151,7 @@ class Pocket {
                         } elseif (!isset($data['call'])) {
                             // echo ($textData);
                             // echo 'kick-bad-events: ' . $this->op['kick-bad-events'] . $eol;
-                            if ($this->op['kick-bad-events']) {
+                            if ($this->op['kick-bad-data']) {
                                 echo "[SERVER] client[$i] kicked for: sending illegal data: no event specified $textData" . $eol;
                                 $this->close($i);
                             } else echo "[SERVER] client[$i] sent illegal data: no event specified $textData" . $eol;
@@ -161,8 +162,11 @@ class Pocket {
                             }
                             else $this->call($data['call'], $i);
                         } else {
-                            $this->close($i);
-                            echo "[SERVER] client[$i] kicked for: sending illegal data: event '{$data['call']}' does not exist" . $eol;
+
+                            if ($this->op['kick-bad-events']) {
+                                $this->close($i);
+                                echo "[SERVER] client[$i] kicked for: sending illegal data: event '{$data['call']}' does not exist" . $eol;
+                            } else echo "[SERVER] client[$i] sent illegal data: event '{$data['call']}' does not exist" . $eol;
                         }
                         break 2;
                     }
