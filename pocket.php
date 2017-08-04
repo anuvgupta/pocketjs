@@ -1,7 +1,7 @@
 <?php
 
 /*
-  pocketjs v1.1
+  pocketjs v1.2
   [http://anuv.me/pocketjs]
   Copyright: (c) 2017 Anuv Gupta
   File: pocket.php (pocketjs server)
