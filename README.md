@@ -3,7 +3,7 @@ pocketjs is a lightweight WebSocket library for writing realtime applications in
 &nbsp;  
 *Why pocketjs?*  
 Many web developers, such as myself, have many existing dynamic web applications currently deployed. But they require a solution for seamless realtime integration, rather than a framework around/in which to architect their entire application. There are many existing options, such as [node.js](http://nodejs.org)/[socket.io](http://socket.io) and [Firebase](https://firebase.google.com), but many require a dramatic shift to an unfamiliar and heavy framework, or are not simultaneously cost-effective and scalable. **pocketjs** is a lightweight, encapsulated, and straightforward library for incorporating realtime updates into an existing web app (preferably written in PHP, but any language should be compatible).
-#### Visit [anuv.me/pocketjs](http://anuv.me/pocketjs)
+#### Visit [github.anuv.me/pocketjs](http://github.anuv.me/pocketjs)
 
 ## Architecture
 pocketjs blends well into existing web frameworks:
@@ -30,8 +30,8 @@ Regarding program structure, pocketjs utilizes an *event-driven flow* model to s
 
 ## Getting Started
 *View a live demo!*
- 1. View live demos online at [anuv.me/pocketjs/demos](http://anuv.me/pocketjs/demos)
- 2. View a chat demo alongside code online at [anuv.me/pocketjs/#hook](http://anuv.me/pocketjs/#hook)
+ 1. View live demos online at [github.anuv.me/pocketjs/demos](http://github.anuv.me/pocketjs/demos)
+ 2. View a chat demo alongside code online at [github.anuv.me/pocketjs/#hook](http://github.anuv.me/pocketjs/#hook)
  3. Host your own local chat app
     - Follow the steps below!
 
@@ -44,20 +44,20 @@ Regarding program structure, pocketjs utilizes an *event-driven flow* model to s
 
 
 ## Further Tutorials
-&nbsp;&nbsp;View this tutorial and others at [anuv.me/pocketjs/docs?tutorials](http://anuv.me/pocketjs/docs?tutorials)
+&nbsp;&nbsp;View this tutorial and others at [github.anuv.me/pocketjs/docs?tutorials](http://github.anuv.me/pocketjs/docs?tutorials)
 
 ## Documentation
-&nbsp;&nbsp;View all API docs and tutorials at [anuv.me/pocketjs/docs](http://anuv.me/pocketjs/docs)
+&nbsp;&nbsp;View all API docs and tutorials at [github.anuv.me/pocketjs/docs](http://github.anuv.me/pocketjs/docs)
 &nbsp;  
 &nbsp;  
 
 # Compatibility
 &nbsp;&nbsp;&nbsp;&nbsp;
-[![XAMPP](http://anuv.me/pocketjs/img/logo/xampp_75.png)](http://www.apachefriends.org)
-[![NGINX](http://anuv.me/pocketjs/img/logo/nginx_75.png)](http://www.nginx.com/)
-[![RubyOnRails](http://anuv.me/pocketjs/img/logo/railsB_75.png)](http://rubyonrails.org/)
-[![Node.js](http://anuv.me/pocketjs/img/logo/node_75.png)](http://nodejs.org/)
-[![macOS Server](http://anuv.me/pocketjs/img/logo/macos_75.png)](http://www.apple.com/macos/server/)  
+[![XAMPP](http://github.anuv.me/pocketjs/img/logo/xampp_75.png)](http://www.apachefriends.org)
+[![NGINX](http://github.anuv.me/pocketjs/img/logo/nginx_75.png)](http://www.nginx.com/)
+[![RubyOnRails](http://github.anuv.me/pocketjs/img/logo/railsB_75.png)](http://rubyonrails.org/)
+[![Node.js](http://github.anuv.me/pocketjs/img/logo/node_75.png)](http://nodejs.org/)
+[![macOS Server](http://github.anuv.me/pocketjs/img/logo/macos_75.png)](http://www.apple.com/macos/server/)  
 pocketjs is compatible with many libraries and frameworks.  
 For more questions about compatibility, email me at [pocketjs@anuv.me](mailto:pocketjs@anuv.me?Subject=Compatibility%20Issue)  
 &nbsp;  
