@@ -29,12 +29,13 @@ body = Block('div', 'app')
                 .on('mouseout', function (e, nav) {
                     nav
                         .css('animation', 'none')
+                        // .css('animation', 'slowbounce 1s ease-in-out')
                         .child('down')
                             .css('opacity', '0.65')
                     ;
                 })
                 .on('click', function () {
-                    $(document.body).animate({
+                    $('html, body').animate({
                         scrollTop: (body.child('main/hook').$().offset().top + 14) + 'px'
                     }, 700);
                 })
