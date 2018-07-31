@@ -8,9 +8,9 @@ Many web developers, such as myself, have many existing dynamic web applications
 ## Architecture
 pocketjs blends well into existing web frameworks:
  - Web Server - all are compatible
+    - Apache, NGINX, node.js, etc.
     - Handles HTTP/HTTPS requests
     - Runs on port 80/443, or with a reverse proxy
-    - Apache, XAMPP, NGINX, Rails, macOS, node.js, etc.
     - Serves static/dynamic HTML/CSS/JS content
         - Provides WebSocket client for pocketjs server
  - WebSocket Server - pocketjs
@@ -53,12 +53,7 @@ Regarding program structure, pocketjs utilizes an *event-driven flow* model to s
 
 # Compatibility
 &nbsp;&nbsp;&nbsp;&nbsp;
-[![XAMPP](http://github.anuv.me/pocketjs/img/logo/xampp_75.png)](http://www.apachefriends.org)
-[![NGINX](http://github.anuv.me/pocketjs/img/logo/nginx_75.png)](http://www.nginx.com/)
-[![RubyOnRails](http://github.anuv.me/pocketjs/img/logo/railsB_75.png)](http://rubyonrails.org/)
-[![Node.js](http://github.anuv.me/pocketjs/img/logo/node_75.png)](http://nodejs.org/)
-[![macOS Server](http://github.anuv.me/pocketjs/img/logo/macos_75.png)](http://www.apple.com/macos/server/)  
-pocketjs is compatible with many libraries and frameworks.  
+pocketjs is compatible with many libraries and frameworks, as it functions on its own.  
 For more questions about compatibility, email me at [pocketjs@anuv.me](mailto:pocketjs@anuv.me?Subject=Compatibility%20Issue)  
 &nbsp;  
 # License
