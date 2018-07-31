@@ -44,17 +44,15 @@ Regarding program structure, pocketjs utilizes an *event-driven flow* model to s
 
 
 ## Further Tutorials
-&nbsp;&nbsp;View this tutorial and others at [github.anuv.me/pocketjs/docs?tutorials](http://github.anuv.me/pocketjs/docs?tutorials)
+View this tutorial and others at [github.anuv.me/pocketjs/docs?tutorials](http://github.anuv.me/pocketjs/docs?tutorials)
 
 ## Documentation
-&nbsp;&nbsp;View all API docs and tutorials at [github.anuv.me/pocketjs/docs](http://github.anuv.me/pocketjs/docs)
+View all API docs and tutorials at [github.anuv.me/pocketjs/docs](http://github.anuv.me/pocketjs/docs)
 &nbsp;  
 &nbsp;  
 
 # Compatibility
-&nbsp;&nbsp;&nbsp;&nbsp;
 pocketjs is compatible with many libraries and frameworks, as it functions on its own.  
 For more questions about compatibility, email me at [pocketjs@anuv.me](mailto:pocketjs@anuv.me?Subject=Compatibility%20Issue)  
-&nbsp;  
 # License
-&nbsp;&nbsp;pocketjs is released under the [MIT License](https://github.com/anuvgupta/pocketjs/blob/master/LICENSE.md)
+pocketjs is released under the [MIT License](https://github.com/anuvgupta/pocketjs/blob/master/LICENSE.md)
