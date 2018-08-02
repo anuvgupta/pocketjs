@@ -29,8 +29,7 @@ The WebSocket server runs independently from the Web Server, and can easily be a
 Regarding program structure, pocketjs utilizes an *event-driven flow* model to simplify operations as much as possible within the bounds of PHP.  
 
 ## Getting Started
-*Documentation and tutorials*  
-Check out docs and tutorials at [github.anuv.me/pocketjs/docs](http://github.anuv.me/pocketjs/docs).  
+*Documentation and tutorials:* Check out docs and tutorials at [github.anuv.me/pocketjs/docs](http://github.anuv.me/pocketjs/docs).  
 
 *View a live demo!*
  1. View live demos online at [github.anuv.me/pocketjs/demos](http://github.anuv.me/pocketjs/demos)
