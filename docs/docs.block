@@ -1,4 +1,491 @@
     *
-menu
-    A Tutorials
-    B Documentation
+
+// pocketjs docs blockfile
+
+// define custom blocks
+!break
+    init
+        {
+            return Block('span').add('br');
+        }
+    load
+        {
+            data('val', function (val) {
+                for (var i = 1; i < val; i++)
+                    block.add('br');
+            });
+        }
+!text
+    init
+        {
+            return Block('span');
+        }
+    load
+        {
+            data('val', function (val) {
+                block.node().appendChild(document.createTextNode(val));
+            });
+            data('html', function (html) {
+                block.html(html);
+            });
+        }
+!image
+    init
+        {
+            return Block('div');
+        }
+    load
+        {
+            var src = data('src');
+            var height = data('height');
+            var width = data('width');
+            var alt = data('alt');
+            if (src != null) {
+                block.css('background-image', "url('" + src + "')")
+                    .css('background-repeat', 'no-repeat')
+                    .css('background-size', 'contain')
+                ;
+            }
+            if (height !== null) block.css('height', height);
+            else block.css('height', 'auto');
+            if (width !== null) block.css('width', width);
+            else block.css('width', 'auto');
+            if (alt !== null) block.attribute('title', alt);
+        }
+// app content layer
+docs
+    :open
+        {
+            block
+                .css('transition', 'opacity 0.3s ease')
+                .css('opacity', '1')
+            ;
+        }
+    css
+        width 100%
+        opacity 0
+        transition opacity 1s ease
+        position relative
+        // padding-bottom 20px
+        overflow-x hidden
+    div bar
+        css
+            position fixed
+            top 0
+            left 0
+            width 100%
+            height 70px
+            background-color #3c3f49
+            z-index 20
+            box-shadow 0 2px 5px 0 rgba(0, 0, 0, 0.3)
+        block hamburger
+            css
+                position absolute
+                top 0
+                left 10px
+                cursor pointer
+                width 70px
+            :click
+                {
+                    if (block.parent().sibling('menu').key('showing') == 'showing') {
+                        block.parent().sibling('menu').on('hide');
+                    } else {
+                        block.parent().sibling('menu').on('show');
+                    }
+                }
+            div imgwrap
+                css
+                    margin 0 auto
+                    height 25px
+                    width 25px
+                image image
+                    src img/menu.png
+                    height 25px
+                    width 25px
+        block logo
+            css
+                position absolute
+                top 1px
+                left 80px
+                width 70px
+            div imgwrap
+                css
+                    margin 0 auto
+                    height 41px
+                    width 41px
+                image image
+                    src ../img/pocketjs_w.png
+                    height 41px
+                    width 41px
+        block logoname
+            css
+                position absolute
+                top -2px
+                left 155px
+                width auto
+                color white
+                font-family JosefinSansLight
+                font-weight 100
+            div textwrap
+                text t1
+                    html pocketjs&nbsp;
+                    css
+                        font-size 37px
+                        letter-spacing 1px
+                text t3
+                    val docs
+                    css
+                        font-size 36px
+                        font-family JosefinSansThin
+        block sourceButton
+            css
+                position absolute
+                right 30px
+                top 0
+                width auto
+            button button
+                type button
+                class btn btn-outline-light
+                html View Source
+                :click
+                    {
+                        window.open('https://github.com/anuvgupta/pocketjs', '_blank');
+                    }
+    div menu
+        css
+            height 100%
+            width 340px
+            border-right 1px solid #eee
+            position fixed
+            left 0
+            top 0
+            background-color white
+            transition opacity 0.2s ease, margin-left 0.3s ease, width 0.3s ease
+            box-shadow 0 2px 5px 0 rgba(0, 0, 0, 0.13)
+        @query window height != 0
+            {
+                if (block.key('showing') == 'hidden') {
+                    block.css('margin-left', '-' + (block.$().width()) + 'px');
+                }
+            }
+        @query window width > 550
+            css
+                width 340px
+        @query window width <= 550
+            css
+                width 100%
+        $showing hidden
+        :show
+            {
+                var width = block.$().width();
+                block.css({
+                    // opacity: '1',
+                    marginLeft: '0'
+                });
+                block.sibling('main').css({
+                    width: (window.innerWidth - width) + 'px',
+                    marginLeft: width + 'px'
+                });
+                block.key('showing', 'showing');
+            }
+        :hide
+            {
+                var width = block.$().width();
+                block.css({
+                    marginLeft: '-' + width + 'px'
+                });
+                block.sibling('main').css({
+                    width: window.innerWidth + 'px',
+                    marginLeft: '0'
+                });
+                // setTimeout(function () {
+                //     block.css({
+                //         opacity: '0'
+                //     });
+                // }, 550);
+                block.key('showing', 'hidden');
+            }
+        div spacer
+            css
+                height 110px
+        !list-item
+            init
+                {
+                    var block = Block('li');
+                    return block
+                        .add(Block('a', 'link')
+                            .attribute('href', '#')
+                            .add('text', 1)
+                            .on('click', function (e, b, d) {
+                                app.block.child('main/page').on('hideAll').on('show', {
+                                    page: block.mark(),
+                                    type: (block.parent(1).mark() == 'item2List' ? 'code' : 'help')
+                                });
+                            })
+                        )
+                    ;
+                }
+            load
+                {
+                    data('val', function (val) {
+                        block.child('link/text').data(val);
+                    });
+                }
+        div item1
+            css
+                height 30px
+                width 100%
+                font-size 17px
+            a link
+                css
+                    color #505050
+                    transition color 0.1s ease
+                href #item1List
+                data-toggle collapse
+                block imgwrap
+                    css
+                        margin-left 40px
+                        width 30px
+                        height 30px
+                        opacity 0.4
+                        display inline-table
+                        float left
+                        transition opacity 0.1s ease
+                    image arrow
+                        src img/right.png
+                        height 18px
+                        width 18px
+                        css
+                            margin auto
+                            transition transform 0.2s ease, margin 0.2s ease
+                block textwrap
+                    css
+                        margin-left 10px
+                        width auto
+                        height 30px
+                        display inline-table
+                        float left
+                    text text
+                        val Basics
+                :mouseover
+                    {
+                        block.css('color', '#444');
+                        block.child('imgwrap').css('opacity', '0.6');
+                    }
+                :mouseout
+                    {
+                        block.css('color', '#505050');
+                        block.child('imgwrap').css('opacity', '0.4');
+                    }
+                :click
+                    {
+                        if (block.parent().sibling('item1List').node().className.indexOf('show') !== -1) {
+                            block.child('imgwrap/arrow').css('transform', 'rotate(0deg)').css('margin-bottom', '0');
+                        } else {
+                            block.child('imgwrap/arrow').css('transform', 'rotate(90deg)').css('margin-bottom', '1px');
+                        }
+                    }
+        div item1List
+            class collapse
+            id item1List
+            ul list
+                css
+                    margin-left 25px
+                list-item intro
+                    val Intro
+                list-item getting-started
+                    val Getting Started
+                list-item cmd-line
+                    val Command Line
+                list-item demos
+                    val Demos
+        div item2
+            css
+                height 30px
+                width 100%
+                font-size 17px
+            a link
+                css
+                    color #505050
+                    transition color 0.1s ease
+                href #item2List
+                data-toggle collapse
+                block imgwrap
+                    css
+                        margin-left 40px
+                        width 30px
+                        height 30px
+                        opacity 0.4
+                        display inline-table
+                        float left
+                        transition opacity 0.1s ease
+                    image arrow
+                        src img/right.png
+                        height 18px
+                        width 18px
+                        css
+                            margin auto
+                            transition transform 0.2s ease, margin 0.2s ease
+                block textwrap
+                    css
+                        margin-left 10px
+                        width auto
+                        height 30px
+                        display inline-table
+                        float left
+                    text text
+                        val Functions
+                :mouseover
+                    {
+                        block.css('color', '#444');
+                        block.child('imgwrap').css('opacity', '0.6');
+                    }
+                :mouseout
+                    {
+                        block.css('color', '#505050');
+                        block.child('imgwrap').css('opacity', '0.4');
+                    }
+                :click
+                    {
+                        if (block.parent().sibling('item2List').node().className.indexOf('show') !== -1) {
+                            block.child('imgwrap/arrow').css('transform', 'rotate(0deg)').css('margin-bottom', '0');
+                        } else {
+                            block.child('imgwrap/arrow').css('transform', 'rotate(90deg)').css('margin-bottom', '1px');
+                        }
+                    }
+        div item2List
+            class collapse
+            id item2List
+            ul list
+                css
+                    margin-left 25px
+                list-item construct
+                    val __construct
+                list-item destruct
+                    val __destruct
+                list-item open
+                    val open
+                list-item close
+                    val close
+                list-item send
+                    val send
+                list-item sendAll
+                    val sendAll
+                list-item bind
+                    val bind
+                list-item call
+                    val call
+                list-item callArr
+                    val callArr
+                list-item onConn
+                    val onConn
+                list-item onRun
+                    val onRun
+                list-item onClose
+                    val onClose
+                list-item log
+                    val log
+                list-item setOpt
+                    val setOpt
+    div main
+        css
+            transition width 0.3s ease
+            transition margin-left 0.3s ease
+        @query window height != 0
+            {
+                if (block.sibling('menu').key('showing') == 'showing') {
+                    block.css({
+                        width: (window.innerWidth - block.sibling('menu').$().width()) + 'px',
+                        marginLeft: block.sibling('menu').$().width() + 'px'
+                    });
+                } else {
+                    block.css({
+                        width: window.innerWidth + 'px',
+                        marginLeft: '0'
+                    });
+                }
+
+            }
+        div page
+            css
+                width 90%
+                margin 0 auto
+                background-color white
+                border-radius 2px
+                margin-top 110px
+                margin-bottom 50px
+                -webkit-box-shadow 0 4px 17px 0 rgba(0, 0, 0, 0.05), 0 6px 20px 0 rgba(0, 0, 0, 0.03)
+                -moz-box-shadow 0 4px 17px 0 rgba(0, 0, 0, 0.05), 0 6px 20px 0 rgba(0, 0, 0, 0.03)
+                box-shadow 0 4px 17px 0 rgba(0, 0, 0, 0.05), 0 6px 20px 0 rgba(0, 0, 0, 0.03)
+            // @query window height != 0
+            //     {
+            //         console.log(block.parent().$().width())
+            //         block.css('width', (block.parent().$().width() * 0.9) + 'px');
+            //     }
+            :hideAll
+                {
+                    var children = block.children();
+                    for (var c in children) {
+                        children[c].css('display', 'none');
+                    }
+                }
+            :show
+                {
+                    var page = data.page;
+                    console.log(data);
+                    if (page == 'intro') {
+                        block.child('intro').css('display', 'block');
+                    } else {
+                        var md_src = app.docs_src[page] || '<br/>';
+                        var html = marked(md_src);
+                        block.child('markedContent').node().className = (data.type == 'code'? 'code-type' : '');
+                        block.child('markedContent').html(html).css('display', 'block');
+                    }
+                }
+            div intro
+                css
+                    padding 20px 30px
+                    position relative
+                    min-height 340px
+                    line-height 1.7
+                h1 title
+                    html pocketjs
+                    css
+                        letter-spacing 1px
+                        padding-bottom 6px
+                        border-bottom 1px solid #e4e4e4
+                        color #222
+                div spacer
+                    css
+                        height 8px
+                a homelink
+                    target _blank
+                    href ../
+                    image logo
+                        src ../img/pocketjs.png
+                        height 220px
+                        width 220px
+                        css
+                            opacity 0.95
+                            float right
+                            margin 0 20px 10px
+                p p
+                    html
+                        `
+                            pocketjs is a lightweight WebSocket library for writing realtime applications in PHP and JavaScript.
+                            <br/><br/>
+                            This site contains a getting started guide, instructions for the command line utility, links to demo projects. It also contains documentation/explanations of all the individual functions of the library.
+                            <br/><br/>
+                            View the main site <a href="../">here</a> and GitHub project page <a href="https://github.com/anuvgupta/pocketjs">here</a>.
+                            <br/>
+                        `
+                div textwrap
+                    css
+                        padding-top 15px
+                    text text
+                        html &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;—&nbsp;&nbsp;Anuv
+            div markedContent
+                id markedContent
+                css
+                    padding 20px 30px
+                    // display none

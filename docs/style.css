@@ -1,5 +1,72 @@
-@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro');
-
-* {
-    font-family: 'Source Sans Pro', Verdana, Helvetica, sans-serif;
+@font-face {
+    font-family: JosefinSans;
+    src: url('../fonts/JosefinSans-Regular.ttf');
+    font-weight: normal;
+}
+@font-face {
+    font-family: JosefinSansLight;
+    src: url('../fonts/JosefinSans-Light.ttf');
+    font-weight: normal;
+}
+@font-face {
+    font-family: JosefinSansThin;
+    src: url('../fonts/JosefinSans-Thin.ttf');
+    font-weight: normal;
+}
+body {
+    background-color: #f8f8f8;
+}
+ul {
+    list-style-type: none;
+}
+ul li:before {
+    content: "\2013\a0\a0\a0\a0";
+    opacity: 0.4;
+}
+#markedContent ul {
+    list-style-type: initial;
+}
+#markedContent  ul li:before {
+    content: initial;
+    opacity: initial;
+}
+#markedContent {
+    line-height: 1.7;
+}
+#markedContent h1, h2 {
+    border-bottom: 1px solid #e4e4e4;
+    padding-bottom: 6px;
+    letter-spacing: 1px;
+    color: #222;
+}
+#markedContent.code-type h1 {
+    border: none;
+    border-radius: 3px;
+    background-color: #f5f5f5;
+    padding: 10px 15px;
+    letter-spacing: 3px;
+    font-family: "Lucida Console", Monaco, monospace;
+    font-weight: 600;
+    font-size: 33px;
+    margin-bottom: 18px;
+    color: #222;
+}
+#markedContent code {
+    background-color: rgba(27,31,35,0.05);
+    padding: 0.2em 0.4em;
+    margin: 0;
+    border-radius: 3px;
+    /* color: #222; */
+}
+#markedContent pre {
+    background-color: #f6f8fa;
+    padding: 16px;
+    overflow: auto;
+    border-radius: 3px;
+}
+#markedContent pre code {
+    background-color: initial;
+    padding: initial;
+    margin: initial;
+    border-radius: initial;
 }
