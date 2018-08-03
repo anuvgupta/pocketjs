@@ -6,6 +6,13 @@
         <title>pocketjs demos</title>
         <style type = 'text/css'>
 
+            /* fonts */
+            @font-face {
+                font-family: JosefinSans;
+                src: url('../fonts/JosefinSans-Regular.ttf');
+                font-weight: normal;
+            }
+
             /* selection color  */
             ::-moz-selection {
                 color: #1B1B1B;
@@ -18,7 +25,7 @@
 
             /* monospace font */
             * {
-                font: 22px Courier New, Courier, Consolas, monospace, sans-serif;
+                font: 22px sans-serif;
             }
 
             /* layout styling */
@@ -47,23 +54,29 @@
             }
             #title {
                 color: #EFEFEF;
-                font-size: 50px;
+                font-size: 65px;
+                font-family: JosefinSans;
             }
             a {
                 color: #2F5FAF;
-                font-size: 22px;
+                font-size: 32px;
+                text-decoration: none;
+                font-family: JosefinSans;
+                letter-spacing: 2px;
+            }
+            a:hover {
+                color: #4D7DCD;
             }
 
         </style>
     </head>
     <body>
         <div id = 'content'>
-            <h1 id = 'title'>pocketjs demos</h1>
-            <a href = 'chat-simple'>chat-simple</a>
-            <br/>
-            <a href = 'chat-better'>chat-better</a>
-            <br/>
-            <a href = 'http://rubbr.anuv.me/' target = '_blank'>rubbr.io</a>
+            <h1 id = 'title'>pocketjs demos</h1><br/>
+            <a href = 'chat-simple'>chat-simple</a><br/>
+            <a href = 'chat-better'>chat-better</a><br/>
+            <a href = 'http://rubbr.anuv.me/' target = '_blank'>rubbr.io</a><br/>
+            <br/><br/><br/>
         </div>
     </body>
 </html>
