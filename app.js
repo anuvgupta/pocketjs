@@ -385,10 +385,13 @@ $(document).ready(function () {
             var index = window.location.href.indexOf('#');
             if (index == -1) return false;
             var id = window.location.href.substring(index + 1);
+            console.log($('#' + id).offset().top);
             if (document.getElementById(id) == null) return false;
-            $(document.body).animate({
-                scrollTop: $('#' + id).offset().top + 'px'
-            }, 0);
+            setTimeout(function () {
+                $('html, body').animate({
+                    scrollTop: $('#' + id).offset().top + 'px'
+                }, 100);
+            }, 100);
         }, 10);
         // set up pocket
         b.child('main/hook/middle/chat').on('connect');
@@ -415,7 +418,7 @@ $(document).ready(function () {
         url: 'https://raw.githubusercontent.com/anuvgupta/pocketjs/master/README.md',
         dataType: 'text',
         success: function (data) {
-            data = data.substring(0, data.indexOf(' 1. Install PHP 5.4')).replace('#### Visit [anuv.me/pocketjs](http://anuv.me/pocketjs)', '');
+            data = data.substring(0, data.indexOf(' 1. Install PHP 5.4')).replace('#### Visit [github.anuv.me/pocketjs](http://github.anuv.me/pocketjs)', '').replace('## Architecture', '## architecture').replace('## Getting Started', '## getting started');
             var renderer = new marked.Renderer();
             body.child('main/info/content').html(marked(data, { renderer: renderer })).css('opacity', '1');
             $('#pocketjs').html('pocketjs?');
