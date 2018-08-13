@@ -20,6 +20,7 @@ pocketjs blends well into existing web frameworks:
  - Web Server - all are compatible
     - Apache, NGINX, node.js, etc.
     - Handles HTTP/HTTPS requests
+    - Runs on port 80/443, or with a reverse proxy
     - Serves static/dynamic HTML/CSS/JS content
         - Provides WebSocket client for pocketjs server
 
