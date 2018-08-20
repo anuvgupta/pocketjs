@@ -1,6 +1,6 @@
 #
 # pocketjs v1.1
-# [http://anuv.me/pocketjs]
+# [http://github.anuv.me/pocketjs]
 # Copyright: (c) 2017 Anuv Gupta
 # File: pocket.py (pocketjs python client)
 # Source: [https://github.com/anuvgupta/pocketjs]
