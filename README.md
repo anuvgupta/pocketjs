@@ -29,23 +29,18 @@ The WebSocket server runs independently from the Web Server, and can easily be a
 Regarding program structure, pocketjs utilizes an *event-driven flow* model to simplify operations as much as possible within the bounds of PHP.  
 
 ## Getting Started
-*Documentation and tutorials:* Check out docs and tutorials at [github.anuv.me/pocketjs/docs](http://github.anuv.me/pocketjs/docs).  
+*Documentation and tutorials:* Check out docs and tutorials at [github.anuv.me/pocketjs/docs](http://github.anuv.me/pocketjs/docs). Here you can find a getting started guide, a tutorial on the basics of a typical pocketjs application, and documentation for each function of both the client and server.  
 
 *View a live demo!*
  1. View live demos online at [github.anuv.me/pocketjs/demos](http://github.anuv.me/pocketjs/demos)
  2. View a chat demo alongside code online at [github.anuv.me/pocketjs/#hook](http://github.anuv.me/pocketjs/#hook)
  3. Host your own local chat app
-    - Follow the steps below!
+     1. Install PHP 5.4 or above, or PHP7
+     2. Clone [this](http://github.com/anuvgupta/pocketjs) repository
+     3. Go to the [demos](http://github.com/anuvgupta/pocketjs/tree/master/demos) folder and follow the instructions to set up your own!
 
-*Set up a local pocketjs chat demo in just* ***3*** *simple steps*
- 1. Install PHP 5.4 or above, or PHP7
-    - From [php.net/downloads.php](http://php.net/downloads.php)
-    - Or your favorite package manager
- 2. Clone [this](http://github.com/anuvgupta/pocketjs) repository
- 3. Go to the [demos](http://github.com/anuvgupta/pocketjs/tree/master/demos) folder and try out some demos!
-
-# Compatibility
+## Compatibility
 pocketjs is compatible with many libraries and frameworks, as it functions on its own.  
 For more questions about compatibility, email me at [pocketjs@anuv.me](mailto:pocketjs@anuv.me?Subject=Compatibility%20Issue)  
-# License
+## License
 pocketjs is released under the [MIT License](https://github.com/anuvgupta/pocketjs/blob/master/LICENSE.md)
