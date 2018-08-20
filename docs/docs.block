@@ -548,6 +548,11 @@ docs
                         }, 50);
                         block.child('markedContent').node().className = (data.type == 'code'? 'code-type' : '');
                         block.child('markedContent').html(html).css('display', 'block');
+                        setTimeout(function() {
+                            $('html, body').animate({
+                                scrollTop: 0
+                            }, 5);
+                        }, 50);
                     }
                 }
             div intro
