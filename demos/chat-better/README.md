@@ -1,7 +1,7 @@
 # chat-better
 A demo of an improved chat room application (for realtime messaging) created with pocketjs  
 Clients can send and receive messages that appear on other clients' screens immediately! Clients have usernames, and are notified when other clients connect and disconnect.  
-This demo is online at [anuv.me/pocketjs/demos/chat-better](http://anuv.me/pocketjs/demos/chat-better)
+This demo is online at [github.anuv.me/pocketjs/demos/chat-better](http://github.anuv.me/pocketjs/demos/chat-better)
 
 ## code
  - `pocket.php` is the pocketjs server-side library
@@ -42,6 +42,6 @@ To test this demo yourself:
     - Check the terminal window in which the pocketjs server is running to see a log
  5. Chat with yourself
     - Check the JavaScript console for any error messages that might appear
-    - Check the [docs](#documentation) and [tutorials](#further-tutorials) for troubleshooting, or [contact me](mailto:pocketjs@anuv.me) through email
+    - Check the [docs and tutorials](http://github.anuv.me/pocketjs/docs) for troubleshooting, or [contact me](mailto:pocketjs@anuv.me) through email
     - Open the page in a new window, place them side by side, and enjoy the realtime updates!
     - Check out the other demos, like [chat-simple](../chat-simple)
