@@ -18,4 +18,4 @@ Runs when a pocket object is constructed with `new Pocket(...)`. Configures the 
      - Use `true` to keep logging on, with `LOG` instead of an application name
 
 ## Return Value
-void
+`void`

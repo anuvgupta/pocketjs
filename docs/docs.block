@@ -128,15 +128,16 @@ docs
                 font-weight 100
             div textwrap
                 text t1
-                    html pocketjs&nbsp;
+                    html pocketjs
                     css
                         font-size 37px
                         letter-spacing 1px
                 text t3
-                    val docs
+                    html docs
                     css
                         font-size 36px
                         font-family JosefinSansThin
+                        padding-left 8px
         block sourceButton
             css
                 position absolute
@@ -162,6 +163,8 @@ docs
             background-color white
             transition opacity 0.2s ease, margin-left 0.3s ease, width 0.3s ease
             box-shadow 0 2px 5px 0 rgba(0, 0, 0, 0.13)
+            overflow-y scroll
+            -webkit-overflow-scrolling touch
         @query window height != 0
             {
                 if (block.key('showing') == 'hidden') {
@@ -205,7 +208,7 @@ docs
                 // }, 550);
                 block.key('showing', 'hidden');
             }
-        div spacer
+        div spacerTop
             css
                 height 110px
         !list-item
@@ -217,12 +220,21 @@ docs
                             .attribute('href', '#')
                             .add('text', 1)
                             .on('click', function (e, b, d) {
+                                var page = block.mark();
+                                var parName = block.parent(1).mark();
                                 app.block.child('main/page').on('hideAll').on('show', {
-                                    page: block.mark(),
-                                    type: (block.parent(1).mark() == 'item2List' ? 'code' : 'help')
+                                    page: page,
+                                    type: (parName == 'item2List' || parName == 'item3List' ? 'code' : 'help')
                                 });
+                                // window.history.pushState({
+                                //     page: page
+                                // }, page, '#' + page);
                             })
                         )
+                        .on('activate', function (e, b, d) {
+                            block.child('link').on('click');
+                            // block.child('link').node().click();
+                        })
                     ;
                 }
             load
@@ -230,6 +242,9 @@ docs
                     data('val', function (val) {
                         block.child('link/text').data(val);
                     });
+                    var page = block.mark();
+                    block.child('link').attribute('href', '#' + page);
+                    app.docs_links[page] = block;
                 }
         div item1
             css
@@ -238,7 +253,7 @@ docs
                 font-size 17px
             a link
                 css
-                    color #505050
+                    color #4a4a4a
                     transition color 0.1s ease
                 href #item1List
                 data-toggle collapse
@@ -266,15 +281,15 @@ docs
                         display inline-table
                         float left
                     text text
-                        val Basics
+                        val Tutorials
                 :mouseover
                     {
-                        block.css('color', '#444');
+                        block.css('color', '#424242');
                         block.child('imgwrap').css('opacity', '0.6');
                     }
                 :mouseout
                     {
-                        block.css('color', '#505050');
+                        block.css('color', '#4a4a4a');
                         block.child('imgwrap').css('opacity', '0.4');
                     }
                 :click
@@ -291,14 +306,18 @@ docs
             ul list
                 css
                     margin-left 25px
-                list-item intro
+                list-item tut-intro
                     val Intro
-                list-item getting-started
-                    val Getting Started
-                list-item cmd-line
-                    val Command Line
-                list-item demos
+                list-item tut-setup
+                    val Setup
+                list-item tut-basics
+                    val Basics
+                list-item tut-demos
                     val Demos
+                list-item tut-cmd-line
+                    val CLI
+                list-item tut-alt-clients
+                    val Clients
         div item2
             css
                 height 30px
@@ -306,7 +325,7 @@ docs
                 font-size 17px
             a link
                 css
-                    color #505050
+                    color #4a4a4a
                     transition color 0.1s ease
                 href #item2List
                 data-toggle collapse
@@ -334,15 +353,15 @@ docs
                         display inline-table
                         float left
                     text text
-                        val Functions
+                        val PHP Server Methods
                 :mouseover
                     {
-                        block.css('color', '#444');
+                        block.css('color', '#424242');
                         block.child('imgwrap').css('opacity', '0.6');
                     }
                 :mouseout
                     {
-                        block.css('color', '#505050');
+                        block.css('color', '#4a4a4a');
                         block.child('imgwrap').css('opacity', '0.4');
                     }
                 :click
@@ -359,34 +378,119 @@ docs
             ul list
                 css
                     margin-left 25px
-                list-item construct
+                list-item php-construct
                     val __construct
-                list-item destruct
+                list-item php-destruct
                     val __destruct
-                list-item open
+                list-item php-open
                     val open
-                list-item close
+                list-item php-close
                     val close
-                list-item send
+                list-item php-send
                     val send
-                list-item sendAll
+                list-item php-sendAll
                     val sendAll
-                list-item bind
+                list-item php-bind
                     val bind
-                list-item call
+                list-item php-call
                     val call
-                list-item callArr
+                list-item php-callArr
                     val callArr
-                list-item onConn
+                list-item php-onConn
                     val onConn
-                list-item onRun
+                list-item php-onRun
                     val onRun
-                list-item onClose
+                list-item php-onClose
                     val onClose
-                list-item log
+                list-item php-log
                     val log
-                list-item setOpt
+                list-item php-setOpt
                     val setOpt
+        div item3
+            css
+                height 30px
+                width 100%
+                font-size 17px
+            a link
+                css
+                    color #4a4a4a
+                    transition color 0.1s ease
+                href #item3List
+                data-toggle collapse
+                block imgwrap
+                    css
+                        margin-left 40px
+                        width 30px
+                        height 30px
+                        opacity 0.4
+                        display inline-table
+                        float left
+                        transition opacity 0.1s ease
+                    image arrow
+                        src img/right.png
+                        height 18px
+                        width 18px
+                        css
+                            margin auto
+                            transition transform 0.2s ease, margin 0.2s ease
+                block textwrap
+                    css
+                        margin-left 10px
+                        width auto
+                        height 30px
+                        display inline-table
+                        float left
+                    text text
+                        val JS Client Methods
+                :mouseover
+                    {
+                        block.css('color', '#424242');
+                        block.child('imgwrap').css('opacity', '0.6');
+                    }
+                :mouseout
+                    {
+                        block.css('color', '#4a4a4a');
+                        block.child('imgwrap').css('opacity', '0.4');
+                    }
+                :click
+                    {
+                        if (block.parent().sibling('item3List').node().className.indexOf('show') !== -1) {
+                            block.child('imgwrap/arrow').css('transform', 'rotate(0deg)').css('margin-bottom', '0');
+                        } else {
+                            block.child('imgwrap/arrow').css('transform', 'rotate(90deg)').css('margin-bottom', '1px');
+                        }
+                    }
+        div item3List
+            class collapse
+            id item3List
+            ul list
+                css
+                    margin-left 25px
+                list-item js-connect
+                    val connect
+                list-item js-send
+                    val send
+                list-item js-bind
+                    val bind
+                list-item js-call
+                    val call
+                list-item js-callArr
+                    val callArr
+                list-item js-onOpen
+                    val onOpen
+                list-item js-onClose
+                    val onClose
+                list-item js-online
+                    val online
+                list-item js-getID
+                    val getID
+                list-item js-getAddress
+                    val getAddress
+                list-item js-getPort
+                    val getPort
+        div spacerBottom
+            css
+                height 40px
     div main
         css
             transition width 0.3s ease
@@ -432,12 +536,16 @@ docs
             :show
                 {
                     var page = data.page;
-                    console.log(data);
-                    if (page == 'intro') {
+                    // console.log(data);
+                    if (page == 'tut-intro') {
                         block.child('intro').css('display', 'block');
                     } else {
                         var md_src = app.docs_src[page] || '<br/>';
                         var html = marked(md_src);
+                        setTimeout(function () {
+                            app.parseDocLinks();
+                            app.parseCodeHighlight();
+                        }, 50);
                         block.child('markedContent').node().className = (data.type == 'code'? 'code-type' : '');
                         block.child('markedContent').html(html).css('display', 'block');
                     }
@@ -457,7 +565,7 @@ docs
                         color #222
                 div spacer
                     css
-                        height 8px
+                        height 1px
                 a homelink
                     target _blank
                     href ../
@@ -474,7 +582,7 @@ docs
                         `
                             pocketjs is a lightweight WebSocket library for writing realtime applications in PHP and JavaScript.
                             <br/><br/>
-                            This site contains a getting started guide, instructions for the command line utility, links to demo projects. It also contains documentation/explanations of all the individual functions of the library.
+                            This site contains a getting started guide, instructions for the command line utility, and links to demo projects. It also contains documentation/explanations of all the individual functions of the library.
                             <br/><br/>
                             View the main site <a href="../">here</a> and GitHub project page <a href="https://github.com/anuvgupta/pocketjs">here</a>.
                             <br/>

@@ -30,6 +30,9 @@ ul li:before {
     content: initial;
     opacity: initial;
 }
+#markedContent  li p {
+    margin-bottom: 0.2rem;
+}
 #markedContent {
     line-height: 1.7;
 }
@@ -63,6 +66,7 @@ ul li:before {
     padding: 16px;
     overflow: auto;
     border-radius: 3px;
+    margin-top: 1rem;
 }
 #markedContent pre code {
     background-color: initial;
