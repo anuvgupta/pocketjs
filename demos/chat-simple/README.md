@@ -1,7 +1,7 @@
 # chat-simple
 A demo of a simplistic chat application (for realtime messaging) created with pocketjs  
 Clients can send and receive messages that appear on other clients' screens immediately!  
-This demo is online at [anuv.me/pocketjs/demos/chat-simple](http://anuv.me/pocketjs/demos/chat-simple)
+This demo is online at [github.anuv.me/pocketjs/demos/chat-simple](http://github.anuv.me/pocketjs/demos/chat-simple)
 
 ## code
  - `pocket.php` is the pocketjs server-side library
