@@ -2,8 +2,8 @@
 pocketjs is a lightweight WebSocket library for writing realtime applications in PHP and JavaScript.  
 &nbsp;  
 *Why pocketjs?*  
-Many web developers, such as myself, have many existing dynamic web applications currently deployed. But they require a solution for seamless realtime integration, rather than a framework around/in which to architect their entire application. There are many existing options, such as [node.js](http://nodejs.org)/[socket.io](http://socket.io) and [Firebase](https://firebase.google.com), but many require a dramatic shift to an unfamiliar and heavy framework, or are not simultaneously cost-effective and scalable. **pocketjs** is a lightweight, encapsulated, and straightforward library for incorporating realtime updates into an existing web app (preferably written in PHP, but any language should be compatible).
-#### Visit [github.anuv.me/pocketjs](http://github.anuv.me/pocketjs)
+Many web developers have many existing dynamic web applications currently deployed, but they require a solution for seamless realtime integration, rather than a framework around/in which to architect their entire application. There are many existing options, such as [node.js](http://nodejs.org)/[socket.io](http://socket.io) and [Firebase](https://firebase.google.com), but many require a dramatic shift to an unfamiliar and heavy framework, or essentially just having envisioned and built the project for that framework in the first place. **pocketjs** is a lightweight, encapsulated, and straightforward library for incorporating realtime updates into an existing web app (preferably written in PHP, but any language should be compatible).  
+*Visit [github.anuv.me/pocketjs](http://github.anuv.me/pocketjs)*. 
 
 ## Architecture
 pocketjs blends well into existing web frameworks:
@@ -39,8 +39,8 @@ Regarding program structure, pocketjs utilizes an *event-driven flow* model to s
      2. Clone [this](http://github.com/anuvgupta/pocketjs) repository
      3. Go to the [demos](http://github.com/anuvgupta/pocketjs/tree/master/demos) folder and follow the instructions to set up your own!
 
-## Compatibility
+### Compatibility
 pocketjs is compatible with many libraries and frameworks, as it functions on its own.  
-For more questions about compatibility, email me at [pocketjs@anuv.me](mailto:pocketjs@anuv.me?Subject=Compatibility%20Issue)  
-## License
+
+### License
 pocketjs is released under the [MIT License](https://github.com/anuvgupta/pocketjs/blob/master/LICENSE.md)
