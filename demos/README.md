@@ -1,10 +1,10 @@
 # pocketjs demos
-This folder contains many demonstrations of WebSocket applications using pocketjs  
-Each demo includes instructions for trying it out locally, on your own machine!
+This folder contains demos of WebSocket applications using pocketjs  
 
-## demo list
-We recommend you check the demos out in this order (of ascending difficulty)
+## demos
  1. [chat-simple](chat-simple) - a simple chat application for realtime messaging
  2. [chat-better](chat-better) - an improved chat room application for realtime messaging
 
-More demos to come soon!  
+## examples
+ 1. [rubbr](https://github.com/anuvgupta/rubbr) – car racing multiplayer web game
+ 2. [slop](https://github.com/anuvgupta/slop) – synchronized grocery list editor
