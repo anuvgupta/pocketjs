@@ -41,6 +41,5 @@ To test this demo yourself:
     - Check the terminal window in which the pocketjs server is running to see a log
  5. Chat with yourself
     - Check the JavaScript console for any error messages that might appear
-    - Check the [docs](#documentation) and [tutorials](#further-tutorials) for troubleshooting, or [contact me](mailto:pocketjs@anuv.me) through email
     - Open the page in a new window, place them side by side, and enjoy the realtime updates!
     - Check out the other demos, like [chat-better](../chat-better)
