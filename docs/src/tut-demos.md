@@ -23,7 +23,7 @@ Here are some applications I've made that use pocketjs for their core functional
          - pocketjs calculates every player's position & collisions, synchronizes the map (positions of money/players/health/nitro) as well as the leaderboard between all clients
   - slop
      - View online: [slop.anuv.me](http://slop.anuv.me)
-         - Password: slop
+         - *Password: slop*
      - View source: [github.com/anuvgupta/slop](https://github.com/anuvgupta/slop)
      - An online realtime collaborative grocery list app. Multiple lists may be created, with various names/purposes. New items can be added and removed, as well as crossed off.
          - pocketjs synchronizes all lists and items between all clients, so the changes by any one client are immediately reflected across all client devices (no reloading necessary)
