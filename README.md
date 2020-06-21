@@ -1,5 +1,5 @@
 # pocketjs
-pocketjs is a barebones WebSocket library for writing realtime applications in PHP and JavaScript.  
+pocketjs is a barebones WebSocket library for implementing realtime applications in PHP and JavaScript.  
 &nbsp;  
 *Why pocketjs?*  
 Many web developers have many existing dynamic web applications currently deployed, but they require a solution for seamless realtime integration, rather than a framework around/in which to architect their entire application. There are many existing options, such as [node.js](http://nodejs.org)/[socket.io](http://socket.io) and [Firebase](https://firebase.google.com), but many require a dramatic shift to an unfamiliar and heavy framework, or essentially just having envisioned and built the project for that framework in the first place. **pocketjs** is a lightweight, encapsulated, and straightforward library for incorporating realtime updates into an existing web app (preferably written in PHP, but any language should be compatible).  
