@@ -2,10 +2,10 @@
 <html>
     <head>
         <title>pocketjs chat-better</title>
-        <link rel = 'icon' type = 'image/png' href = '../../img/pocketjs_40.png'/>
-        <link rel = 'stylesheet' type = 'text/css' href = 'style.css'/>
-        <script type = 'text/javascript' src = '../../js/chat/pocket.js'></script>
-        <script type = 'text/javascript'>
+        <link rel="icon" type="image/png" href="../../img/pocketjs_40.png" />
+        <link rel="stylesheet" type="text/css" href="style.css" />
+        <script type="text/javascript" src="../../js/chat/pocket.js"></script>
+        <script type="text/javascript">
             // covenience function for getting element
             function getElement(id) {
                 return document.getElementById(id);
@@ -24,9 +24,12 @@
                 // sending messages to server
                 var send = function () {
                     var val = inBox.value; // get input box value
-                    if ((val !== null) && (val != '') && val.trim() != '') { // if input is not empty
-                        if ((name == null) || (name == '') || (name.trim() == '')) // if client has no name yet
-                            pocket.send('join', val); // client wants to join room, so send the input as username
+                    if (val !== null && val != '' && val.trim() != '') {
+                        // if input is not empty
+                        if (name == null || name == '' || name.trim() == '')
+                            // if client has no name yet
+                            pocket.send('join', val);
+                        // client wants to join room, so send the input as username
                         else pocket.send('sendmsg', val); // client is already in room, so send the input as message
                         inBox.value = ''; // clear the input box
                     }
@@ -40,9 +43,10 @@
 
                 // receivinig authentication after attempting to join
                 pocket.bind('username', function (success, username) {
-                    if (success) { // if username accepted by server
+                    if (success) {
+                        // if username accepted by server
                         // modify UI with CSS to show output div
-                        outDiv.style.height = (0.66 * window.innerHeight) + 'px';
+                        outDiv.style.height = 0.66 * window.innerHeight + 'px';
                         setTimeout(function () {
                             outDiv.style.overflowY = 'scroll';
                         }, 500);
@@ -64,7 +68,11 @@
                 // receiving messages from server
                 pocket.bind('newmsg', function (user, msg, id) {
                     // if user has already joined room and message is not blank
-                    if (!((name == null) || (name == '') || (name.trim() == '')) && (msg != null && msg.trim() != '')) {
+                    if (
+                        !(name == null || name == '' || name.trim() == '') &&
+                        msg != null &&
+                        msg.trim() != ''
+                    ) {
                         var span = document.createElement('span'); // create a span
                         span.className = 'message'; // for styling
                         var strong = document.createElement('strong'); // create a strong (bold)
@@ -82,24 +90,38 @@
                 });
                 // when connected to server
                 pocket.onOpen(function () {
-                    if (helpLine.innerHTML != 'pocketjs demo') helpLine.innerHTML = 'Connected to server'; // notify user
+                    if (helpLine.innerHTML != 'pocketjs demo')
+                        helpLine.innerHTML = 'Connected to server'; // notify user
                 });
 
                 // connect to pocketjs WebSocket server
-                pocket.connect('aws.anuv.me', 8003, 'chat-better.php');
+                pocket.connect(
+                    document.domain === 'localhost'
+                        ? 'localhost'
+                        : 'pjs.anuv.me',
+                    location.protocol === 'https:' ? 443 : 80,
+                    'chat-better-demo',
+                    location.protocol === 'https:'
+                );
             });
         </script>
     </head>
     <body>
-        <div id = 'content'>
-            <span id = 'title'>chat-better</span>
-            <div id = 'output'></div>
-            <div id = 'inputwrap'>
-                <input id = 'input' type = 'text' placeholder = 'nickname'/>
-                <button id = 'submit'>join</button>
+        <div id="content">
+            <span id="title">chat-better</span>
+            <div id="output"></div>
+            <div id="inputwrap">
+                <input id="input" type="text" placeholder="nickname" />
+                <button id="submit">join</button>
             </div>
-            <span id = 'help'>pocketjs demo</span><br/>
-            <span id = 'link'>Code for this demo is on <a href = 'http://github.com/anuvgupta/pocketjs/tree/master/demos/chat-better'>GitHub</a><br/></span>
+            <span id="help">pocketjs demo</span><br />
+            <span id="link"
+                >Code for this demo is on
+                <a
+                    href="http://github.com/anuvgupta/pocketjs/tree/master/demos/chat-better"
+                    >GitHub</a
+                ><br
+            /></span>
         </div>
     </body>
 </html>
