@@ -45,13 +45,17 @@
 
             // connect to pocketjs WebSocket server
             pocket.connect(
-                document.domain === 'localhost' ? 'localhost' : 'pjs.anuv.me',
+                document.domain === 'localhost'
+                    ? 'localhost'
+                    : 'pjs-demo.anuv.me',
                 location.protocol === 'https:' ? 443 : 80,
                 'socket',
                 location.protocol === 'https:'
             );
             console.log(
-                document.domain === 'localhost' ? 'localhost' : 'pjs.anuv.me',
+                document.domain === 'localhost'
+                    ? 'localhost'
+                    : 'pjs-demo.anuv.me',
                 location.protocol === 'https:' ? 443 : 80,
                 'socket',
                 location.protocol === 'https:'
