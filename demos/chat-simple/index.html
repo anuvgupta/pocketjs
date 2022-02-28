@@ -47,7 +47,13 @@
             pocket.connect(
                 document.domain === 'localhost' ? 'localhost' : 'pjs.anuv.me',
                 location.protocol === 'https:' ? 443 : 80,
-                'chat-simple-demo',
+                'socket',
+                location.protocol === 'https:'
+            );
+            console.log(
+                document.domain === 'localhost' ? 'localhost' : 'pjs.anuv.me',
+                location.protocol === 'https:' ? 443 : 80,
+                'socket',
                 location.protocol === 'https:'
             );
         </script>
